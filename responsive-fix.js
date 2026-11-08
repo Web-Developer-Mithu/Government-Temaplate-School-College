@@ -1,3 +1,4 @@
+var boundaryPoly = null;
 /**
  * ==========================================================================
  * MASTER RESPONSIVE, BILINGUAL & INTERACTION SYSTEM
@@ -1277,12 +1278,640 @@
         });
     }
 
+                    // --------------------------------------------------------------------------
+    // 4.10. Smart Google Maps Parser & Leaflet Real GPS 3D Marker Engine
+    // --------------------------------------------------------------------------
+    function parseGoogleMapEmbed(embedInput) {
+        if (!embedInput || typeof embedInput !== 'string') return null;
+        var src = embedInput;
+        var srcMatch = embedInput.match(/src=["']([^"']+)["']/i);
+        if (srcMatch && srcMatch[1]) {
+            src = srcMatch[1];
+        }
+        var result = {};
+        // 1. Google Embed PB format (!3d... !2d... !2s...)
+        var latMatch = src.match(/!3d([0-9.-]+)/);
+        var lngMatch = src.match(/!2d([0-9.-]+)/);
+        var nameMatch = src.match(/!2s([^!&]+)/);
+        if (latMatch && lngMatch) {
+            result.lat = parseFloat(latMatch[1]);
+            result.lng = parseFloat(lngMatch[1]);
+        } else {
+            // 2. Direct q=lat,lng or ll=lat,lng format
+            var coordMatch = src.match(/[?&](?:q|ll|center)=([0-9.-]+),([0-9.-]+)/i);
+            if (coordMatch) {
+                result.lat = parseFloat(coordMatch[1]);
+                result.lng = parseFloat(coordMatch[2]);
+            }
+        }
+        if (nameMatch && nameMatch[1]) {
+            try {
+                result.name = decodeURIComponent(nameMatch[1].replace(/\+/g, ' '));
+            } catch(e) {
+                result.name = nameMatch[1];
+            }
+        }
+        return (result.lat && result.lng) ? result : null;
+    }
+
+    function initMapFeatures() {
+        window.initMapFeatures = initMapFeatures;
+        var stageWrap = document.getElementById('kc-map-stage-wrap');
+        if (!stageWrap || typeof L === 'undefined') return;
+
+        // Auto-detect if user simply pasted a raw <iframe> into kc-map-stage-wrap
+        var embedSource = document.getElementById('kc-map-embed-source') || stageWrap.querySelector('[data-src]');
+        var existingIframe = stageWrap.querySelector('iframe');
+        if (existingIframe) {
+            try { existingIframe.parentNode.removeChild(existingIframe); } catch(e){}
+        }
+        var mapContainer = document.getElementById('kc-leaflet-map');
+
+        if (!mapContainer) {
+            mapContainer = document.createElement('div');
+            mapContainer.id = 'kc-leaflet-map';
+            mapContainer.style.width = '100%';
+            mapContainer.style.height = '380px';
+            stageWrap.insertBefore(mapContainer, stageWrap.firstChild);
+        }
+
+        var embedInput = null;
+        if (embedSource) {
+            embedInput = embedSource.getAttribute('data-src') || embedSource.getAttribute('src');
+        } else if (existingIframe) {
+            embedInput = existingIframe.getAttribute('src');
+        }
+
+        embedInput = embedInput ||
+                     mapContainer.getAttribute('data-map-embed') ||
+                     stageWrap.getAttribute('data-map-embed') ||
+                     (window.KCC_MAP_CONFIG && window.KCC_MAP_CONFIG.embed);
+
+        // Base Default School Configuration (Govt. K.C. College)
+        var config = {
+            lat: 23.5455,
+            lng: 89.1701,
+            zoom: 18,
+            name: "সরকারি কে. সি. কলেজ",
+            campus: "মূল ক্যাম্পাস",
+            address: "এইচ.এস.এস রোড, ঝিনাইদহ সদর, ঝিনাইদহ-৭৩০০",
+            transit: "পায়রা চত্বর বা কেন্দ্রীয় বাস টার্মিনাল থেকে মাত্র ৫ মিনিট",
+            plusCode: "G5WC+63M (ঝিনাইদহ)",
+            directionUrl: "https://www.google.com/maps/dir/?api=1&destination=23.5455,89.1701",
+            boundary: [
+                [23.5463, 89.1687],
+                [23.5467, 89.1712],
+                [23.5459, 89.1718],
+                [23.5446, 89.1715],
+                [23.5442, 89.1691],
+                [23.5452, 89.1685]
+            ]
+        };
+
+        // Merge with window.KCC_MAP_CONFIG if user defined
+        if (window.KCC_MAP_CONFIG && typeof window.KCC_MAP_CONFIG === 'object') {
+            for (var key in window.KCC_MAP_CONFIG) {
+                if (window.KCC_MAP_CONFIG.hasOwnProperty(key)) {
+                    config[key] = window.KCC_MAP_CONFIG[key];
+                }
+            }
+        }
+
+        // Automatic Google Maps Embed Parser (Admin Panel Dynamic Support!)
+        if (embedInput) {
+            var parsed = parseGoogleMapEmbed(embedInput);
+            if (parsed) {
+                config.lat = parsed.lat;
+                config.lng = parsed.lng;
+                if (parsed.name) config.name = parsed.name;
+                config.directionUrl = "https://www.google.com/maps/dir/?api=1&destination=" + config.lat + "," + config.lng;
+                
+                // If Daulatpur College or another school parsed from embed
+                if (config.name && config.name.toLowerCase().indexOf('daulatpur') !== -1) {
+                    config.name = "দৌলতপুর কলেজ";
+                    config.campus = "মূল ক্যাম্পাস, দৌলতপুর";
+                    config.address = "কলেজ রোড, দৌলতপুর সদর, কুষ্টিয়া-৭০৪০";
+                    config.transit = "দৌলতপুর বাসস্ট্যান্ড বা উপজেলা মোড় থেকে মাত্র ৩ মিনিট";
+                    config.plusCode = "2V5C+X4 (দৌলতপুর)";
+                } else if (config.lat !== 23.5455) {
+                    // Generic new school fallback
+                    config.address = config.name + ", সদর রোড";
+                    config.transit = "নিকটস্থ বাসস্ট্যান্ড বা বাজার মোড় থেকে ৩-৫ মিনিট";
+                    config.plusCode = config.lat.toFixed(4) + ", " + config.lng.toFixed(4);
+                }
+
+                // Check custom data attributes on container
+                if (mapContainer.getAttribute('data-address')) config.address = mapContainer.getAttribute('data-address');
+                if (mapContainer.getAttribute('data-transit')) config.transit = mapContainer.getAttribute('data-transit');
+                if (mapContainer.getAttribute('data-plus-code')) config.plusCode = mapContainer.getAttribute('data-plus-code');
+
+                // Dynamically compute campus perimeter for new school
+                var d_lat = 0.0009;
+                var d_lng = 0.0011;
+                config.boundary = [
+                    [config.lat + d_lat * 0.8, config.lng - d_lng * 0.9],
+                    [config.lat + d_lat * 1.1, config.lng + d_lng * 0.8],
+                    [config.lat + d_lat * 0.3, config.lng + d_lng * 1.2],
+                    [config.lat - d_lat * 0.9, config.lng + d_lng * 0.9],
+                    [config.lat - d_lat * 1.1, config.lng - d_lng * 0.7],
+                    [config.lat - d_lat * 0.2, config.lng - d_lng * 1.1]
+                ];
+            }
+        }
+
+        // Dynamically update the 3 bottom transit info cards!
+        var addrElem = document.getElementById('kc-info-address-val');
+        if (addrElem && config.address) addrElem.textContent = config.address;
+
+        var transitElem = document.getElementById('kc-info-transit-val');
+        if (transitElem && config.transit) transitElem.textContent = config.transit;
+
+        var plusElem = document.getElementById('kc-info-pluscode-val');
+        if (plusElem && config.plusCode) {
+            plusElem.innerHTML = '<code class="kc-plus-code">' + config.plusCode + '</code>';
+        }
+
+                if (mapContainer._leaflet_map) {
+            try { mapContainer._leaflet_map.remove(); } catch(e){}
+            mapContainer._leaflet_map = null;
+        }
+        mapContainer._leaflet_id = null;
+
+        // Initialize Leaflet Map with smooth interactive zooming fully enabled!
+        var map = L.map('kc-leaflet-map', {
+            center: [config.lat, config.lng],
+            zoom: config.zoom || 19,
+            zoomControl: true,
+            scrollWheelZoom: true,
+            doubleClickZoom: true,
+            touchZoom: true,
+            boxZoom: true,
+            keyboard: true,
+            attributionControl: false,
+            zoomAnimation: true
+        });
+
+        // Explicitly ensure interactive zooming is active
+        if (map.scrollWheelZoom) map.scrollWheelZoom.enable();
+        if (map.doubleClickZoom) map.doubleClickZoom.enable();
+        if (map.touchZoom) map.touchZoom.enable();
+
+        // Google Maps Official Satellite Hybrid Layer (Real Aerial Photography + Buildings + Roads)
+        var satelliteLayer = L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
+            maxZoom: 21,
+            maxNativeZoom: 20,
+            subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+            keepBuffer: 1,
+            updateWhenZooming: false,
+            attribution: 'Google Satellite'
+        });
+
+        // Google Maps Official Vector Road Map Layer
+        var roadmapLayer = L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+            maxZoom: 21,
+            maxNativeZoom: 20,
+            subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+            keepBuffer: 1,
+            updateWhenZooming: false,
+            attribution: 'Google Maps'
+        });
+
+        // Default to Real Google Satellite View with Building Detail!
+        satelliteLayer.addTo(map);
+        var currentActiveLayer = satelliteLayer;
+
+        // Feature 4: Campus Boundary Neon Glow Perimeter
+        if (config.boundary && config.boundary.length > 2) {
+            boundaryPoly = L.polygon(config.boundary, {
+                color: '#10b981',
+                weight: 2.8,
+                dashArray: '8, 6',
+                fillColor: '#059669',
+                fillOpacity: 0.16,
+                className: 'kc-campus-boundary-pulse'
+            }).addTo(map);
+
+            boundaryPoly.bindTooltip("🏫 " + config.name + " • ক্যাম্পাস সীমানা", {
+                permanent: false,
+                direction: "top",
+                className: "kc-boundary-tooltip",
+                sticky: true
+            });
+        }
+
+        // Feature 1: Holographic Vertical Light Beam + Touchdown Shockwave + 3D Spinning Pin
+        var pinHtml = `
+            <div class="kc-leaflet-marker" aria-label="লাইভ ক্যাম্পাস পিন">
+                <!-- 0. Landing Touchdown Shockwave -->
+                <div class="kc-landing-shockwave" id="kc-landing-shockwave"></div>
+
+                <!-- 1. Holographic Vertical Laser Light Beam & Rings -->
+                <div class="kc-holographic-beam"></div>
+                <div class="kc-holo-ring"></div>
+                <div class="kc-holo-ring ring-b"></div>
+
+                <!-- 2. Continuous 360° Radar Scanner Beam & Sonar Rings -->
+                <div class="kc-radar-scanner"><div class="kc-radar-beam"></div></div>
+                <div class="kc-radar-ring ring-1"></div>
+                <div class="kc-radar-ring ring-2"></div>
+                <div class="kc-radar-ring ring-3"></div>
+
+                <!-- 3. Dual Gyroscopic Orbit Rings -->
+                <div class="kc-pin-orbit-ring ring-clockwise"><span class="kc-orbit-dot"></span></div>
+                <div class="kc-pin-orbit-ring ring-counter"><span class="kc-orbit-dot dot-gold"></span></div>
+                <div class="kc-pin-ground-shadow"></div>
+
+                <!-- 4. 3D Rotating Location Pin & Interactive Tooltip -->
+                <div class="kc-pin-anchor">
+                    <div class="kc-pin-3d-spin-wrapper">
+                        <div class="kc-live-pin-head">
+                            <svg viewBox="0 0 640 512" class="kc-pin-icon"><path d="M320 32c-8.1 0-16.1 1.4-23.7 4.1L24.3 137.8C9.8 143.4 0 157.5 0 173.3s9.8 29.8 24.3 35.5l95.7 37.2v97.5c-19.6 9.8-32 30-32 52.5 0 33.1 26.9 60 60 60s60-26.9 60-60c0-22.5-12.4-42.7-32-52.5V254.9l80 31.1v97.5c-19.6 9.8-32 30-32 52.5 0 33.1 26.9 60 60 60s60-26.9 60-60c0-22.5-12.4-42.7-32-52.5V294.7l75.7-29.4c7.6-3 15.6-4.4 23.7-4.4s16.1 1.4 23.7 4.4L615.7 209c14.5-5.6 24.3-19.7 24.3-35.5s-9.8-29.8-24.3-35.5L343.7 36.1C336.1 33.4 328.1 32 320 32z"/></svg>
+                        </div>
+                        <div class="kc-live-pin-point"></div>
+                    </div>
+                    <div class="kc-live-pin-tooltip">
+                        <span class="kc-tooltip-title">${config.name}</span>
+                        <span class="kc-tooltip-sub">${config.campus} • ডিরেকশন দেখতে ক্লিক করুন ↗</span>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        var customIcon = L.divIcon({
+            className: 'kc-custom-leaflet-pin',
+            html: pinHtml,
+            iconSize: [0, 0],
+            iconAnchor: [0, 0]
+        });
+
+        var marker = L.marker([config.lat, config.lng], { icon: customIcon }).addTo(map);
+
+        mapContainer._leaflet_map = map;
+        marker.on('click', function() {
+            window.open(config.directionUrl, '_blank');
+        });
+
+        var satSearchText = document.getElementById('kc-sat-search-text');
+        var mapBlock = document.getElementById('kc-map-block') || stageWrap;
+        var mapIsVisible = false;
+        var mapFlightActive = false;
+        var flightTimer = null;
+
+        function updateMapAnimationState() {
+            mapContainer.classList.toggle(
+                'kc-map-animations-paused',
+                !mapIsVisible || document.hidden || mapFlightActive
+            );
+        }
+
+        // Cancel flight if user manually interacts (wheel, drag, touch, zoom button)
+        function stopFlightOnUserInteraction() {
+            if (mapFlightActive) {
+                if (flightTimer) {
+                    clearTimeout(flightTimer);
+                    flightTimer = null;
+                }
+                mapFlightActive = false;
+                try { map.stop(); } catch(e){}
+                updateMapAnimationState();
+                if (boundaryPoly) boundaryPoly.setStyle({ opacity: 1, fillOpacity: 0.16 });
+                if (satSearchText) {
+                    satSearchText.textContent = '📍 ' + config.name + ' (' + config.campus + ') • লাইভ ভিউ';
+                }
+            }
+        }
+
+        map.on('dragstart', stopFlightOnUserInteraction);
+        map.on('wheel', stopFlightOnUserInteraction);
+        map.on('touchstart', stopFlightOnUserInteraction);
+
+        // Real Google Satellite Optical Zoom Flight (100% Live, Continuous, Soft, Zero Fake CGI)
+        function triggerEarthToCampusFlight(revealOpeningGlobe) {
+            if (mapFlightActive) return;
+            mapFlightActive = true;
+            updateMapAnimationState();
+
+            if (boundaryPoly) {
+                boundaryPoly.setStyle({ opacity: 0, fillOpacity: 0 });
+            }
+
+            if (satSearchText) {
+                satSearchText.textContent = '🌍 গ্লোবাল স্যাটেলাইট থেকে ট্র্যাকিং শুরু...';
+            }
+
+            // Start softly at regional altitude (Zoom 3: South Asia / Bay of Bengal / Himalayas)
+            map.setView([config.lat, config.lng], 3, { reset: true });
+            map.invalidateSize();
+
+            if (flightTimer) clearTimeout(flightTimer);
+            flightTimer = setTimeout(function() {
+                if (satSearchText) {
+                    satSearchText.textContent = '🛰️ ' + config.name + ' • রিয়েল-টাইম স্যাটেলাইট জুম...';
+                }
+
+                if (revealOpeningGlobe) revealOpeningGlobe();
+
+                // Smooth continuous optical zoom directly to building rooftops
+                map.flyTo([config.lat, config.lng], config.zoom || 19, {
+                    duration: 4.8,
+                    easeLinearity: 0.22
+                });
+            }, 600);
+        }
+
+        function playOpeningGlobe(onComplete) {
+            var finished = false;
+            var frameId = 0;
+            var renderer = null;
+            var scene = null;
+            var camera = null;
+            var earth = null;
+            var earthTexture = null;
+            var lastTimestamp = 0;
+            var elapsed = 0;
+            var lastRenderTimestamp = 0;
+            var overlay = document.createElement('div');
+            var loadTimeout = null;
+            var overlayLeaving = false;
+
+            overlay.className = 'kc-globe-overlay';
+            overlay.setAttribute('aria-hidden', 'true');
+            stageWrap.appendChild(overlay);
+            mapContainer.classList.add('kc-map-animations-paused');
+
+            function complete(error) {
+                if (finished) return;
+                finished = true;
+                if (loadTimeout) clearTimeout(loadTimeout);
+                if (frameId) cancelAnimationFrame(frameId);
+                if (error) console.error('Opening Earth animation could not be loaded.', error);
+                openingGlobeResume = null;
+
+                function revealOverlay() {
+                    if (overlayLeaving) return;
+                    overlayLeaving = true;
+                    overlay.classList.add('kc-globe-overlay-leaving');
+                    setTimeout(function() {
+                        if (earth) {
+                            earth.geometry.dispose();
+                            earth.material.dispose();
+                        }
+                        if (earthTexture) earthTexture.dispose();
+                        if (renderer) {
+                            renderer.dispose();
+                            renderer.forceContextLoss();
+                        }
+                        if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+                        mapContainer.classList.remove('kc-map-animations-paused');
+                    }, 900);
+                }
+
+                onComplete(revealOverlay);
+            }
+
+            function animate(timestamp) {
+                frameId = 0;
+                if (finished) return;
+                if (document.hidden || !mapIsVisible) {
+                    lastTimestamp = 0;
+                    return;
+                }
+                if (lastTimestamp) elapsed += Math.min(timestamp - lastTimestamp, 50);
+                lastTimestamp = timestamp;
+
+                earth.rotation.y = elapsed / 2800 * Math.PI * 2;
+                if (timestamp - lastRenderTimestamp >= 33) {
+                    renderer.render(scene, camera);
+                    lastRenderTimestamp = timestamp;
+                }
+                if (elapsed >= 2800) {
+                    complete();
+                    return;
+                }
+                frameId = requestAnimationFrame(animate);
+            }
+
+            function resume() {
+                if (!finished && earth && mapIsVisible && !document.hidden && !frameId) {
+                    frameId = requestAnimationFrame(animate);
+                }
+            }
+            openingGlobeResume = resume;
+
+            function loadGlobe() {
+                if (!window.THREE) {
+                    var script = document.createElement('script');
+                    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/0.149.0/three.min.js';
+                    script.onload = function() {
+                        if (window.THREE) initializeGlobe();
+                        else complete(new Error('Three.js loaded without exposing its API.'));
+                    };
+                    script.onerror = function() {
+                        complete(new Error('Three.js CDN script failed to load.'));
+                    };
+                    document.head.appendChild(script);
+                    return;
+                }
+                initializeGlobe();
+            }
+
+            function initializeGlobe() {
+                if (finished) return;
+                try {
+                    var THREE = window.THREE;
+                    var width = Math.max(stageWrap.clientWidth, 1);
+                    var height = Math.max(stageWrap.clientHeight, 1);
+                    renderer = new THREE.WebGLRenderer({
+                        antialias: false,
+                        alpha: false,
+                        powerPreference: 'low-power'
+                    });
+                    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1));
+                    renderer.setSize(width, height);
+                    renderer.outputEncoding = THREE.sRGBEncoding;
+                    overlay.appendChild(renderer.domElement);
+
+                    scene = new THREE.Scene();
+                    scene.background = new THREE.Color('#020817');
+                    camera = new THREE.PerspectiveCamera(42, width / height, 0.1, 100);
+                    camera.position.set(0, 0, 3.1);
+                    scene.add(new THREE.AmbientLight(0xffffff, 0.7));
+                    var sunlight = new THREE.DirectionalLight(0xffffff, 1.3);
+                    sunlight.position.set(-3, 2, 4);
+                    scene.add(sunlight);
+
+                    var loader = new THREE.TextureLoader();
+                    loader.setCrossOrigin('anonymous');
+                    loader.load(
+                        'https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg',
+                        function(texture) {
+                            if (finished) {
+                                texture.dispose();
+                                return;
+                            }
+                            earthTexture = texture;
+                            texture.encoding = THREE.sRGBEncoding;
+                            earth = new THREE.Mesh(
+                                new THREE.SphereGeometry(1, 48, 32),
+                                new THREE.MeshPhongMaterial({
+                                    map: texture,
+                                    shininess: 16,
+                                    specular: new THREE.Color('#182c47')
+                                })
+                            );
+                            scene.add(earth);
+                            resume();
+                        },
+                        undefined,
+                        function(error) {
+                            complete(error || new Error('Earth texture failed to load.'));
+                        }
+                    );
+                } catch (error) {
+                    complete(error);
+                }
+            }
+
+            loadTimeout = setTimeout(function() {
+                complete(new Error('Opening Earth animation timed out.'));
+            }, 8000);
+            loadGlobe();
+        }
+
+        // Softly update search bar during continuous zoom
+        map.on('zoom', function() {
+            if (!mapFlightActive) return;
+            var z = map.getZoom();
+            if (satSearchText) {
+                if (z < 6) {
+                    satSearchText.textContent = '🌍 ভারত মহাসাগর ও দক্ষিণ এশিয়া আকাশসীমা...';
+                } else if (z < 11) {
+                    satSearchText.textContent = '🛰️ বাংলাদেশ ও পদ্মা নদী অববাহিকা...';
+                } else if (z < 16) {
+                    satSearchText.textContent = '🛰️ কুষ্টিয়া জেলা • দৌলতপুর এলাকা অতিক্রম করছে...';
+                } else {
+                    satSearchText.textContent = '📍 ' + config.name + ' • ক্যাম্পাস ছাদ ও সীমানা স্পষ্ট হচ্ছে...';
+                }
+            }
+        });
+
+        // Arrival touchdown at target Zoom
+        map.on('moveend', function() {
+            var currentZoom = map.getZoom();
+            var targetZoom = config.zoom || 19;
+            // Only trigger touchdown arrival once camera reaches campus destination
+            if (mapFlightActive && currentZoom >= targetZoom - 1) {
+                mapFlightActive = false;
+                updateMapAnimationState();
+                if (boundaryPoly) boundaryPoly.setStyle({ opacity: 1, fillOpacity: 0.16 });
+                if (satSearchText) {
+                    satSearchText.textContent = '📍 ' + config.name + ' (' + config.campus + ') • লাইভ স্যাটেলাইট';
+                }
+                var shockwave = document.getElementById('kc-landing-shockwave');
+                if (shockwave) {
+                    shockwave.classList.add('wave-active');
+                    setTimeout(function() {
+                        shockwave.classList.remove('wave-active');
+                    }, 1500);
+                }
+            }
+        });
+
+        function updateMapVisibility(entries) {
+            mapIsVisible = entries[0].isIntersecting;
+            updateMapAnimationState();
+            if (mapIsVisible && !mapContainer.dataset.globeIntroPlayed) {
+                mapContainer.dataset.globeIntroPlayed = 'true';
+                playOpeningGlobe(triggerEarthToCampusFlight);
+            }
+            if (document.hidden) return;
+            if (mapIsVisible && openingGlobeResume) openingGlobeResume();
+        }
+
+        var openingGlobeResume = null;
+        document.addEventListener('visibilitychange', function() {
+            updateMapAnimationState();
+            if (!document.hidden && openingGlobeResume) openingGlobeResume();
+        });
+        if ('IntersectionObserver' in window && mapBlock) {
+            var mapVisibilityObserver = new IntersectionObserver(updateMapVisibility, { threshold: 0.25 });
+            mapVisibilityObserver.observe(mapBlock);
+        } else {
+            mapIsVisible = true;
+            updateMapAnimationState();
+            mapContainer.dataset.globeIntroPlayed = 'true';
+            setTimeout(function() {
+                playOpeningGlobe(triggerEarthToCampusFlight);
+            }, 500);
+        }
+
+        // Replay the smooth campus zoom on recenter
+        var recenterBtn = document.getElementById('kc-map-recenter-btn');
+        if (recenterBtn) {
+            recenterBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                stopFlightOnUserInteraction();
+                map.flyTo([config.lat, config.lng], config.zoom || 19, {
+                    duration: 2.0,
+                    easeLinearity: 0.25
+                });
+                if (satSearchText) {
+                    satSearchText.textContent = '📍 ' + config.name + ' (' + config.campus + ')';
+                }
+            });
+        }
+
+        
+        // View Toggle Listener (Satellite <-> Roadmap)
+        var viewToggleBtn = document.getElementById('kc-map-view-toggle');
+        if (viewToggleBtn) {
+            viewToggleBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (currentActiveLayer === satelliteLayer) {
+                    map.removeLayer(satelliteLayer);
+                    roadmapLayer.addTo(map);
+                    currentActiveLayer = roadmapLayer;
+                    viewToggleBtn.innerHTML = '<span>🗺️ রোডম্যাপ</span>';
+                    viewToggleBtn.classList.remove('active-satellite');
+                    viewToggleBtn.setAttribute('title', 'স্যাটেলাইট ভিউতে পরিবর্তন করুন');
+                } else {
+                    map.removeLayer(roadmapLayer);
+                    satelliteLayer.addTo(map);
+                    currentActiveLayer = satelliteLayer;
+                    viewToggleBtn.innerHTML = '<span>🛰️ স্যাটেলাইট</span>';
+                    viewToggleBtn.classList.add('active-satellite');
+                    viewToggleBtn.setAttribute('title', 'সাধারণ রোডম্যাপে পরিবর্তন করুন');
+                }
+            });
+        }
+
+        // Fullscreen Google Maps button & Header Direction button
+        var fsBtn = document.querySelector('.kc-map-fullscreen-btn');
+        if (fsBtn) {
+            fsBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.open(config.directionUrl, '_blank');
+            });
+        }
+
+        var dirBtn = document.querySelector('.kc-map-dir-btn');
+        if (dirBtn) {
+            dirBtn.href = config.directionUrl;
+        }
+
+        // Auto resize invalidation on window resize
+        window.addEventListener('resize', function() {
+            map.invalidateSize();
+        });
+    }
+
     function initSystem() {
         // Slider Initialization
         initFragmentSlider();
         // Notice Board Auto-scroll Initialization
         initNoticeBoardTicker();
         initNoticeHoverPopover();
+        initMapFeatures();
         // A. Wire Language Switchers
         var deskLangBtn = document.getElementById('kc-lang-toggle-btn') || document.getElementById('kcc-lang-btn-desk');
         if (deskLangBtn) deskLangBtn.addEventListener('click', window.toggleLanguage);
