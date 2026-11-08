@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 520" width="100%" height="100%">
+  <defs>
+    <linearGradient id="paperGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f8fafc"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+
+  <!-- Document Paper Sheet -->
+  <rect x="15" y="15" width="370" height="490" rx="8" fill="url(#paperGrad)" stroke="#e2e8f0" stroke-width="1.5" filter="url(#shadow)"/>
+
+  <!-- Top Red Accent / PDF Header Line -->
+  <path d="M 15 23 Q 15 15 23 15 L 377 15 Q 385 15 385 23 L 385 28 L 15 28 Z" fill="#e11d48"/>
+
+  <!-- College Crest Watermark in center background -->
+  <circle cx="200" cy="270" r="90" fill="#005a2b" opacity="0.04"/>
+  <circle cx="200" cy="270" r="75" fill="none" stroke="#005a2b" stroke-width="2" stroke-dasharray="6,4" opacity="0.08"/>
+
+  <!-- Document Header -->
+  <circle cx="200" cy="65" r="24" fill="#f1f5f9" stroke="#005a2b" stroke-width="1.5"/>
+  <path d="M190 60 L200 52 L210 60 L200 68 Z" fill="#005a2b"/>
+  <path d="M194 65 L200 70 L206 65 L206 75 L194 75 Z" fill="#005a2b"/>
+
+  <text x="200" y="105" font-family="'Hind Siliguri', sans-serif" font-size="13" font-weight="bold" fill="#0f172a" text-anchor="middle">গণপ্রজাতন্ত্রী বাংলাদেশ সরকার</text>
+  <text x="200" y="122" font-family="'Hind Siliguri', sans-serif" font-size="15" font-weight="800" fill="#005a2b" text-anchor="middle">সরকারি আদর্শ মডেল কলেজ</text>
+  <text x="200" y="137" font-family="'Hind Siliguri', sans-serif" font-size="10" fill="#64748b" text-anchor="middle">কলেজ রোড, সদর, দিনাজপুর-১২০০ | www.modelcollege.edu.bd</text>
+
+  <line x1="40" y1="148" x2="360" y2="148" stroke="#cbd5e1" stroke-width="1"/>
+  <line x1="40" y1="151" x2="360" y2="151" stroke="#005a2b" stroke-width="1.5"/>
+
+  <!-- Memo Reference & Date -->
+  <text x="40" y="170" font-family="'Hind Siliguri', sans-serif" font-size="9" font-weight="600" fill="#475569">স্মারক নং: সআমক/প্রশা/২০২৬/১১৮</text>
+  <text x="360" y="170" font-family="'Hind Siliguri', sans-serif" font-size="9" font-weight="600" fill="#475569" text-anchor="end">তারিখ: ০৫/১১/২০২৬ খ্রি.</text>
+
+  <!-- Notice Title Box -->
+  <rect x="130" y="190" width="140" height="24" rx="4" fill="#005a2b" opacity="0.08"/>
+  <text x="200" y="206" font-family="'Hind Siliguri', sans-serif" font-size="12" font-weight="bold" fill="#005a2b" text-anchor="middle">--: বিজ্ঞপ্তি :--</text>
+
+  <!-- Document Body Lines (Realistic Official Layout) -->
+  <rect x="40" y="235" width="320" height="6" rx="3" fill="#334155" opacity="0.75"/>
+  <rect x="40" y="250" width="300" height="6" rx="3" fill="#64748b" opacity="0.5"/>
+  <rect x="40" y="265" width="320" height="6" rx="3" fill="#64748b" opacity="0.5"/>
+  <rect x="40" y="280" width="280" height="6" rx="3" fill="#64748b" opacity="0.5"/>
+  <rect x="40" y="295" width="310" height="6" rx="3" fill="#64748b" opacity="0.5"/>
+  <rect x="40" y="310" width="250" height="6" rx="3" fill="#64748b" opacity="0.5"/>
+
+  <rect x="40" y="335" width="290" height="6" rx="3" fill="#64748b" opacity="0.5"/>
+  <rect x="40" y="350" width="320" height="6" rx="3" fill="#64748b" opacity="0.5"/>
+  <rect x="40" y="365" width="200" height="6" rx="3" fill="#64748b" opacity="0.5"/>
+
+  <!-- Official Seal & Signature Section -->
+  <circle cx="95" cy="425" r="30" fill="none" stroke="#2563eb" stroke-width="2" stroke-dasharray="4,2" opacity="0.6"/>
+  <circle cx="95" cy="425" r="24" fill="none" stroke="#2563eb" stroke-width="1" opacity="0.6"/>
+  <text x="95" y="422" font-family="sans-serif" font-size="7" font-weight="bold" fill="#2563eb" text-anchor="middle" opacity="0.8">OFFICIAL SEAL</text>
+  <text x="95" y="432" font-family="sans-serif" font-size="6" fill="#2563eb" text-anchor="middle" opacity="0.8">GOVT. MODEL COLLEGE</text>
+
+  <!-- Signature -->
+  <path d="M 280 415 Q 295 395 310 410 T 330 405 T 345 415" fill="none" stroke="#1e293b" stroke-width="2"/>
+  <line x1="270" y1="422" x2="355" y2="422" stroke="#64748b" stroke-width="1"/>
+  <text x="312" y="434" font-family="'Hind Siliguri', sans-serif" font-size="8.5" font-weight="bold" fill="#0f172a" text-anchor="middle">অধ্যক্ষ</text>
+  <text x="312" y="445" font-family="'Hind Siliguri', sans-serif" font-size="7.5" fill="#475569" text-anchor="middle">সরকারি আদর্শ মডেল কলেজ</text>
+
+  <!-- PDF Stamp Ribbon on Bottom Left -->
+  <rect x="25" y="468" width="85" height="24" rx="12" fill="#e11d48"/>
+  <text x="67" y="484" font-family="sans-serif" font-size="10" font-weight="800" fill="#ffffff" text-anchor="middle">PDF FILE</text>
+</svg>

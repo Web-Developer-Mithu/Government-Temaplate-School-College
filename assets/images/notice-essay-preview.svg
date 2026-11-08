@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 520" width="100%" height="100%">
+  <defs>
+    <linearGradient id="posterGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#022c22"/>
+      <stop offset="50%" stop-color="#064e3b"/>
+      <stop offset="100%" stop-color="#0f766e"/>
+    </linearGradient>
+    <radialGradient id="sunGlow" cx="50%" cy="40%" r="50%">
+      <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#064e3b" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="520" rx="8" fill="url(#posterGrad)"/>
+  <rect width="400" height="520" fill="url(#sunGlow)"/>
+
+  <!-- Border Frame -->
+  <rect x="15" y="15" width="370" height="490" rx="6" fill="none" stroke="#f59e0b" stroke-width="2" opacity="0.6"/>
+  <rect x="19" y="19" width="362" height="482" rx="4" fill="none" stroke="#fef3c7" stroke-width="0.7" opacity="0.4"/>
+
+  <!-- Header -->
+  <rect x="80" y="35" width="240" height="26" rx="13" fill="#f59e0b"/>
+  <text x="200" y="52" font-family="'Hind Siliguri', sans-serif" font-size="11" font-weight="800" fill="#022c22" text-anchor="middle">সরকারি আদর্শ মডেল কলেজ</text>
+
+  <!-- Flag Emblem Graphic -->
+  <circle cx="200" cy="120" r="38" fill="#e11d48"/>
+  <path d="M190 120 L205 105 L205 135 Z" fill="#ffffff" opacity="0.9"/>
+  <circle cx="200" cy="120" r="44" fill="none" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+  <!-- Main Title -->
+  <text x="200" y="195" font-family="'Hind Siliguri', sans-serif" font-size="16" font-weight="bold" fill="#fde68a" text-anchor="middle">৭ই নভেম্বর উদযাপন ২০২৬</text>
+  <text x="200" y="235" font-family="'Hind Siliguri', sans-serif" font-size="24" font-weight="900" fill="#ffffff" text-anchor="middle">রচনা প্রতিযোগিতা</text>
+
+  <rect x="70" y="255" width="260" height="1" fill="#f59e0b" opacity="0.8"/>
+
+  <!-- Topic -->
+  <text x="200" y="285" font-family="'Hind Siliguri', sans-serif" font-size="12" font-weight="600" fill="#99f6e4" text-anchor="middle">রচনার বিষয়:</text>
+  <rect x="50" y="300" width="300" height="42" rx="6" fill="#042f2e" stroke="#14b8a6" stroke-width="1.2"/>
+  <text x="200" y="326" font-family="'Hind Siliguri', sans-serif" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle">"গণঅভ্যুত্থান ও জাতীয় সংহতি"</text>
+
+  <!-- Details Pill -->
+  <rect x="60" y="365" width="280" height="65" rx="8" fill="rgba(255,255,255,0.08)"/>
+  <text x="200" y="390" font-family="'Hind Siliguri', sans-serif" font-size="11" fill="#f1f5f9" text-anchor="middle">অংশগ্রহণ: একাদশ ও দ্বাদশ শ্রেণির সকল শিক্ষার্থী</text>
+  <text x="200" y="412" font-family="'Hind Siliguri', sans-serif" font-size="11" font-weight="bold" fill="#fbbf24" text-anchor="middle">জমা দেওয়ার শেষ সময়: ০৮ নভেম্বর ২০২৬</text>
+
+  <!-- Footer -->
+  <text x="200" y="465" font-family="'Hind Siliguri', sans-serif" font-size="10" fill="#cbd5e1" text-anchor="middle">আয়োজনে: বাংলা বিভাগ ও সাংস্কৃতিক কমিটি</text>
+  
+  <rect x="25" y="468" width="95" height="22" rx="11" fill="#0284c7"/>
+  <text x="72.5" y="483" font-family="sans-serif" font-size="9" font-weight="bold" fill="#ffffff" text-anchor="middle">IMAGE FLYER</text>
+</svg>
