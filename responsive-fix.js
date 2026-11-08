@@ -1108,6 +1108,7 @@
         var fileSize = document.getElementById('kc-popover-file-size');
         var previewImg = document.getElementById('kc-popover-preview-img');
         var zoomLink = document.getElementById('kc-popover-zoom-link');
+        var cinemaOverlayBtn = document.getElementById('kc-cinema-overlay-btn');
         var fileName = document.getElementById('kc-popover-file-name');
         var catPill = document.getElementById('kc-popover-category-pill');
         var dateText = document.getElementById('kc-popover-date-text');
@@ -1119,15 +1120,17 @@
 
         var hoverTimer = null;
         var leaveTimer = null;
-        var activeItem = null;
-        var isMobile = function() { return window.innerWidth <= 768; };
+        var currentActiveItem = null;
+        var isMouseInsideModal = false;
+        var isMouseInsideItem = false;
+        var isMobile = function() { return window.innerWidth <= 900; };
 
-        function showPopover(item) {
+        function populateAndShow(item) {
             if (!item) return;
-            activeItem = item;
+            currentActiveItem = item;
 
             // Extract rich metadata from notice item
-            var noticeTitle = item.getAttribute('data-title') || (item.querySelector('.kc-notice-text') ? item.querySelector('.kc-notice-text').textContent : '');
+            var noticeTitle = item.getAttribute('data-title') || (item.querySelector('.kc-notice-text') ? item.querySelector('.kc-notice-text').textContent.trim() : '');
             var noticeDate = item.getAttribute('data-date') || '০৫/১১/২০২৬';
             var noticeCategory = item.getAttribute('data-category') || 'নোটিশ';
             var categoryColor = item.getAttribute('data-category-color') || '#005a2b';
@@ -1170,110 +1173,106 @@
             }
 
             if (zoomLink) zoomLink.href = previewUrl;
+            if (cinemaOverlayBtn) cinemaOverlayBtn.href = previewUrl;
             if (linkFull) linkFull.href = noticeLink;
             if (btnDownload) {
                 btnDownload.href = previewUrl;
                 btnDownload.setAttribute('download', noticeFileName);
             }
 
-            // Positioning Logic
-            if (!isMobile()) {
-                var rect = item.getBoundingClientRect();
-                var popWidth = 630;
-                var popHeight = 350;
-                var pad = 16;
+            // Clean inline positioning to allow smooth CSS GPU centering
+            popCard.style.position = '';
+            popCard.style.left = '';
+            popCard.style.top = '';
 
-                // Position horizontally with collision detection
-                var left = rect.left + 50;
-                if (left + popWidth > window.innerWidth - pad) {
-                    left = window.innerWidth - popWidth - pad;
-                }
-                if (left < pad) left = pad;
-
-                // Position vertically centered or anchored to item top
-                var top = rect.top - 20;
-                if (top + popHeight > window.innerHeight - pad) {
-                    top = window.innerHeight - popHeight - pad;
-                }
-                if (top < pad) top = pad;
-
-                popCard.style.position = 'fixed';
-                popCard.style.left = Math.round(left) + 'px';
-                popCard.style.top = Math.round(top) + 'px';
-            } else {
-                popCard.style.position = '';
-                popCard.style.left = '';
-                popCard.style.top = '';
-            }
-
+            // Activate modal
             popover.classList.add('kc-popover-active');
             popover.setAttribute('aria-hidden', 'false');
         }
 
-        function hidePopover() {
+        function hideModal() {
             clearTimeout(hoverTimer);
+            clearTimeout(leaveTimer);
             popover.classList.remove('kc-popover-active');
             popover.setAttribute('aria-hidden', 'true');
-            activeItem = null;
+            currentActiveItem = null;
+            isMouseInsideModal = false;
+            isMouseInsideItem = false;
         }
 
-        // Event Delegation on Notice Viewport
-        var viewport = document.getElementById('kc-notice-viewport');
-        if (viewport) {
-            viewport.addEventListener('mouseover', function(e) {
-                if (isMobile()) return;
-                var item = e.target.closest('.kc-notice-item');
-                if (item) {
+        // Attach non-bubbling mouseenter & mouseleave directly to notice items
+        function attachItemEvents() {
+            var items = document.querySelectorAll('.kc-notice-item');
+            items.forEach(function(item) {
+                // Remove any previous listener clones
+                item.onmouseenter = function() {
+                    if (isMobile()) return;
+                    isMouseInsideItem = true;
                     clearTimeout(leaveTimer);
+
+                    // If already showing the exact same item, keep it visible smoothly
+                    if (currentActiveItem === item && popover.classList.contains('kc-popover-active')) {
+                        return;
+                    }
+
+                    // Ultra-snappy 160ms intent debounce
                     clearTimeout(hoverTimer);
-                    // Smart 150ms debounce
                     hoverTimer = setTimeout(function() {
-                        showPopover(item);
-                    }, 150);
-                }
-            });
+                        populateAndShow(item);
+                    }, 160);
+                };
 
-            viewport.addEventListener('mouseout', function(e) {
-                if (isMobile()) return;
-                var item = e.target.closest('.kc-notice-item');
-                if (item) {
+                item.onmouseleave = function() {
+                    if (isMobile()) return;
+                    isMouseInsideItem = false;
                     clearTimeout(hoverTimer);
-                    leaveTimer = setTimeout(function() {
-                        hidePopover();
-                    }, 220);
-                }
-            });
 
-            // Mobile click handler
-            viewport.addEventListener('click', function(e) {
-                if (!isMobile()) return;
-                var item = e.target.closest('.kc-notice-item');
-                if (item) {
-                    e.preventDefault();
-                    showPopover(item);
-                }
+                    // 250ms grace period so user can smoothly move mouse into the popup
+                    leaveTimer = setTimeout(function() {
+                        if (!isMouseInsideModal && !isMouseInsideItem) {
+                            hideModal();
+                        }
+                    }, 250);
+                };
+
+                // Mobile tap handler
+                item.onclick = function(e) {
+                    if (isMobile()) {
+                        e.preventDefault();
+                        populateAndShow(item);
+                    }
+                };
             });
         }
 
-        // Keep popover open while mouse is inside it
-        popCard.addEventListener('mouseenter', function() {
-            clearTimeout(leaveTimer);
-        });
+        attachItemEvents();
 
-        popCard.addEventListener('mouseleave', function() {
+        // Also re-attach after cloned items are generated in ticker
+        setTimeout(attachItemEvents, 500);
+
+        // Keep modal active while mouse is inside modal card
+        popCard.onmouseenter = function() {
+            isMouseInsideModal = true;
+            clearTimeout(leaveTimer);
+        };
+
+        popCard.onmouseleave = function() {
+            isMouseInsideModal = false;
             if (isMobile()) return;
             leaveTimer = setTimeout(function() {
-                hidePopover();
-            }, 220);
-        });
+                if (!isMouseInsideItem) {
+                    hideModal();
+                }
+            }, 250);
+        };
 
-        // Close triggers
-        if (closeBtn) closeBtn.addEventListener('click', hidePopover);
-        if (backdrop) backdrop.addEventListener('click', hidePopover);
+        // Instant close on backdrop click or close button
+        if (closeBtn) closeBtn.onclick = hideModal;
+        if (backdrop) backdrop.onclick = hideModal;
 
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape' || e.keyCode === 27) {
-                hidePopover();
+                hideModal();
             }
         });
     }
