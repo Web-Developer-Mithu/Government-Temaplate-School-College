@@ -1201,47 +1201,19 @@ var boundaryPoly = null;
             isMouseInsideItem = false;
         }
 
-        // Attach non-bubbling mouseenter & mouseleave directly to notice items
+        // Attach click event to notice items (Click to open, NO hover popup)
         function attachItemEvents() {
             var items = document.querySelectorAll('.kc-notice-item');
             items.forEach(function(item) {
-                // Remove any previous listener clones
-                item.onmouseenter = function() {
-                    if (isMobile()) return;
-                    isMouseInsideItem = true;
-                    clearTimeout(leaveTimer);
+                // Remove hover events
+                item.onmouseenter = null;
+                item.onmouseleave = null;
 
-                    // If already showing the exact same item, keep it visible smoothly
-                    if (currentActiveItem === item && popover.classList.contains('kc-popover-active')) {
-                        return;
-                    }
-
-                    // Ultra-snappy 160ms intent debounce
-                    clearTimeout(hoverTimer);
-                    hoverTimer = setTimeout(function() {
-                        populateAndShow(item);
-                    }, 160);
-                };
-
-                item.onmouseleave = function() {
-                    if (isMobile()) return;
-                    isMouseInsideItem = false;
-                    clearTimeout(hoverTimer);
-
-                    // 250ms grace period so user can smoothly move mouse into the popup
-                    leaveTimer = setTimeout(function() {
-                        if (!isMouseInsideModal && !isMouseInsideItem) {
-                            hideModal();
-                        }
-                    }, 250);
-                };
-
-                // Mobile tap handler
+                // Open modal on click (both desktop & mobile)
                 item.onclick = function(e) {
-                    if (isMobile()) {
-                        e.preventDefault();
-                        populateAndShow(item);
-                    }
+                    e.preventDefault();
+                    e.stopPropagation();
+                    populateAndShow(item);
                 };
             });
         }
@@ -1251,21 +1223,9 @@ var boundaryPoly = null;
         // Also re-attach after cloned items are generated in ticker
         setTimeout(attachItemEvents, 500);
 
-        // Keep modal active while mouse is inside modal card
-        popCard.onmouseenter = function() {
-            isMouseInsideModal = true;
-            clearTimeout(leaveTimer);
-        };
-
-        popCard.onmouseleave = function() {
-            isMouseInsideModal = false;
-            if (isMobile()) return;
-            leaveTimer = setTimeout(function() {
-                if (!isMouseInsideItem) {
-                    hideModal();
-                }
-            }, 250);
-        };
+        // Keep modal active while user is viewing it (closed explicitly by user)
+        popCard.onmouseenter = null;
+        popCard.onmouseleave = null;
 
         // Instant close on backdrop click or close button
         if (closeBtn) closeBtn.onclick = hideModal;

@@ -31,19 +31,18 @@ img, video, audio, iframe {
 }
 
 /* ==========================================================================
-   DESKTOP VIEW (min-width: 980px): EXACT 960px PIXEL-PERFECT ALIGNMENT
-   Everything (Header, Menu, Marquee, Content, Sidebar, Footer) = Exactly 960px
+   DESKTOP VIEW (min-width: 980px): 90% RESPONSIVE CONTAINER & MODERN LAYOUT
    ========================================================================== */
 @media (min-width: 980px) {
-    /* 1. Central Page Container */
+    /* 1. Central Page Container - 90% Responsive Width */
     .container {
-        width: 960px !important;
-        max-width: 960px !important;
+        width: 90% !important;
+        max-width: 90% !important;
         margin: 0 auto !important;
         padding: 0 !important;
         position: relative !important;
         background: #ffffff !important;
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1) !important;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.12) !important;
         box-sizing: border-box !important;
         overflow: visible !important;
     }
@@ -51,8 +50,8 @@ img, video, audio, iframe {
     .container .column,
     .container .columns,
     .sixteen.columns {
-        width: 960px !important;
-        max-width: 960px !important;
+        width: 100% !important;
+        max-width: 100% !important;
         margin: 0 !important;
         padding: 0 !important;
         float: none !important;
@@ -76,10 +75,10 @@ img, video, audio, iframe {
     .def-header-top-bar {
         display: block !important;
         width: 100% !important;
-        max-width: 960px !important;
+        max-width: 100% !important;
         height: 36px !important;
         margin: 0 auto !important;
-        padding: 0 12px !important;
+        padding: 0 16px !important;
         background: linear-gradient(90deg, #03703e 36%, #10b636 100%) !important;
         box-sizing: border-box !important;
         float: none !important;
@@ -98,24 +97,24 @@ img, video, audio, iframe {
     }
 
     .callbacks_container {
-        width: 960px !important;
-        max-width: 960px !important;
+        width: 100% !important;
+        max-width: 100% !important;
         margin: 0 !important;
     }
 
     #jmenu,
     #jmenu .menu,
     .meganizr {
-        width: 960px !important;
-        max-width: 960px !important;
+        width: 100% !important;
+        max-width: 100% !important;
         margin: 0 !important;
         box-sizing: border-box !important;
     }
 
     /* 3. Notice Marquee */
     .notice_marquee {
-        width: 960px !important;
-        max-width: 960px !important;
+        width: 100% !important;
+        max-width: 100% !important;
         margin: 6px 0 !important;
         border-radius: 6px !important;
         overflow: hidden !important;
@@ -125,21 +124,23 @@ img, video, audio, iframe {
     }
 
     .notice_marquee > div {
-        width: 960px !important;
-        max-width: 960px !important;
+        width: 100% !important;
+        max-width: 100% !important;
         box-sizing: border-box !important;
         display: flex !important;
         align-items: center !important;
-        padding: 6px 10px !important;
+        padding: 6px 14px !important;
     }
 
-    /* 4. Content Area Layout: 720px Left + 20px Gap + 220px Right = Exactly 960px */
+    /* 4. Content Area Layout: Fluid Left + 280px Right Sidebar */
     div#contents:has(#left-content),
     .container > div#contents:nth-of-type(2) {
-        width: 960px !important;
-        max-width: 960px !important;
-        display: block !important;
-        margin: 10px 0 0 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        display: flex !important;
+        gap: 24px !important;
+        align-items: flex-start !important;
+        margin: 12px 0 0 0 !important;
         padding: 0 !important;
         box-sizing: border-box !important;
         clear: both !important;
@@ -153,8 +154,10 @@ img, video, audio, iframe {
     }
 
     #left-content {
-        width: 720px !important;
-        max-width: 720px !important;
+        flex: 1 1 0% !important;
+        min-width: 0 !important;
+        width: calc(100% - 304px) !important;
+        max-width: 100% !important;
         float: left !important;
         margin: 0 !important;
         padding: 0 !important;
@@ -163,41 +166,42 @@ img, video, audio, iframe {
 
     #right-content,
     .right-side-bar {
-        width: 220px !important;
-        max-width: 220px !important;
+        flex: 0 0 280px !important;
+        width: 280px !important;
+        max-width: 280px !important;
         float: right !important;
-        margin: 0 0 0 20px !important;
+        margin: 0 !important;
         padding: 0 !important;
         box-sizing: border-box !important;
     }
 
     /* Left Content Elements */
     .ad-gallery {
-        width: 720px !important;
-        max-width: 720px !important;
+        width: 100% !important;
+        max-width: 100% !important;
     }
 
     .ad-gallery .ad-image-wrapper {
-        height: 400px !important;
+        height: 440px !important;
     }
 
     #notice-board {
-        width: 720px !important;
-        max-width: 720px !important;
+        width: 100% !important;
+        max-width: 100% !important;
         margin: 16px 0 !important;
     }
 
     .quick-menu-grid {
-        width: 720px !important;
-        max-width: 720px !important;
+        width: 100% !important;
+        max-width: 100% !important;
         display: grid !important;
         grid-template-columns: repeat(4, 1fr) !important;
-        gap: 10px !important;
+        gap: 12px !important;
     }
 
     .important-services-grid {
-        width: 720px !important;
-        max-width: 720px !important;
+        width: 100% !important;
+        max-width: 100% !important;
         display: grid !important;
         grid-template-columns: repeat(2, 1fr) !important;
         gap: 14px !important;
@@ -206,8 +210,8 @@ img, video, audio, iframe {
     /* Right Sidebar Blocks */
     #right-content .column.block,
     .right-side-bar .block {
-        width: 220px !important;
-        max-width: 220px !important;
+        width: 100% !important;
+        max-width: 100% !important;
         box-sizing: border-box !important;
         background: #ffffff !important;
         border-radius: 8px !important;
@@ -220,23 +224,23 @@ img, video, audio, iframe {
 
     /* Footer Widths */
     .footer-artwork {
-        width: 960px !important;
-        max-width: 960px !important;
+        width: 100% !important;
+        max-width: 100% !important;
         margin: 0 auto !important;
         height: 70px !important;
         background-size: 100% 100% !important;
     }
 
     .def-smart-footer {
-        width: 960px !important;
-        max-width: 960px !important;
+        width: 100% !important;
+        max-width: 100% !important;
         margin: 0 auto !important;
         box-sizing: border-box !important;
     }
 
     .def-footer-container {
-        width: 960px !important;
-        max-width: 960px !important;
+        width: 100% !important;
+        max-width: 100% !important;
         padding: 24px 16px 0 16px !important;
         box-sizing: border-box !important;
     }
@@ -738,8 +742,8 @@ body {
 
 /* 1. Horizon Artwork (Monument & Trees) Seamless Sky */
 .footer-artwork {
-    width: 960px !important;
-    max-width: 960px !important;
+    width: 100% !important;
+    max-width: 100% !important;
     margin: 35px auto 0 auto !important;
     display: flex !important;
     align-items: flex-end !important;
@@ -774,8 +778,8 @@ body {
 
 /* 2. Main Concept Footer Card */
 .kc-concept-footer {
-    width: 960px !important;
-    max-width: 960px !important;
+    width: 100% !important;
+    max-width: 100% !important;
     margin: 0 auto 35px auto !important;
     box-sizing: border-box !important;
     position: relative !important;
@@ -2193,7 +2197,7 @@ body, html {
 /* 1. Header Root */
 .kcc-header-root {
     width: 100% !important;
-    max-width: 960px !important;
+    max-width: 100% !important;
     margin: 0 auto !important;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
     position: relative !important;
@@ -2557,7 +2561,7 @@ body, html {
 /* 1. Header Root */
 .kcc-header-root {
     width: 100% !important;
-    max-width: 960px !important;
+    max-width: 100% !important;
     margin: 0 auto !important;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
     position: relative !important;
@@ -2833,7 +2837,7 @@ body, html {
 #dawgdrops,
 .sixteen.columns.menu {
     width: 100% !important;
-    max-width: 960px !important;
+    max-width: 100% !important;
     margin: 0 auto !important;
     background: #004d25 !important;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12) !important;
@@ -3075,7 +3079,7 @@ body, html {
 #dawgdrops,
 .sixteen.columns.menu {
     width: 100% !important;
-    max-width: 960px !important;
+    max-width: 100% !important;
     margin: 0 auto !important;
     background: #004d25 !important;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12) !important;
@@ -3884,8 +3888,8 @@ body, html {
 #right-content .block.kc-bani-card,
 .right-side-bar .block.kc-bani-card {
     padding: 0 !important;
-    width: 220px !important;
-    max-width: 220px !important;
+    width: 100% !important;
+    max-width: 100% !important;
     box-sizing: border-box !important;
     overflow: hidden !important;
     background: #ffffff !important;
