@@ -1236,6 +1236,56 @@ var boundaryPoly = null;
                 hideModal();
             }
         });
+
+        // --------------------------------------------------------------------------
+        // Official Notice 1-Page Print Engine (with Institution Letterhead)
+        // --------------------------------------------------------------------------
+        function syncPrintData() {
+            var ref = document.getElementById('kc-popover-ref-text') ? document.getElementById('kc-popover-ref-text').textContent.trim() : 'স্মারক নং: সআমক/প্রশাসন/২০২৬/২২১';
+            var date = document.getElementById('kc-popover-date-text') ? document.getElementById('kc-popover-date-text').textContent.trim() : '০৪/১১/২০২৬';
+            var title = document.getElementById('kc-popover-title') ? document.getElementById('kc-popover-title').textContent.trim() : 'বিজ্ঞপ্তি';
+            var details = document.getElementById('kc-popover-details-text') ? document.getElementById('kc-popover-details-text').textContent.trim() : '';
+
+            var highlightEl = document.querySelector('.kc-highlight-text');
+            var highlight = (highlightEl && highlightEl.textContent.trim()) ? highlightEl.textContent.trim() : '';
+
+            var printRef = document.getElementById('kc-print-ref');
+            var printDate = document.getElementById('kc-print-date');
+            var printSubject = document.getElementById('kc-print-subject');
+            var printDetails = document.getElementById('kc-print-body-text');
+            var printHighlight = document.getElementById('kc-print-highlight-box');
+            var printHighlightText = document.getElementById('kc-print-highlight-text');
+
+            if (printRef) printRef.textContent = ref;
+            if (printDate) {
+                printDate.textContent = (date.indexOf('তারিখ') === -1) ? 'তারিখ: ' + date + ' খ্রি.' : date;
+            }
+            if (printSubject) {
+                printSubject.textContent = (title.indexOf('বিষয়') === -1) ? 'বিষয়: ' + title : title;
+            }
+            if (printDetails) printDetails.textContent = details;
+
+            if (printHighlight && printHighlightText) {
+                if (highlight && highlight.length > 5) {
+                    printHighlightText.textContent = highlight;
+                    printHighlight.style.display = 'block';
+                } else {
+                    printHighlight.style.display = 'none';
+                }
+            }
+        }
+
+        window.printOfficialNotice = function() {
+            syncPrintData();
+            window.print();
+        };
+
+        window.addEventListener('beforeprint', function() {
+            var popover = document.getElementById('kc-notice-popover');
+            if (popover && popover.classList.contains('kc-popover-active')) {
+                syncPrintData();
+            }
+        });
     }
 
                     // --------------------------------------------------------------------------

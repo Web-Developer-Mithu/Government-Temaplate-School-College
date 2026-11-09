@@ -8076,122 +8076,698 @@ li {
             
 
                         <style>
+                /* ==========================================================================
+                   MODERN INSTITUTIONAL QUICK MENU (PREMIUM PORTAL DESIGN)
+                   ========================================================================== */
+                .quick-menu-wrapper {
+                    background: #ffffff;
+                    border-radius: 12px;
+                    overflow: hidden;
+                    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+                    border: 1px solid #e2e8f0;
+                }
+
+                .qm-card-header,
+                #left-content .block h5.title.qm-card-header {
+                    background: linear-gradient(135deg, #03703e 0%, #014d2a 100%) !important;
+                    padding: 12px 18px !important;
+                    margin: 0 !important;
+                    color: #ffffff !important;
+                    display: flex !important;
+                    flex-direction: row !important;
+                    align-items: center !important;
+                    justify-content: space-between !important;
+                    border-bottom: 3px solid #f59e0b !important;
+                    box-sizing: border-box !important;
+                }
+
+                .qm-card-title {
+                    display: flex !important;
+                    align-items: center !important;
+                    gap: 10px !important;
+                    font-size: 16px !important;
+                    font-weight: 700 !important;
+                    color: #ffffff !important;
+                    margin: 0 !important;
+                }
+
+                .qm-card-title-icon {
+                    width: 28px !important;
+                    height: 28px !important;
+                    background: rgba(255, 255, 255, 0.16) !important;
+                    border-radius: 8px !important;
+                    display: inline-flex !important;
+                    align-items: center !important;
+                    justify-content: center !important;
+                    color: #fde68a !important;
+                }
+
+                .qm-header-badge {
+                    font-size: 11.5px !important;
+                    font-weight: 600 !important;
+                    color: #014d2a !important;
+                    background: #fde68a !important;
+                    padding: 3px 10px !important;
+                    border-radius: 20px !important;
+                    letter-spacing: 0.2px !important;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
+                    display: inline-flex !important;
+                    align-items: center !important;
+                    gap: 5px !important;
+                }
+
+                .qm-header-badge::before {
+                    content: '';
+                    display: inline-block;
+                    width: 6px;
+                    height: 6px;
+                    border-radius: 50%;
+                    background: #16a34a;
+                }
+
                 .quick-menu-grid {
-                    display: grid;
-                    grid-template-columns: repeat(4, 1fr);
-                    gap: 12px;
-                    margin-top: 15px;
-                    margin-bottom: 20px;
-                    width: 100%;
-                    box-sizing: border-box;
+                    display: grid !important;
+                    grid-template-columns: repeat(4, 1fr) !important;
+                    gap: 14px !important;
+                    padding: 18px !important;
+                    background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%) !important;
+                    width: 100% !important;
+                    box-sizing: border-box !important;
+                    margin: 0 !important;
                 }
+
                 .quick-menu-item {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-                    padding: 16px 8px;
-                    border-radius: 8px;
+                    position: relative !important;
+                    display: flex !important;
+                    flex-direction: column !important;
+                    align-items: center !important;
+                    justify-content: flex-start !important;
+                    background: #ffffff !important;
+                    border: 1.5px solid #e2e8f0 !important;
+                    border-radius: 12px !important;
+                    padding: 16px 8px 14px 8px !important;
+                    min-height: 128px !important;
                     text-decoration: none !important;
-                    text-align: center;
-                    border: 3px solid #fff;
-                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.07);
-                    transition: all 0.2s ease-in-out;
-                    box-sizing: border-box;
-                    min-height: 82px;
-                    cursor: pointer;
+                    transition: all 0.28s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+                    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04) !important;
+                    overflow: hidden !important;
+                    cursor: pointer !important;
+                    box-sizing: border-box !important;
+                    text-align: center !important;
                 }
+
+                /* Top category color bar */
+                .quick-menu-item::before {
+                    content: '' !important;
+                    position: absolute !important;
+                    top: 0 !important;
+                    left: 0 !important;
+                    right: 0 !important;
+                    height: 3.5px !important;
+                    background: var(--qm-grad) !important;
+                    transition: height 0.25s ease !important;
+                    z-index: 2 !important;
+                }
+
+                /* Background tint overlay on hover */
+                .quick-menu-item::after {
+                    content: '' !important;
+                    position: absolute !important;
+                    inset: 0 !important;
+                    background: var(--qm-soft-bg) !important;
+                    opacity: 0 !important;
+                    transition: opacity 0.25s ease !important;
+                    pointer-events: none !important;
+                    z-index: 0 !important;
+                }
+
                 .quick-menu-item:hover {
-                    transform: translateY(-2px);
-                    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.12);
+                    transform: translateY(-5px) !important;
+                    border-color: var(--qm-accent) !important;
+                    box-shadow: 0 12px 26px -4px var(--qm-shadow), 0 4px 10px rgba(0, 0, 0, 0.03) !important;
                     text-decoration: none !important;
                 }
-                .quick-menu-item i {
-                    font-size: 24px;
-                    margin-bottom: 8px;
-                    display: block;
-                    line-height: 1;
+
+                .quick-menu-item:hover::before {
+                    height: 4.5px !important;
                 }
-                .quick-menu-item span {
-                    font-size: 14px;
-                    font-weight: 700;
-                    line-height: 1.3;
-                    display: block;
+
+                .quick-menu-item:hover::after {
+                    opacity: 0.5 !important;
                 }
-                .quick-menu-item.alert-success {
-                    background-color: #d4edda !important;
-                    border-color: #ffffff;
-                    color: #155724 !important;
+
+                /* Icon Squircle Badge */
+                .qm-icon-wrap {
+                    position: relative !important;
+                    z-index: 1 !important;
+                    width: 46px !important;
+                    height: 46px !important;
+                    border-radius: 12px !important;
+                    display: flex !important;
+                    align-items: center !important;
+                    justify-content: center !important;
+                    background: var(--qm-grad) !important;
+                    color: #ffffff !important;
+                    box-shadow: 0 6px 14px var(--qm-glow) !important;
+                    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease !important;
+                    margin-bottom: 10px !important;
+                    flex-shrink: 0 !important;
                 }
-                .quick-menu-item.alert-success i,
-                .quick-menu-item.alert-success span {
-                    color: #155724 !important;
+
+                .qm-icon-wrap svg {
+                    width: 22px !important;
+                    height: 22px !important;
+                    stroke: #ffffff !important;
+                    fill: none !important;
+                    stroke-width: 2 !important;
+                    stroke-linecap: round !important;
+                    stroke-linejoin: round !important;
+                    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.15)) !important;
                 }
-                .quick-menu-item.alert-info {
-                    background-color: #d1ecf1 !important;
-                    border-color: #ffffff;
-                    color: #0c5460 !important;
+
+                .quick-menu-item:hover .qm-icon-wrap {
+                    transform: scale(1.08) translateY(-2px) !important;
+                    box-shadow: 0 8px 18px var(--qm-glow-hover) !important;
                 }
-                .quick-menu-item.alert-info i,
-                .quick-menu-item.alert-info span {
-                    color: #0c5460 !important;
+
+                /* Content Container */
+                .qm-content-wrap {
+                    position: relative !important;
+                    z-index: 1 !important;
+                    display: flex !important;
+                    flex-direction: column !important;
+                    align-items: center !important;
+                    width: 100% !important;
                 }
+
+                .qm-item-title {
+                    font-size: 14.5px !important;
+                    font-weight: 700 !important;
+                    color: #1e293b !important;
+                    line-height: 1.35 !important;
+                    margin-bottom: 5px !important;
+                    transition: color 0.2s ease !important;
+                    display: block !important;
+                }
+
+                .quick-menu-item:hover .qm-item-title {
+                    color: var(--qm-accent) !important;
+                }
+
+                /* Category Pill / Tag */
+                .qm-item-tag {
+                    display: inline-flex !important;
+                    align-items: center !important;
+                    font-size: 11px !important;
+                    font-weight: 600 !important;
+                    color: var(--qm-accent) !important;
+                    background: var(--qm-soft-bg) !important;
+                    padding: 2px 8px !important;
+                    border-radius: 12px !important;
+                    border: 1px solid var(--qm-border) !important;
+                    line-height: 1.4 !important;
+                    transition: all 0.25s ease !important;
+                }
+
+                .quick-menu-item:hover .qm-item-tag {
+                    background: var(--qm-accent) !important;
+                    color: #ffffff !important;
+                    border-color: var(--qm-accent) !important;
+                    box-shadow: 0 2px 6px var(--qm-glow) !important;
+                }
+
+                /* Micro Arrow Indicator on hover */
+                .qm-arrow-indicator {
+                    position: absolute !important;
+                    bottom: 6px !important;
+                    right: 8px !important;
+                    opacity: 0 !important;
+                    transform: translateX(-4px) !important;
+                    transition: all 0.25s ease !important;
+                    color: var(--qm-accent) !important;
+                    z-index: 1 !important;
+                    display: flex !important;
+                    align-items: center !important;
+                }
+
+                .qm-arrow-indicator svg {
+                    width: 12px !important;
+                    height: 12px !important;
+                    stroke: currentColor !important;
+                    stroke-width: 2.5 !important;
+                }
+
+                .quick-menu-item:hover .qm-arrow-indicator {
+                    opacity: 0.9 !important;
+                    transform: translateX(0) !important;
+                }
+
+                /* Individual Category Color Palettes */
+                .qm-theme-admission {
+                    --qm-grad: linear-gradient(135deg, #059669 0%, #10b981 100%);
+                    --qm-accent: #059669;
+                    --qm-soft-bg: #ecfdf5;
+                    --qm-border: #a7f3d0;
+                    --qm-glow: rgba(16, 185, 129, 0.32);
+                    --qm-glow-hover: rgba(16, 185, 129, 0.48);
+                    --qm-shadow: rgba(16, 185, 129, 0.16);
+                }
+
+                .qm-theme-payment {
+                    --qm-grad: linear-gradient(135deg, #1d4ed8 0%, #3b82f6 100%);
+                    --qm-accent: #1d4ed8;
+                    --qm-soft-bg: #eff6ff;
+                    --qm-border: #bfdbfe;
+                    --qm-glow: rgba(37, 99, 235, 0.32);
+                    --qm-glow-hover: rgba(37, 99, 235, 0.48);
+                    --qm-shadow: rgba(37, 99, 235, 0.16);
+                }
+
+                .qm-theme-cert {
+                    --qm-grad: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+                    --qm-accent: #7c3aed;
+                    --qm-soft-bg: #faf5ff;
+                    --qm-border: #e9d5ff;
+                    --qm-glow: rgba(124, 58, 237, 0.32);
+                    --qm-glow-hover: rgba(124, 58, 237, 0.48);
+                    --qm-shadow: rgba(124, 58, 237, 0.16);
+                }
+
+                .qm-theme-students {
+                    --qm-grad: linear-gradient(135deg, #0891b2 0%, #06b6d4 100%);
+                    --qm-accent: #0891b2;
+                    --qm-soft-bg: #ecfeff;
+                    --qm-border: #a5f3fc;
+                    --qm-glow: rgba(8, 145, 178, 0.32);
+                    --qm-glow-hover: rgba(8, 145, 178, 0.48);
+                    --qm-shadow: rgba(8, 145, 178, 0.16);
+                }
+
+                .qm-theme-notice {
+                    --qm-grad: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
+                    --qm-accent: #d97706;
+                    --qm-soft-bg: #fffbeb;
+                    --qm-border: #fde68a;
+                    --qm-glow: rgba(217, 119, 6, 0.32);
+                    --qm-glow-hover: rgba(217, 119, 6, 0.48);
+                    --qm-shadow: rgba(217, 119, 6, 0.16);
+                }
+
+                .qm-theme-results {
+                    --qm-grad: linear-gradient(135deg, #e11d48 0%, #f43f5e 100%);
+                    --qm-accent: #e11d48;
+                    --qm-soft-bg: #fff1f2;
+                    --qm-border: #fecdd3;
+                    --qm-glow: rgba(225, 29, 72, 0.32);
+                    --qm-glow-hover: rgba(225, 29, 72, 0.48);
+                    --qm-shadow: rgba(225, 29, 72, 0.16);
+                }
+
+                .qm-theme-class-routine {
+                    --qm-grad: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%);
+                    --qm-accent: #0284c7;
+                    --qm-soft-bg: #f0f9ff;
+                    --qm-border: #bae6fd;
+                    --qm-glow: rgba(2, 132, 199, 0.32);
+                    --qm-glow-hover: rgba(2, 132, 199, 0.48);
+                    --qm-shadow: rgba(2, 132, 199, 0.16);
+                }
+
+                .qm-theme-exam-routine {
+                    --qm-grad: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+                    --qm-accent: #4f46e5;
+                    --qm-soft-bg: #eef2ff;
+                    --qm-border: #c7d2fe;
+                    --qm-glow: rgba(79, 70, 229, 0.32);
+                    --qm-glow-hover: rgba(79, 70, 229, 0.48);
+                    --qm-shadow: rgba(79, 70, 229, 0.16);
+                }
+
+                /* ==========================================================================
+                   LIVELY CONTEXT-AWARE MICRO-ANIMATIONS FOR ALL QUICK MENU ICONS
+                   ========================================================================== */
+
+                /* 1. নোটিশ (Notice) - Ringing Notification Bell */
+                .qm-theme-notice .qm-icon-wrap svg {
+                    transform-origin: 50% 12% !important;
+                    animation: qmBellRing 2.8s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite !important;
+                    will-change: transform;
+                }
+                .qm-theme-notice:hover .qm-icon-wrap svg {
+                    animation: qmBellRing 0.85s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite !important;
+                }
+                @keyframes qmBellRing {
+                    0%, 100% { transform: rotate(0deg); }
+                    4% { transform: rotate(18deg); }
+                    8% { transform: rotate(-16deg); }
+                    12% { transform: rotate(14deg); }
+                    16% { transform: rotate(-12deg); }
+                    20% { transform: rotate(8deg); }
+                    24% { transform: rotate(-5deg); }
+                    28% { transform: rotate(2deg); }
+                    32% { transform: rotate(0deg); }
+                }
+
+                /* 2. অনলাইন ভর্তি (Admission) - Floating & Joyful Mortarboard Bob */
+                .qm-theme-admission .qm-icon-wrap svg {
+                    transform-origin: 50% 80% !important;
+                    animation: qmCapFloat 3.2s ease-in-out infinite !important;
+                    will-change: transform;
+                }
+                .qm-theme-admission:hover .qm-icon-wrap svg {
+                    animation: qmCapBounce 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) infinite !important;
+                }
+                @keyframes qmCapFloat {
+                    0%, 100% { transform: translateY(0) rotate(0deg); }
+                    25% { transform: translateY(-4px) rotate(-4deg); }
+                    50% { transform: translateY(-1px) rotate(3deg); }
+                    75% { transform: translateY(-6px) rotate(-2deg) scale(1.05); }
+                }
+                @keyframes qmCapBounce {
+                    0%, 100% { transform: translateY(0) scale(1) rotate(0deg); }
+                    40% { transform: translateY(-7px) scale(1.12) rotate(-6deg); }
+                    70% { transform: translateY(-2px) scale(1.04) rotate(4deg); }
+                }
+
+                /* 3. বেতন পরিশোধ (Payment) - Card Swipe & Contactless Tap */
+                .qm-theme-payment .qm-icon-wrap svg {
+                    transform-origin: 50% 50% !important;
+                    animation: qmCardSwipe 3s ease-in-out infinite !important;
+                    will-change: transform;
+                }
+                .qm-theme-payment:hover .qm-icon-wrap svg {
+                    animation: qmCardTap 0.9s ease-in-out infinite !important;
+                }
+                @keyframes qmCardSwipe {
+                    0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+                    20% { transform: translateY(-3px) rotate(-6deg); }
+                    40% { transform: translateY(2px) rotate(4deg); }
+                    60% { transform: translateY(-2px) scale(1.08) rotate(-2deg); }
+                    80% { transform: translateY(0) rotate(0deg); }
+                }
+                @keyframes qmCardTap {
+                    0%, 100% { transform: scale(1) rotate(0deg); }
+                    30% { transform: scale(0.92) rotate(-4deg); }
+                    60% { transform: scale(1.15) rotate(4deg); }
+                }
+
+                /* 4. সনদ আবেদন (Certificate) - Pinned Honor Medal Pendulum Sway */
+                .qm-theme-cert .qm-icon-wrap svg {
+                    transform-origin: 50% 15% !important;
+                    animation: qmCertSway 3.4s ease-in-out infinite !important;
+                    will-change: transform;
+                }
+                .qm-theme-cert:hover .qm-icon-wrap svg {
+                    animation: qmCertSway 1.2s ease-in-out infinite !important;
+                }
+                @keyframes qmCertSway {
+                    0%, 100% { transform: rotate(0deg); }
+                    20% { transform: rotate(9deg); }
+                    40% { transform: rotate(-8deg); }
+                    60% { transform: rotate(5deg); }
+                    80% { transform: rotate(-3deg); }
+                }
+
+                /* 5. ছাত্র-ছাত্রীর তালিকা (Students) - Lively Student Group Greeting Bob */
+                .qm-theme-students .qm-icon-wrap svg {
+                    transform-origin: 50% 85% !important;
+                    animation: qmStudentsBob 3.2s ease-in-out infinite !important;
+                    will-change: transform;
+                }
+                .qm-theme-students:hover .qm-icon-wrap svg {
+                    animation: qmStudentsWave 0.9s ease-in-out infinite !important;
+                }
+                @keyframes qmStudentsBob {
+                    0%, 100% { transform: translateY(0) translateX(0); }
+                    25% { transform: translateY(-3px) translateX(-2px) scale(1.04); }
+                    50% { transform: translateY(0) translateX(0); }
+                    75% { transform: translateY(-3px) translateX(2px) scale(1.04); }
+                }
+                @keyframes qmStudentsWave {
+                    0%, 100% { transform: translateY(0) rotate(0deg); }
+                    30% { transform: translateY(-5px) rotate(-5deg) scale(1.1); }
+                    70% { transform: translateY(-5px) rotate(5deg) scale(1.1); }
+                }
+
+                /* 6. ফলাফল (Exam Results) - Victorious Trophy Lift & Celebration */
+                .qm-theme-results .qm-icon-wrap svg {
+                    transform-origin: 50% 85% !important;
+                    animation: qmTrophyLift 2.8s ease-in-out infinite !important;
+                    will-change: transform;
+                }
+                .qm-theme-results:hover .qm-icon-wrap svg {
+                    animation: qmTrophyCelebration 0.85s ease-in-out infinite !important;
+                }
+                @keyframes qmTrophyLift {
+                    0%, 100% { transform: translateY(0) scale(1) rotate(0deg); }
+                    20% { transform: translateY(-4px) scale(1.08) rotate(-5deg); }
+                    35% { transform: translateY(-5px) scale(1.1) rotate(5deg); }
+                    50% { transform: translateY(-2px) scale(1.05) rotate(-3deg); }
+                    65% { transform: translateY(0) scale(1) rotate(0deg); }
+                }
+                @keyframes qmTrophyCelebration {
+                    0%, 100% { transform: scale(1) rotate(0deg); }
+                    25% { transform: translateY(-6px) scale(1.15) rotate(-8deg); }
+                    75% { transform: translateY(-6px) scale(1.15) rotate(8deg); }
+                }
+
+                /* 7. ক্লাস রুটিন (Class Routine) - Clock / Schedule Rhythmic Pendulum Tick */
+                .qm-theme-class-routine .qm-icon-wrap svg {
+                    transform-origin: 50% 50% !important;
+                    animation: qmClockTick 2.6s ease-in-out infinite !important;
+                    will-change: transform;
+                }
+                .qm-theme-class-routine:hover .qm-icon-wrap svg {
+                    animation: qmClockTick 0.8s ease-in-out infinite !important;
+                }
+                @keyframes qmClockTick {
+                    0%, 100% { transform: rotate(0deg); }
+                    15% { transform: rotate(8deg); }
+                    30% { transform: rotate(-7deg); }
+                    45% { transform: rotate(5deg); }
+                    60% { transform: rotate(-3deg); }
+                    75% { transform: rotate(0deg); }
+                }
+
+                /* 8. পরীক্ষার রুটিন (Exam Routine) - Exam Checklist Marking Motion */
+                .qm-theme-exam-routine .qm-icon-wrap svg {
+                    transform-origin: 50% 40% !important;
+                    animation: qmExamCheck 3s ease-in-out infinite !important;
+                    will-change: transform;
+                }
+                .qm-theme-exam-routine:hover .qm-icon-wrap svg {
+                    animation: qmExamTap 0.85s ease-in-out infinite !important;
+                }
+                @keyframes qmExamCheck {
+                    0%, 100% { transform: translateY(0) rotate(0deg); }
+                    20% { transform: translateY(-3px) rotate(-4deg); }
+                    40% { transform: translateY(2px) translateX(2px) rotate(4deg); }
+                    60% { transform: translateY(-2px) translateX(1px) scale(1.06); }
+                    80% { transform: translateY(0) rotate(0deg); }
+                }
+                @keyframes qmExamTap {
+                    0%, 100% { transform: scale(1) translateY(0); }
+                    50% { transform: scale(1.12) translateY(-4px) rotate(5deg); }
+                }
+
+                /* Squircle Badge Ambient Glow Pulse */
+                .qm-icon-wrap {
+                    animation: qmBadgePulse 4s ease-in-out infinite !important;
+                }
+                @keyframes qmBadgePulse {
+                    0%, 100% {
+                        box-shadow: 0 6px 14px var(--qm-glow);
+                    }
+                    50% {
+                        box-shadow: 0 8px 18px var(--qm-glow-hover), 0 0 10px var(--qm-glow);
+                    }
+                }
+
+                /* Responsive Breakpoints */
                 @media screen and (max-width: 768px) {
                     .quick-menu-grid {
                         grid-template-columns: repeat(2, 1fr) !important;
-                        gap: 8px !important;
-                        margin-top: 10px !important;
-                        margin-bottom: 15px !important;
+                        gap: 10px !important;
+                        padding: 12px !important;
                     }
                     .quick-menu-item {
-                        padding: 12px 6px !important;
-                        min-height: 72px !important;
-                        border-radius: 8px !important;
-                        border-width: 2px !important;
+                        padding: 14px 6px 12px 6px !important;
+                        min-height: 110px !important;
+                        border-radius: 10px !important;
                     }
-                    .quick-menu-item i {
-                        font-size: 22px !important;
+                    .qm-icon-wrap {
+                        width: 42px !important;
+                        height: 42px !important;
+                        border-radius: 10px !important;
+                        margin-bottom: 8px !important;
+                    }
+                    .qm-icon-wrap svg {
+                        width: 20px !important;
+                        height: 20px !important;
+                    }
+                    .qm-item-title {
+                        font-size: 13.5px !important;
+                        margin-bottom: 4px !important;
+                    }
+                    .qm-item-tag {
+                        font-size: 10.5px !important;
+                        padding: 1px 6px !important;
+                    }
+                    .qm-header-badge {
+                        display: none !important;
+                    }
+                }
+
+                @media screen and (max-width: 480px) {
+                    .quick-menu-grid {
+                        grid-template-columns: repeat(2, 1fr) !important;
+                        gap: 8px !important;
+                        padding: 10px 8px !important;
+                    }
+                    .quick-menu-item {
+                        padding: 12px 4px 10px 4px !important;
+                        min-height: 98px !important;
+                    }
+                    .qm-icon-wrap {
+                        width: 38px !important;
+                        height: 38px !important;
+                        border-radius: 9px !important;
                         margin-bottom: 6px !important;
                     }
-                    .quick-menu-item span {
-                        font-size: 13.5px !important;
+                    .qm-icon-wrap svg {
+                        width: 18px !important;
+                        height: 18px !important;
+                    }
+                    .qm-item-title {
+                        font-size: 12.5px !important;
+                    }
+                    .qm-item-tag {
+                        font-size: 9.5px !important;
+                        padding: 1px 5px !important;
                     }
                 }
             </style>
             <div class="column block" bis_skin_checked="1">
-                <h5 class="bk-org title">কুইক মেনু</h5>
+                <h5 class="bk-org title qm-card-header">
+                    <span class="qm-card-title">
+                        <span class="qm-card-title-icon">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                        </span>
+                        কুইক মেনু
+                    </span>
+                    <span class="qm-header-badge">৮টি জরুরি সেবা</span>
+                </h5>
                 <div class="quick-menu-grid" bis_skin_checked="1">
-                    <a href="https://www.modelcollege.edu.bd/online-admission" class="quick-menu-item alert-success" bis_skin_checked="1">
-                        <svg class="svg-inline--fa fa-address-card fa-w-18" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="address-card" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg=""><path fill="currentColor" d="M528 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h480c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-352 96c35.3 0 64 28.7 64 64s-28.7 64-64 64-64-28.7-64-64 28.7-64 64-64zm112 236.8c0 10.6-10 19.2-22.4 19.2H86.4C74 384 64 375.4 64 364.8v-19.2c0-31.8 30.1-57.6 67.2-57.6h5c12.3 5.1 25.7 8 39.8 8s27.6-2.9 39.8-8h5c37.1 0 67.2 25.8 67.2 57.6v19.2zM512 312c0 4.4-3.6 8-8 8H360c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h144c4.4 0 8 3.6 8 8v16zm0-64c0 4.4-3.6 8-8 8H360c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h144c4.4 0 8 3.6 8 8v16zm0-64c0 4.4-3.6 8-8 8H360c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h144c4.4 0 8 3.6 8 8v16z"></path></svg><!-- <i class="fa fa-address-card" aria-hidden="true"></i> -->
-                        <span>অনলাইন ভর্তি</span>
+                    <!-- 1. অনলাইন ভর্তি -->
+                    <a href="https://www.modelcollege.edu.bd/online-admission" class="quick-menu-item qm-theme-admission" bis_skin_checked="1" title="অনলাইন ভর্তি পোর্টাল">
+                        <div class="qm-icon-wrap">
+                            <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+                        </div>
+                        <div class="qm-content-wrap">
+                            <span class="qm-item-title">অনলাইন ভর্তি</span>
+                            <span class="qm-item-tag">ভর্তি পোর্টাল</span>
+                        </div>
+                        <span class="qm-arrow-indicator">
+                            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </span>
                     </a>
-                    <a href="https://www.modelcollege.edu.bd/fees-payment" class="quick-menu-item alert-info" bis_skin_checked="1">
-                        <svg class="svg-inline--fa fa-check-circle fa-w-16" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"></path></svg><!-- <i class="fa fa-check-circle" aria-hidden="true"></i> -->
-                        <span>বেতন পরিশোধ</span>
+
+                    <!-- 2. বেতন পরিশোধ -->
+                    <a href="https://www.modelcollege.edu.bd/fees-payment" class="quick-menu-item qm-theme-payment" bis_skin_checked="1" title="অনলাইনে বেতন ও ফি পরিশোধ">
+                        <div class="qm-icon-wrap">
+                            <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="3"></rect><line x1="2" y1="10" x2="22" y2="10"></line><line x1="6" y1="15" x2="10" y2="15"></line></svg>
+                        </div>
+                        <div class="qm-content-wrap">
+                            <span class="qm-item-title">বেতন পরিশোধ</span>
+                            <span class="qm-item-tag">ফি পেমেন্ট</span>
+                        </div>
+                        <span class="qm-arrow-indicator">
+                            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </span>
                     </a>
-                    <a href="https://www.modelcollege.edu.bd/certificate/apply" class="quick-menu-item alert-info" bis_skin_checked="1">
-                        <svg class="svg-inline--fa fa-certificate fa-w-16" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="certificate" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M458.622 255.92l45.985-45.005c13.708-12.977 7.316-36.039-10.664-40.339l-62.65-15.99 17.661-62.015c4.991-17.838-11.829-34.663-29.661-29.671l-61.994 17.667-15.984-62.671C337.085.197 313.765-6.276 300.99 7.228L256 53.57 211.011 7.229c-12.63-13.351-36.047-7.234-40.325 10.668l-15.984 62.671-61.995-17.667C74.87 57.907 58.056 74.738 63.046 92.572l17.661 62.015-62.65 15.99C.069 174.878-6.31 197.944 7.392 210.915l45.985 45.005-45.985 45.004c-13.708 12.977-7.316 36.039 10.664 40.339l62.65 15.99-17.661 62.015c-4.991 17.838 11.829 34.663 29.661 29.671l61.994-17.667 15.984 62.671c4.439 18.575 27.696 24.018 40.325 10.668L256 458.61l44.989 46.001c12.5 13.488 35.987 7.486 40.325-10.668l15.984-62.671 61.994 17.667c17.836 4.994 34.651-11.837 29.661-29.671l-17.661-62.015 62.65-15.99c17.987-4.302 24.366-27.367 10.664-40.339l-45.984-45.004z"></path></svg><!-- <i class="fa fa-certificate" aria-hidden="true"></i> -->
-                        <span>সনদ আবেদন</span>
+
+                    <!-- 3. সনদ আবেদন -->
+                    <a href="https://www.modelcollege.edu.bd/certificate/apply" class="quick-menu-item qm-theme-cert" bis_skin_checked="1" title="অনলাইনে সনদপত্রের জন্য আবেদন">
+                        <div class="qm-icon-wrap">
+                            <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"></circle><path d="M15.4 12.6l2.6 7.4-6-3-6 3 2.6-7.4"></path></svg>
+                        </div>
+                        <div class="qm-content-wrap">
+                            <span class="qm-item-title">সনদ আবেদন</span>
+                            <span class="qm-item-tag">সনদপত্র সেবা</span>
+                        </div>
+                        <span class="qm-arrow-indicator">
+                            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </span>
                     </a>
-                    <a href="https://www.modelcollege.edu.bd/student-list" class="quick-menu-item alert-success" bis_skin_checked="1">
-                        <svg class="svg-inline--fa fa-list fa-w-16" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="list" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M80 368H16a16 16 0 0 0-16 16v64a16 16 0 0 0 16 16h64a16 16 0 0 0 16-16v-64a16 16 0 0 0-16-16zm0-320H16A16 16 0 0 0 0 64v64a16 16 0 0 0 16 16h64a16 16 0 0 0 16-16V64a16 16 0 0 0-16-16zm0 160H16a16 16 0 0 0-16 16v64a16 16 0 0 0 16 16h64a16 16 0 0 0 16-16v-64a16 16 0 0 0-16-16zm416 176H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16zm0-320H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16V80a16 16 0 0 0-16-16zm0 160H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16z"></path></svg><!-- <i class="fa fa-list" aria-hidden="true"></i> -->
-                        <span>ছাত্র-ছাত্রীর তালিকা</span>
+
+                    <!-- 4. ছাত্র-ছাত্রীর তালিকা -->
+                    <a href="https://www.modelcollege.edu.bd/student-list" class="quick-menu-item qm-theme-students" bis_skin_checked="1" title="শিক্ষার্থীদের তালিকা ও ডাটাবেজ">
+                        <div class="qm-icon-wrap">
+                            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                        </div>
+                        <div class="qm-content-wrap">
+                            <span class="qm-item-title">ছাত্র-ছাত্রীর তালিকা</span>
+                            <span class="qm-item-tag">শিক্ষার্থী তথ্য</span>
+                        </div>
+                        <span class="qm-arrow-indicator">
+                            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </span>
                     </a>
-                    <a href="https://www.modelcollege.edu.bd/website-all-notice" class="quick-menu-item alert-success" bis_skin_checked="1">
-                        <svg class="svg-inline--fa fa-bullhorn fa-w-18" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="bullhorn" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg=""><path fill="currentColor" d="M576 240c0-23.63-12.95-44.04-32-55.12V32.01C544 23.26 537.02 0 512 0c-7.12 0-14.19 2.38-19.98 7.02l-85.03 68.03C364.28 109.19 310.66 128 256 128H64c-35.35 0-64 28.65-64 64v96c0 35.35 28.65 64 64 64h33.7c-1.39 10.48-2.18 21.14-2.18 32 0 39.77 9.26 77.35 25.56 110.94 5.19 10.69 16.52 17.06 28.4 17.06h74.28c26.05 0 41.69-29.84 25.9-50.56-16.4-21.52-26.15-48.36-26.15-77.44 0-11.11 1.62-21.79 4.41-32H256c54.66 0 108.28 18.81 150.98 52.95l85.03 68.03a32.023 32.023 0 0 0 19.98 7.02c24.92 0 32-22.78 32-32V295.13C563.05 284.04 576 263.63 576 240zm-96 141.42l-33.05-26.44C392.95 311.78 325.12 288 256 288v-96c69.12 0 136.95-23.78 190.95-66.98L480 98.58v282.84z"></path></svg><!-- <i class="fa fa-bullhorn" aria-hidden="true"></i> -->
-                        <span>নোটিশ</span>
+
+                    <!-- 5. নোটিশ -->
+                    <a href="https://www.modelcollege.edu.bd/website-all-notice" class="quick-menu-item qm-theme-notice" bis_skin_checked="1" title="সর্বশেষ নোটিশ ও পরিপত্র">
+                        <div class="qm-icon-wrap">
+                            <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                        </div>
+                        <div class="qm-content-wrap">
+                            <span class="qm-item-title">নোটিশ</span>
+                            <span class="qm-item-tag">জরুরি নোটিশ</span>
+                        </div>
+                        <span class="qm-arrow-indicator">
+                            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </span>
                     </a>
-                    <a href="#" class="quick-menu-item alert-info">
-                        <svg class="svg-inline--fa fa-certificate fa-w-16" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="certificate" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M458.622 255.92l45.985-45.005c13.708-12.977 7.316-36.039-10.664-40.339l-62.65-15.99 17.661-62.015c4.991-17.838-11.829-34.663-29.661-29.671l-61.994 17.667-15.984-62.671C337.085.197 313.765-6.276 300.99 7.228L256 53.57 211.011 7.229c-12.63-13.351-36.047-7.234-40.325 10.668l-15.984 62.671-61.995-17.667C74.87 57.907 58.056 74.738 63.046 92.572l17.661 62.015-62.65 15.99C.069 174.878-6.31 197.944 7.392 210.915l45.985 45.005-45.985 45.004c-13.708 12.977-7.316 36.039 10.664 40.339l62.65 15.99-17.661 62.015c-4.991 17.838 11.829 34.663 29.661 29.671l61.994-17.667 15.984 62.671c4.439 18.575 27.696 24.018 40.325 10.668L256 458.61l44.989 46.001c12.5 13.488 35.987 7.486 40.325-10.668l15.984-62.671 61.994 17.667c17.836 4.994 34.651-11.837 29.661-29.671l-17.661-62.015 62.65-15.99c17.987-4.302 24.366-27.367 10.664-40.339l-45.984-45.004z"></path></svg><!-- <i class="fa fa-certificate" aria-hidden="true"></i> -->
-                        <span>ফলাফল</span>
+
+                    <!-- 6. ফলাফল -->
+                    <a href="#" class="quick-menu-item qm-theme-results" title="পরীক্ষার ফলাফল ও গ্রেডশিট">
+                        <div class="qm-icon-wrap">
+                            <svg viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.45 1-1 1H8c-.55 0-1 .45-1 1v1h10v-1c0-.55-.45-1-1-1h-1c-.55 0-1-.45-1-1v-2.34"></path><path d="M18 4H6v7a6 6 0 0 0 12 0V4z"></path></svg>
+                        </div>
+                        <div class="qm-content-wrap">
+                            <span class="qm-item-title">ফলাফল</span>
+                            <span class="qm-item-tag">গ্রেড ও রেজাল্ট</span>
+                        </div>
+                        <span class="qm-arrow-indicator">
+                            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </span>
                     </a>
-                    <a href="https://www.modelcollege.edu.bd/class-routine" class="quick-menu-item alert-info" bis_skin_checked="1">
-                        <svg class="svg-inline--fa fa-calendar fa-w-14" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="calendar" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M12 192h424c6.6 0 12 5.4 12 12v260c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V204c0-6.6 5.4-12 12-12zm436-44v-36c0-26.5-21.5-48-48-48h-48V12c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v52H160V12c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v52H48C21.5 64 0 85.5 0 112v36c0 6.6 5.4 12 12 12h424c6.6 0 12-5.4 12-12z"></path></svg><!-- <i class="fa fa-calendar" aria-hidden="true"></i> -->
-                        <span>ক্লাস রুটিন</span>
+
+                    <!-- 7. ক্লাস রুটিন -->
+                    <a href="https://www.modelcollege.edu.bd/class-routine" class="quick-menu-item qm-theme-class-routine" bis_skin_checked="1" title="নিয়মিত ক্লাস সময়সূচী">
+                        <div class="qm-icon-wrap">
+                            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><polyline points="12 14 12 17 14 17"></polyline></svg>
+                        </div>
+                        <div class="qm-content-wrap">
+                            <span class="qm-item-title">ক্লাস রুটিন</span>
+                            <span class="qm-item-tag">ক্লাস সময়সূচী</span>
+                        </div>
+                        <span class="qm-arrow-indicator">
+                            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </span>
                     </a>
-                    <a href="https://www.modelcollege.edu.bd/exam-routine" class="quick-menu-item alert-success" bis_skin_checked="1">
-                        <svg class="svg-inline--fa fa-newspaper fa-w-18" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="newspaper" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg=""><path fill="currentColor" d="M552 64H88c-13.255 0-24 10.745-24 24v8H24c-13.255 0-24 10.745-24 24v272c0 30.928 25.072 56 56 56h472c26.51 0 48-21.49 48-48V88c0-13.255-10.745-24-24-24zM56 400a8 8 0 0 1-8-8V144h16v248a8 8 0 0 1-8 8zm236-16H140c-6.627 0-12-5.373-12-12v-8c0-6.627 5.373-12 12-12h152c6.627 0 12 5.373 12 12v8c0 6.627-5.373 12-12 12zm208 0H348c-6.627 0-12-5.373-12-12v-8c0-6.627 5.373-12 12-12h152c6.627 0 12 5.373 12 12v8c0 6.627-5.373 12-12 12zm-208-96H140c-6.627 0-12-5.373-12-12v-8c0-6.627 5.373-12 12-12h152c6.627 0 12 5.373 12 12v8c0 6.627-5.373 12-12 12zm208 0H348c-6.627 0-12-5.373-12-12v-8c0-6.627 5.373-12 12-12h152c6.627 0 12 5.373 12 12v8c0 6.627-5.373 12-12 12zm0-96H140c-6.627 0-12-5.373-12-12v-40c0-6.627 5.373-12 12-12h360c6.627 0 12 5.373 12 12v40c0 6.627-5.373 12-12 12z"></path></svg><!-- <i class="fa fa-newspaper" aria-hidden="true"></i> -->
-                        <span>পরীক্ষার রুটিন</span>
+
+                    <!-- 8. পরীক্ষার রুটিন -->
+                    <a href="https://www.modelcollege.edu.bd/exam-routine" class="quick-menu-item qm-theme-exam-routine" bis_skin_checked="1" title="পরীক্ষার সময়সূচী ও আসন বিন্যাস">
+                        <div class="qm-icon-wrap">
+                            <svg viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect><path d="M9 12l2 2 4-4"></path><path d="M9 17l2 2 4-4"></path></svg>
+                        </div>
+                        <div class="qm-content-wrap">
+                            <span class="qm-item-title">পরীক্ষার রুটিন</span>
+                            <span class="qm-item-tag">পরীক্ষা সময়সূচী</span>
+                        </div>
+                        <span class="qm-arrow-indicator">
+                            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </span>
                     </a>
                 </div>
             </div>
@@ -8206,151 +8782,398 @@ li {
 
             
 
-                        <style>
+                                    <style>
+                /* ==========================================================================
+                   PREMIUM INSTITUTIONAL SERVICES (গুরুত্বপূর্ণ লিঙ্ক ও সেবা)
+                   ========================================================================== */
+                .sb-main-card-header,
+                #left-content .block h5.title.sb-main-card-header {
+                    background: linear-gradient(135deg, #03703e 0%, #014d2a 100%) !important;
+                    padding: 12px 18px !important;
+                    margin: 0 !important;
+                    color: #ffffff !important;
+                    display: flex !important;
+                    flex-direction: row !important;
+                    align-items: center !important;
+                    justify-content: space-between !important;
+                    border-bottom: 3px solid #f59e0b !important;
+                    box-sizing: border-box !important;
+                }
+
+                .sb-main-title {
+                    display: flex !important;
+                    align-items: center !important;
+                    gap: 10px !important;
+                    font-size: 16px !important;
+                    font-weight: 700 !important;
+                    color: #ffffff !important;
+                    margin: 0 !important;
+                }
+
+                .sb-main-title-icon {
+                    width: 28px !important;
+                    height: 28px !important;
+                    background: rgba(255, 255, 255, 0.16) !important;
+                    border-radius: 8px !important;
+                    display: inline-flex !important;
+                    align-items: center !important;
+                    justify-content: center !important;
+                    color: #fde68a !important;
+                }
+
+                .sb-main-badge {
+                    font-size: 11.5px !important;
+                    font-weight: 600 !important;
+                    color: #014d2a !important;
+                    background: #fde68a !important;
+                    padding: 3px 10px !important;
+                    border-radius: 20px !important;
+                    letter-spacing: 0.2px !important;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
+                    display: inline-flex !important;
+                    align-items: center !important;
+                    gap: 5px !important;
+                }
+
+                .sb-main-badge::before {
+                    content: '';
+                    display: inline-block;
+                    width: 6px;
+                    height: 6px;
+                    border-radius: 50%;
+                    background: #16a34a;
+                }
+
                 .important-services-grid {
-                    display: grid;
-                    grid-template-columns: repeat(2, 1fr);
-                    gap: 20px 25px;
-                    margin: 15px 0;
-                    width: 100%;
-                    box-sizing: border-box;
+                    display: grid !important;
+                    grid-template-columns: repeat(2, 1fr) !important;
+                    gap: 18px !important;
+                    padding: 18px !important;
+                    margin: 0 !important;
+                    width: 100% !important;
+                    box-sizing: border-box !important;
+                    background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%) !important;
+                    align-items: stretch !important;
                 }
 
                 .service-box.box {
-                    width: 100% !important;
-                    margin: 0 !important;
-                    padding: 15px !important;
-                    background: #fff;
-                    border: 1px solid #ddd;
-                    border-radius: 8px;
-                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-                    box-sizing: border-box;
-                    min-height: 155px;
-                    display: flex;
-                    flex-direction: column;
-                    text-align: left !important;
+                    position: relative !important;
+                    background: #ffffff !important;
+                    border: 1.5px solid #e2e8f0 !important;
+                    border-radius: 14px !important;
+                    padding: 0 !important;
+                    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05), 0 1px 3px rgba(15, 23, 42, 0.03) !important;
+                    overflow: hidden !important;
+                    display: flex !important;
+                    flex-direction: column !important;
+                    transition: all 0.28s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+                    box-sizing: border-box !important;
+                    height: 100% !important;
+                    min-height: auto !important;
                 }
 
+                /* Top category accent bar */
+                .service-box.box::before {
+                    content: '' !important;
+                    position: absolute !important;
+                    top: 0 !important;
+                    left: 0 !important;
+                    right: 0 !important;
+                    height: 3.5px !important;
+                    background: var(--sb-grad) !important;
+                    transition: height 0.25s ease !important;
+                    z-index: 2 !important;
+                }
+
+                .service-box.box:hover {
+                    transform: translateY(-4px) !important;
+                    border-color: var(--sb-accent) !important;
+                    box-shadow: 0 14px 28px -4px var(--sb-shadow), 0 4px 10px rgba(0, 0, 0, 0.03) !important;
+                }
+
+                .service-box.box:hover::before {
+                    height: 4.5px !important;
+                }
+
+                /* Card Header */
                 .service-box.box h4 {
-                    margin: 0 0 12px 0 !important;
-                    font-size: 17px !important;
+                    margin: 0 !important;
+                    padding: 12px 16px !important;
+                    background: #ffffff !important;
+                    border-bottom: 1px solid #f1f5f9 !important;
+                    font-size: 16px !important;
                     font-weight: 700 !important;
-                    color: #222 !important;
-                    border-bottom: 1px solid #f0f0f0 !important;
-                    padding-bottom: 8px !important;
-                    text-align: left !important;
+                    color: #1e293b !important;
+                    display: flex !important;
+                    align-items: center !important;
+                    justify-content: space-between !important;
+                    letter-spacing: -0.2px !important;
                 }
 
+                .sb-header-title-wrap {
+                    display: flex !important;
+                    align-items: center !important;
+                    gap: 8px !important;
+                }
+
+                .sb-header-icon {
+                    width: 26px !important;
+                    height: 26px !important;
+                    border-radius: 7px !important;
+                    display: flex !important;
+                    align-items: center !important;
+                    justify-content: center !important;
+                    background: var(--sb-soft-bg) !important;
+                    color: var(--sb-accent) !important;
+                    flex-shrink: 0 !important;
+                }
+
+                .sb-header-icon svg {
+                    width: 15px !important;
+                    height: 15px !important;
+                    stroke: currentColor !important;
+                    stroke-width: 2 !important;
+                    fill: none !important;
+                }
+
+                .sb-header-count {
+                    font-size: 11px !important;
+                    font-weight: 600 !important;
+                    color: var(--sb-accent) !important;
+                    background: var(--sb-soft-bg) !important;
+                    padding: 2px 8px !important;
+                    border-radius: 20px !important;
+                    border: 1px solid var(--sb-border) !important;
+                    line-height: 1.3 !important;
+                }
+
+                /* Card Body */
                 .service-box-body {
-                    display: flex;
-                    align-items: flex-start;
-                    gap: 14px;
-                    width: 100%;
+                    display: flex !important;
+                    align-items: center !important;
+                    padding: 16px 14px !important;
+                    gap: 14px !important;
+                    flex: 1 !important;
+                    box-sizing: border-box !important;
                 }
 
+                /* Illustration Squircle Container */
                 .service-box-icon {
-                    width: 85px;
-                    height: 85px;
-                    flex-shrink: 0;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
+                    width: 82px !important;
+                    height: 82px !important;
+                    border-radius: 14px !important;
+                    background: var(--sb-soft-bg) !important;
+                    border: 1.5px solid var(--sb-border) !important;
+                    display: flex !important;
+                    align-items: center !important;
+                    justify-content: center !important;
+                    flex-shrink: 0 !important;
+                    box-shadow: 0 4px 12px var(--sb-shadow-light) !important;
+                    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease !important;
+                    padding: 8px !important;
+                    box-sizing: border-box !important;
                 }
 
                 .service-box-icon img {
-                    max-width: 85px;
-                    max-height: 80px;
-                    width: auto;
-                    height: auto;
-                    object-fit: contain;
+                    max-width: 66px !important;
+                    max-height: 66px !important;
+                    width: auto !important;
+                    height: auto !important;
+                    object-fit: contain !important;
+                    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.08)) !important;
+                    transition: transform 0.3s ease !important;
                 }
 
+                .service-box.box:hover .service-box-icon {
+                    transform: scale(1.06) translateY(-2px) !important;
+                    box-shadow: 0 8px 18px var(--sb-shadow) !important;
+                }
+
+                .service-box.box:hover .service-box-icon img {
+                    transform: scale(1.05) !important;
+                }
+
+                /* Links List */
                 .service-box-links {
-                    flex: 1;
+                    flex: 1 !important;
                     margin: 0 !important;
                     padding: 0 !important;
                     list-style: none !important;
-                    width: auto !important;
-                    float: none !important;
+                    display: flex !important;
+                    flex-direction: column !important;
+                    gap: 6px !important;
                 }
 
                 .service-box-links li {
-                    margin: 0 0 7px 0 !important;
+                    margin: 0 !important;
                     padding: 0 !important;
                     list-style: none !important;
-                    list-style-image: none !important;
-                    display: flex !important;
-                    align-items: baseline !important;
-                    gap: 6px !important;
-                    text-align: left !important;
+                    display: block !important;
                 }
 
                 .service-box-links li::before {
-                    content: '▶';
-                    font-size: 9px;
-                    color: #28a745;
-                    flex-shrink: 0;
+                    display: none !important;
                 }
 
                 .service-box-links li a {
-                    font-size: 14px !important;
-                    line-height: 1.4 !important;
-                    color: #444 !important;
+                    display: flex !important;
+                    align-items: center !important;
+                    justify-content: space-between !important;
+                    padding: 6.5px 10px !important;
+                    background: #f8fafc !important;
+                    border: 1px solid #e2e8f0 !important;
+                    border-radius: 8px !important;
+                    font-size: 13.5px !important;
+                    font-weight: 600 !important;
+                    color: #334155 !important;
                     text-decoration: none !important;
-                    word-break: normal !important;
+                    transition: all 0.22s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+                    line-height: 1.35 !important;
+                    box-sizing: border-box !important;
                 }
 
+                .sb-link-text-wrap {
+                    display: flex !important;
+                    align-items: center !important;
+                    gap: 8px !important;
+                }
+
+                .sb-link-dot {
+                    width: 6px !important;
+                    height: 6px !important;
+                    border-radius: 50% !important;
+                    background: var(--sb-accent) !important;
+                    opacity: 0.65 !important;
+                    flex-shrink: 0 !important;
+                    transition: all 0.2s ease !important;
+                }
+
+                .sb-link-arrow {
+                    display: flex !important;
+                    align-items: center !important;
+                    color: var(--sb-accent) !important;
+                    opacity: 0.45 !important;
+                    transform: translateX(0) !important;
+                    transition: all 0.22s ease !important;
+                    flex-shrink: 0 !important;
+                }
+
+                .sb-link-arrow svg {
+                    width: 12px !important;
+                    height: 12px !important;
+                    stroke: currentColor !important;
+                    stroke-width: 2.4 !important;
+                    fill: none !important;
+                }
+
+                /* Link Hover Interaction */
                 .service-box-links li a:hover {
-                    color: #03703e !important;
-                    text-decoration: underline !important;
+                    background: var(--sb-soft-bg) !important;
+                    border-color: var(--sb-accent) !important;
+                    color: var(--sb-accent) !important;
+                    transform: translateX(4px) !important;
+                    box-shadow: 0 3px 8px var(--sb-shadow-light) !important;
+                    text-decoration: none !important;
                 }
 
-                @media screen and (max-width: 768px) {
+                .service-box-links li a:hover .sb-link-dot {
+                    opacity: 1 !important;
+                    transform: scale(1.4) !important;
+                }
+
+                .service-box-links li a:hover .sb-link-arrow {
+                    opacity: 1 !important;
+                    transform: translateX(3px) !important;
+                }
+
+                /* 4 Category Color Palettes */
+                .sb-theme-institution {
+                    --sb-grad: linear-gradient(135deg, #059669 0%, #10b981 100%);
+                    --sb-accent: #059669;
+                    --sb-soft-bg: #ecfdf5;
+                    --sb-border: #a7f3d0;
+                    --sb-shadow: rgba(16, 185, 129, 0.18);
+                    --sb-shadow-light: rgba(16, 185, 129, 0.1);
+                }
+
+                .sb-theme-admin {
+                    --sb-grad: linear-gradient(135deg, #1d4ed8 0%, #3b82f6 100%);
+                    --sb-accent: #1d4ed8;
+                    --sb-soft-bg: #eff6ff;
+                    --sb-border: #bfdbfe;
+                    --sb-shadow: rgba(37, 99, 235, 0.18);
+                    --sb-shadow-light: rgba(37, 99, 235, 0.1);
+                }
+
+                .sb-theme-academic {
+                    --sb-grad: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+                    --sb-accent: #7c3aed;
+                    --sb-soft-bg: #faf5ff;
+                    --sb-border: #e9d5ff;
+                    --sb-shadow: rgba(124, 58, 237, 0.18);
+                    --sb-shadow-light: rgba(124, 58, 237, 0.1);
+                }
+
+                .sb-theme-download {
+                    --sb-grad: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
+                    --sb-accent: #d97706;
+                    --sb-soft-bg: #fffbeb;
+                    --sb-border: #fde68a;
+                    --sb-shadow: rgba(217, 119, 6, 0.18);
+                    --sb-shadow-light: rgba(217, 119, 6, 0.1);
+                }
+
+                /* Responsive Breakpoints */
+                @media screen and (max-width: 900px) {
                     .important-services-grid {
                         grid-template-columns: 1fr !important;
                         gap: 15px !important;
-                        margin: 10px 0 !important;
+                        padding: 14px !important;
                     }
+                }
 
-                    .service-box.box {
-                        padding: 14px 12px !important;
-                        min-height: auto !important;
-                    }
-
-                    .service-box.box h4 {
-                        font-size: 16px !important;
-                        margin-bottom: 10px !important;
-                    }
-
+                @media screen and (max-width: 576px) {
                     .service-box-body {
+                        flex-direction: column !important;
+                        align-items: center !important;
+                        padding: 14px 10px !important;
                         gap: 12px !important;
                     }
-
                     .service-box-icon {
-                        width: 75px !important;
-                        height: 75px !important;
+                        width: 72px !important;
+                        height: 72px !important;
                     }
-
-                    .service-box-icon img {
-                        max-width: 75px !important;
-                        max-height: 70px !important;
+                    .service-box-links {
+                        width: 100% !important;
                     }
-
-                    .service-box-links li a {
-                        font-size: 14px !important;
+                    .sb-header-count {
+                        display: none !important;
                     }
                 }
             </style>
             <div class="column block" bis_skin_checked="1">
-                <h5 class="bk-org title">
-                    গুরুত্বপূর্ণ লিঙ্ক ও সেবা
+                <h5 class="bk-org title sb-main-card-header">
+                    <span class="sb-main-title">
+                        <span class="sb-main-title-icon">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                        </span>
+                        গুরুত্বপূর্ণ লিঙ্ক ও সেবা
+                    </span>
+                    <span class="sb-main-badge">৪টি সেবা শাখা</span>
                 </h5>
 
                 <div class="important-services-grid" bis_skin_checked="1">
-                                        
-                    
-                    <div id="box-267" class="service-box box" bis_skin_checked="1">
-                        <h4>প্রতিষ্ঠান সম্পর্কে</h4>
+                    <!-- 1. প্রতিষ্ঠান সম্পর্কে -->
+                    <div id="box-267" class="service-box box sb-theme-institution" bis_skin_checked="1">
+                        <h4>
+                            <span class="sb-header-title-wrap">
+                                <span class="sb-header-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v4M12 14v4M16 14v4"></path></svg>
+                                </span>
+                                প্রতিষ্ঠান সম্পর্কে
+                            </span>
+                            <span class="sb-header-count">৩টি সেবা</span>
+                        </h4>
 
                         <div class="service-box-body" bis_skin_checked="1">
                             <div class="service-box-icon" bis_skin_checked="1">
@@ -8358,31 +9181,48 @@ li {
                             </div>
 
                             <ul class="service-box-links">
-                                                                
                                 <li>
                                     <a href="https://www.modelcollege.edu.bd/pages/about-institution" target="_self" bis_skin_checked="1">
-                                        প্রতিষ্ঠান সম্পর্কে
+                                        <span class="sb-link-text-wrap">
+                                            <span class="sb-link-dot"></span>
+                                            <span>প্রতিষ্ঠান সম্পর্কে</span>
+                                        </span>
+                                        <span class="sb-link-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
                                     </a>
                                 </li>
-                                                                
                                 <li>
                                     <a href="https://www.modelcollege.edu.bd/pages/honor-board" target="_self" bis_skin_checked="1">
-                                        অর্নার বোর্ড
+                                        <span class="sb-link-text-wrap">
+                                            <span class="sb-link-dot"></span>
+                                            <span>অর্নার বোর্ড</span>
+                                        </span>
+                                        <span class="sb-link-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
                                     </a>
                                 </li>
-                                                                
                                 <li>
                                     <a href="https://www.modelcollege.edu.bd/pages/founder-donor-info" target="_self" bis_skin_checked="1">
-                                        প্রতিষ্ঠাতা এবং দানকারীর তথ্য
+                                        <span class="sb-link-text-wrap">
+                                            <span class="sb-link-dot"></span>
+                                            <span>প্রতিষ্ঠাতা এবং দানকারীর তথ্য</span>
+                                        </span>
+                                        <span class="sb-link-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
                                     </a>
                                 </li>
-                                                            </ul>
+                            </ul>
                         </div>
                     </div>
-                                        
-                    
-                    <div id="box-268" class="service-box box" bis_skin_checked="1">
-                        <h4>কলেজ প্রশাসন</h4>
+
+                    <!-- 2. কলেজ প্রশাসন -->
+                    <div id="box-268" class="service-box box sb-theme-admin" bis_skin_checked="1">
+                        <h4>
+                            <span class="sb-header-title-wrap">
+                                <span class="sb-header-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                </span>
+                                কলেজ প্রশাসন
+                            </span>
+                            <span class="sb-header-count">৩টি সেবা</span>
+                        </h4>
 
                         <div class="service-box-body" bis_skin_checked="1">
                             <div class="service-box-icon" bis_skin_checked="1">
@@ -8390,31 +9230,48 @@ li {
                             </div>
 
                             <ul class="service-box-links">
-                                                                
                                 <li>
                                     <a href="https://www.modelcollege.edu.bd/pages/principal-list" target="_self" bis_skin_checked="1">
-                                        অধ্যক্ষবৃন্দের কার্যকাল
+                                        <span class="sb-link-text-wrap">
+                                            <span class="sb-link-dot"></span>
+                                            <span>অধ্যক্ষবৃন্দের কার্যকাল</span>
+                                        </span>
+                                        <span class="sb-link-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
                                     </a>
                                 </li>
-                                                                
                                 <li>
                                     <a href="https://www.modelcollege.edu.bd/teacher-list" target="_self" bis_skin_checked="1">
-                                        শিক্ষক-শিক্ষিকাদের তালিকা
+                                        <span class="sb-link-text-wrap">
+                                            <span class="sb-link-dot"></span>
+                                            <span>শিক্ষক-শিক্ষিকাদের তালিকা</span>
+                                        </span>
+                                        <span class="sb-link-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
                                     </a>
                                 </li>
-                                                                
                                 <li>
                                     <a href="https://www.modelcollege.edu.bd/staff-list" target="_self" bis_skin_checked="1">
-                                        কমর্চারীদের তালিকা
+                                        <span class="sb-link-text-wrap">
+                                            <span class="sb-link-dot"></span>
+                                            <span>কমর্চারীদের তালিকা</span>
+                                        </span>
+                                        <span class="sb-link-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
                                     </a>
                                 </li>
-                                                            </ul>
+                            </ul>
                         </div>
                     </div>
-                                        
-                    
-                    <div id="box-269" class="service-box box" bis_skin_checked="1">
-                        <h4>একাডেমিক</h4>
+
+                    <!-- 3. একাডেমিক -->
+                    <div id="box-269" class="service-box box sb-theme-academic" bis_skin_checked="1">
+                        <h4>
+                            <span class="sb-header-title-wrap">
+                                <span class="sb-header-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+                                </span>
+                                একাডেমিক
+                            </span>
+                            <span class="sb-header-count">৬টি সেবা</span>
+                        </h4>
 
                         <div class="service-box-body" bis_skin_checked="1">
                             <div class="service-box-icon" bis_skin_checked="1">
@@ -8422,49 +9279,75 @@ li {
                             </div>
 
                             <ul class="service-box-links">
-                                                                
                                 <li>
                                     <a href="https://www.modelcollege.edu.bd/student-list" target="_self" bis_skin_checked="1">
-                                        ছাত্র-ছাত্রীদের তালিকা
+                                        <span class="sb-link-text-wrap">
+                                            <span class="sb-link-dot"></span>
+                                            <span>ছাত্র-ছাত্রীদের তালিকা</span>
+                                        </span>
+                                        <span class="sb-link-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
                                     </a>
                                 </li>
-                                                                
                                 <li>
                                     <a href="https://www.modelcollege.edu.bd/pages/student-attendance" target="_self" bis_skin_checked="1">
-                                        ছাত্র-ছাত্রীর উপস্থিতি
+                                        <span class="sb-link-text-wrap">
+                                            <span class="sb-link-dot"></span>
+                                            <span>ছাত্র-ছাত্রীর উপস্থিতি</span>
+                                        </span>
+                                        <span class="sb-link-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
                                     </a>
                                 </li>
-                                                                
                                 <li>
                                     <a href="https://www.modelcollege.edu.bd/class-routine" target="_self" bis_skin_checked="1">
-                                        ক্লাস-রুটিন
+                                        <span class="sb-link-text-wrap">
+                                            <span class="sb-link-dot"></span>
+                                            <span>ক্লাস-রুটিন</span>
+                                        </span>
+                                        <span class="sb-link-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
                                     </a>
                                 </li>
-                                                                
                                 <li>
                                     <a href="https://www.modelcollege.edu.bd/exam-routine" target="_self" bis_skin_checked="1">
-                                        পরীক্ষার-রুটিন
+                                        <span class="sb-link-text-wrap">
+                                            <span class="sb-link-dot"></span>
+                                            <span>পরীক্ষার-রুটিন</span>
+                                        </span>
+                                        <span class="sb-link-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
                                     </a>
                                 </li>
-                                                                
                                 <li>
                                     <a href="https://www.modelcollege.edu.bd/pages/exam-result" target="_self" bis_skin_checked="1">
-                                        পরীক্ষার ফলাফল
+                                        <span class="sb-link-text-wrap">
+                                            <span class="sb-link-dot"></span>
+                                            <span>পরীক্ষার ফলাফল</span>
+                                        </span>
+                                        <span class="sb-link-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
                                     </a>
                                 </li>
-                                                                
                                 <li>
                                     <a href="https://www.modelcollege.edu.bd/pages/syllabus" target="_self" bis_skin_checked="1">
-                                        সিলেবাস
+                                        <span class="sb-link-text-wrap">
+                                            <span class="sb-link-dot"></span>
+                                            <span>সিলেবাস</span>
+                                        </span>
+                                        <span class="sb-link-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
                                     </a>
                                 </li>
-                                                            </ul>
+                            </ul>
                         </div>
                     </div>
-                                        
-                    
-                    <div id="box-270" class="service-box box" bis_skin_checked="1">
-                        <h4>ডাউনলোড</h4>
+
+                    <!-- 4. ডাউনলোড -->
+                    <div id="box-270" class="service-box box sb-theme-download" bis_skin_checked="1">
+                        <h4>
+                            <span class="sb-header-title-wrap">
+                                <span class="sb-header-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                </span>
+                                ডাউনলোড
+                            </span>
+                            <span class="sb-header-count">৪টি সেবা</span>
+                        </h4>
 
                         <div class="service-box-body" bis_skin_checked="1">
                             <div class="service-box-icon" bis_skin_checked="1">
@@ -8472,38 +9355,48 @@ li {
                             </div>
 
                             <ul class="service-box-links">
-                                                                
                                 <li>
                                     <a href="https://www.modelcollege.edu.bd/pages/manual" target="_self" bis_skin_checked="1">
-                                        ম্যানুয়েল
+                                        <span class="sb-link-text-wrap">
+                                            <span class="sb-link-dot"></span>
+                                            <span>ম্যানুয়েল</span>
+                                        </span>
+                                        <span class="sb-link-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
                                     </a>
                                 </li>
-                                                                
                                 <li>
                                     <a href="https://www.modelcollege.edu.bd/pages/e-book" target="_self" bis_skin_checked="1">
-                                        ই-বুক
+                                        <span class="sb-link-text-wrap">
+                                            <span class="sb-link-dot"></span>
+                                            <span>ই-বুক</span>
+                                        </span>
+                                        <span class="sb-link-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
                                     </a>
                                 </li>
-                                                                
                                 <li>
                                     <a href="https://www.modelcollege.edu.bd/pages/lecture-sheet" target="_self" bis_skin_checked="1">
-                                        লেকচার শীট
+                                        <span class="sb-link-text-wrap">
+                                            <span class="sb-link-dot"></span>
+                                            <span>লেকচার শীট</span>
+                                        </span>
+                                        <span class="sb-link-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
                                     </a>
                                 </li>
-                                                                
                                 <li>
                                     <a href="https://www.modelcollege.edu.bd/pages/book-list" target="_self" bis_skin_checked="1">
-                                        বুক লিস্ট
+                                        <span class="sb-link-text-wrap">
+                                            <span class="sb-link-dot"></span>
+                                            <span>বুক লিস্ট</span>
+                                        </span>
+                                        <span class="sb-link-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
                                     </a>
                                 </li>
-                                                            </ul>
+                            </ul>
                         </div>
                     </div>
-                    
                 </div>
             </div>
-            
-                        <br>
+            <br>
             <div class="column block" bis_skin_checked="1">
                 <h5 class="bk-org title"> ফটো গ্যালারি </h5>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-top: 15px;" bis_skin_checked="1">
@@ -9250,11 +10143,121 @@ li {
                         <svg viewBox="0 0 512 512"><path d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V274.7l-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7V32zM64 352c-35.3 0-64 28.7-64 64v32c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V416c0-35.3-28.7-64-64-64H346.5l-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352H64zM432 456c13.3 0 24-10.7 24-24s-10.7-24-24-24s-24 10.7-24 24s10.7 24 24 24z"/></svg>
                         <span>ডাউনলোড কপি</span>
                     </a>
-                    <button type="button" class="kc-cinema-btn-print" id="kc-cinema-btn-print" onclick="window.print();" title="প্রিন্ট করুন">
+                    <button type="button" class="kc-cinema-btn-print" id="kc-cinema-btn-print" onclick="printOfficialNotice();" title="অফিসিয়াল নোটিশ প্রিন্ট করুন">
                         <svg viewBox="0 0 512 512"><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H384v96h64V64c0-35.3-28.7-64-64-64H128zM384 416H128V320H384v96zm64-192c0-17.7-14.3-32-32-32H96c-17.7 0-32 14.3-32 32v128h64v64c0 17.7 14.3 32 32 32H352c17.7 0 32-14.3 32-32V352h64V224zm-64 48c-13.3 0-24-10.7-24-24s10.7-24 24-24 24 10.7 24 24-10.7 24-24 24z"/></svg>
                         <span>প্রিন্ট</span>
                     </button>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==========================================================================
+     OFFICIAL INSTITUTIONAL NOTICE PRINT SHEET (A4 STRICT 1-PAGE FORMAT)
+     ========================================================================== -->
+<div id="kc-notice-print-container" class="kc-notice-print-container" aria-hidden="true">
+    <div class="kc-print-page">
+        <!-- Official Institutional Letterhead -->
+        <div class="kc-print-header">
+            <div class="kc-print-header-logo-wrap">
+                <img src="assets/images/college-logo.png" alt="College Logo" class="kc-print-logo" />
+            </div>
+            <div class="kc-print-header-center">
+                <div class="kc-print-govt-bd">গণপ্রজাতন্ত্রী বাংলাদেশ সরকার</div>
+                <div class="kc-print-office-dept">অধ্যক্ষের কার্যালয়</div>
+                <h1 class="kc-print-college-title">সরকারি আদর্শ মডেল কলেজ</h1>
+                <div class="kc-print-college-sub-en">Govt. Ideal Model College, Dinajpur</div>
+                <div class="kc-print-college-meta">কলেজ রোড, সদর, দিনাজপুর-১২০০ | স্থাপিত: ১৯৭৫ | ইআইআইএন: ১১৬৫৫২</div>
+                <div class="kc-print-college-contact">ওয়েবসাইট: www.modelcollege.edu.bd | ইমেইল: info@modelcollege.edu.bd</div>
+            </div>
+            <div class="kc-print-header-seal-wrap">
+                <div class="kc-print-seal-emblem">
+                    <svg viewBox="0 0 100 100" class="kc-print-seal-emblem-svg">
+                        <circle cx="50" cy="50" r="46" stroke="#005a2b" stroke-width="2" fill="none" stroke-dasharray="3 2"></circle>
+                        <circle cx="50" cy="50" r="39" stroke="#005a2b" stroke-width="1.2" fill="none"></circle>
+                        <text x="50" y="27" font-size="7.5" text-anchor="middle" fill="#005a2b" font-weight="bold">সরকারি আদর্শ মডেল কলেজ</text>
+                        <text x="50" y="52" font-size="8.5" text-anchor="middle" fill="#005a2b" font-weight="bold">অফিসিয়াল নথি</text>
+                        <text x="50" y="73" font-size="7" text-anchor="middle" fill="#005a2b">দিনাজপুর সদর</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Decorative Double Divider Rule -->
+        <div class="kc-print-divider"></div>
+
+        <!-- Metadata Bar: Reference No & Date -->
+        <div class="kc-print-meta-bar">
+            <div class="kc-print-ref" id="kc-print-ref">স্মারক নং: সআমক/প্রশাসন/২০২৬/২২১</div>
+            <div class="kc-print-date" id="kc-print-date">তারিখ: ০৪/১১/২০২৬ খ্রি.</div>
+        </div>
+
+        <!-- Centered Formal Title "বিজ্ঞপ্তি" -->
+        <div class="kc-print-heading-box">
+            <span class="kc-print-heading-title">বিজ্ঞপ্তি</span>
+        </div>
+
+        <!-- Notice Subject Line -->
+        <div class="kc-print-subject-line">
+            <span class="kc-print-subject-text" id="kc-print-subject">বিষয়: ৭ই নভেম্বর জাতীয় বিপ্লব ও সংহতি দিবস ২০২৬ উদযাপন প্রসঙ্গে।</span>
+        </div>
+
+        <!-- Highlight Note / Urgent Notice Box -->
+        <div class="kc-print-highlight-box" id="kc-print-highlight-box">
+            <span class="kc-print-highlight-tag">জরুরি নির্দেশনা:</span>
+            <span id="kc-print-highlight-text">নোটিশের নির্দেশনা অনুযায়ী নির্ধারিত তারিখ ও সময়ের মধ্যে করণীয় সম্পন্ন করার জন্য অনুরোধ করা যাচ্ছে।</span>
+        </div>
+
+        <!-- Full Notice Body Text -->
+        <div class="kc-print-body-wrap">
+            <p id="kc-print-body-text" class="kc-print-body-text">
+                এতদ্বারা অত্র কলেজের সকল শিক্ষক, কর্মকর্তা, কর্মচারী ও শিক্ষার্থীদের সদয় অবগতির জন্য জানানো যাচ্ছে যে, ৭ই নভেম্বর জাতীয় বিপ্লব ও সংহতি দিবস উপলক্ষে অডিটোরিয়াম ভবনে সকাল ১১:০০ ঘটিকায় এক বিশেষ আলোচনা সভা ও দোয়া মাহফিলের আয়োজন করা হয়েছে। অনুষ্ঠানে সবাইকে যথাসময়ে উপস্থিত হওয়ার অনুরোধ জানানো যাচ্ছে।
+            </p>
+        </div>
+
+        <!-- Signature & Authority Seal Block -->
+        <div class="kc-print-sign-row">
+            <div class="kc-print-sign-box">
+                <div class="kc-print-seal-stamp">
+                    <svg viewBox="0 0 100 100" class="kc-print-seal-svg">
+                        <circle cx="50" cy="50" r="46" stroke="#005a2b" stroke-width="1.8" fill="none" stroke-dasharray="3 2"></circle>
+                        <circle cx="50" cy="50" r="38" stroke="#005a2b" stroke-width="1" fill="none"></circle>
+                        <text x="50" y="27" font-size="7.5" text-anchor="middle" fill="#005a2b" font-weight="bold">অধ্যক্ষের কার্যালয়</text>
+                        <text x="50" y="52" font-size="9" text-anchor="middle" fill="#005a2b" font-weight="bold">স্বাক্ষরিত</text>
+                        <text x="50" y="73" font-size="7.5" text-anchor="middle" fill="#005a2b">স.আ.ম.ক.</text>
+                    </svg>
+                </div>
+                <div class="kc-print-signature-img">
+                    <svg viewBox="0 0 160 45" width="130" height="36">
+                        <path d="M 12 30 Q 32 8 52 22 T 85 18 T 115 28 T 148 12" stroke="#1d4ed8" stroke-width="2.2" fill="none" stroke-linecap="round"></path>
+                    </svg>
+                </div>
+                <div class="kc-print-signatory-name">(প্রফেসর মোঃ মিজানুর রহমান)</div>
+                <div class="kc-print-signatory-title">অধ্যক্ষ</div>
+                <div class="kc-print-signatory-inst">সরকারি আদর্শ মডেল কলেজ, দিনাজপুর</div>
+                <div class="kc-print-signatory-phone">ফোন: ০৫৩১-৬৩০০০ | ইমেইল: principal@modelcollege.edu.bd</div>
+            </div>
+        </div>
+
+        <!-- CC / অনুলিপি Block -->
+        <div class="kc-print-cc-block">
+            <div class="kc-print-cc-title">অনুলিপি সদয় অবগতি ও প্রয়োজনীয় ব্যবস্থা গ্রহণের জন্য প্রেরিত হলো:</div>
+            <ol class="kc-print-cc-list">
+                <li>উপাধ্যক্ষ, সরকারি আদর্শ মডেল কলেজ, দিনাজপুর।</li>
+                <li>সকল বিভাগীয় প্রধান (একাডেমিক শাখা), সরকারি আদর্শ মডেল কলেজ।</li>
+                <li>সম্পাদক, শিক্ষক পরিষদ, সরকারি আদর্শ মডেল কলেজ।</li>
+                <li>অফিসিয়াল নোটিশ বোর্ড ও কলেজ ওয়েবসাইট (www.modelcollege.edu.bd)।</li>
+                <li>অধ্যক্ষের ব্যক্তিগত নথি / অফিস সংরক্ষণ কপি।</li>
+            </ol>
+        </div>
+
+        <!-- Official Print Sheet Footer -->
+        <div class="kc-print-footer">
+            <div class="kc-print-footer-border"></div>
+            <div class="kc-print-footer-content">
+                <span class="kc-print-footer-left">✓ এটি সরকারি আদর্শ মডেল কলেজের অফিশিয়াল ওয়েবসাইট থেকে সংগৃহীত ডিজিটাল নোটিশ কপি।</span>
+                <span class="kc-print-footer-right">www.modelcollege.edu.bd</span>
             </div>
         </div>
     </div>

@@ -482,20 +482,21 @@ img, video, audio, iframe {
 
     .quick-menu-grid {
         grid-template-columns: repeat(2, 1fr) !important;
-        gap: 6px !important;
+        gap: 8px !important;
+        padding: 10px 8px !important;
     }
 
     .quick-menu-item {
-        padding: 10px 4px !important;
-        min-height: 70px !important;
+        padding: 12px 6px 10px 6px !important;
+        min-height: 98px !important;
     }
 
-    .quick-menu-item i {
-        font-size: 20px !important;
-    }
-
-    .quick-menu-item span {
+    .qm-item-title {
         font-size: 12.5px !important;
+    }
+
+    .qm-item-tag {
+        font-size: 9.5px !important;
     }
 }
 
@@ -7318,3 +7319,832 @@ body, html {
     color: #0284c7 !important;
     transform: scale(1.05);
 }
+
+/* ==========================================================================
+   OFFICIAL INSTITUTIONAL NOTICE PRINT SHEET (A4 STRICT 1-PAGE FORMAT)
+   ========================================================================== */
+#kc-notice-print-container {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+@page {
+    size: A4 portrait;
+    margin: 10mm 12mm 10mm 12mm;
+}
+
+@media print {
+    html, body {
+        width: 100% !important;
+        height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #ffffff !important;
+        color: #0f172a !important;
+        font-family: "SolaimanLipi", "Kalpurush", "Nikosh", "Arial", sans-serif !important;
+        font-size: 11pt !important;
+        line-height: 1.5 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        overflow: visible !important;
+    }
+
+    body > *:not(#kc-notice-print-container) {
+        display: none !important;
+        visibility: hidden !important;
+    }
+
+    #kc-notice-print-container {
+        display: block !important;
+        visibility: visible !important;
+        position: relative !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 auto !important;
+        padding: 0 !important;
+        background: #ffffff !important;
+        box-sizing: border-box !important;
+        page-break-after: avoid !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+
+    .kc-print-page {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 auto !important;
+        padding: 10px 14px !important;
+        box-sizing: border-box !important;
+        border: 1.5px solid #1e293b !important;
+        border-radius: 4px !important;
+        position: relative !important;
+        page-break-after: avoid !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+
+    .kc-print-header {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding-bottom: 6px !important;
+        gap: 10px !important;
+    }
+
+    .kc-print-header-logo-wrap,
+    .kc-print-header-seal-wrap {
+        width: 72px !important;
+        height: 72px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        flex-shrink: 0 !important;
+    }
+
+    .kc-print-logo {
+        width: 68px !important;
+        height: 68px !important;
+        object-fit: contain !important;
+    }
+
+    .kc-print-seal-emblem {
+        width: 68px !important;
+        height: 68px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    .kc-print-seal-emblem-svg {
+        width: 68px !important;
+        height: 68px !important;
+    }
+
+    .kc-print-header-center {
+        flex: 1 !important;
+        text-align: center !important;
+    }
+
+    .kc-print-govt-bd {
+        font-size: 11pt !important;
+        font-weight: 600 !important;
+        color: #334155 !important;
+        margin-bottom: 1px !important;
+        letter-spacing: 0.3px !important;
+    }
+
+    .kc-print-office-dept {
+        font-size: 12pt !important;
+        font-weight: 700 !important;
+        color: #0f172a !important;
+        margin-bottom: 1px !important;
+    }
+
+    .kc-print-college-title {
+        font-size: 20pt !important;
+        font-weight: 800 !important;
+        color: #005a2b !important;
+        margin: 0 !important;
+        line-height: 1.2 !important;
+        letter-spacing: -0.3px !important;
+    }
+
+    .kc-print-college-sub-en {
+        font-size: 9.5pt !important;
+        font-weight: 600 !important;
+        color: #475569 !important;
+        margin-top: 1px !important;
+        letter-spacing: 0.2px !important;
+    }
+
+    .kc-print-college-meta,
+    .kc-print-college-contact {
+        font-size: 8.5pt !important;
+        color: #64748b !important;
+        line-height: 1.35 !important;
+        margin-top: 2px !important;
+    }
+
+    .kc-print-divider {
+        height: 3px !important;
+        border-top: 2px solid #005a2b !important;
+        border-bottom: 1px solid #005a2b !important;
+        margin: 6px 0 10px 0 !important;
+    }
+
+    .kc-print-meta-bar {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        font-size: 10pt !important;
+        font-weight: 600 !important;
+        color: #1e293b !important;
+        margin-bottom: 10px !important;
+        padding-bottom: 4px !important;
+        border-bottom: 1px dashed #cbd5e1 !important;
+    }
+
+    .kc-print-heading-box {
+        text-align: center !important;
+        margin: 8px 0 10px 0 !important;
+    }
+
+    .kc-print-heading-title {
+        display: inline-block !important;
+        font-size: 14pt !important;
+        font-weight: 800 !important;
+        color: #005a2b !important;
+        padding: 2px 24px !important;
+        border: 1.5px solid #005a2b !important;
+        border-radius: 4px !important;
+        margin: 0 !important;
+        letter-spacing: 2px !important;
+        background: #f0fdf4 !important;
+    }
+
+    .kc-print-subject-line {
+        font-size: 11.5pt !important;
+        font-weight: 700 !important;
+        color: #0f172a !important;
+        margin-bottom: 10px !important;
+        line-height: 1.4 !important;
+    }
+
+    .kc-print-highlight-box {
+        background: #fefce8 !important;
+        border-left: 3.5px solid #ca8a04 !important;
+        padding: 6px 12px !important;
+        font-size: 9.5pt !important;
+        color: #854d0e !important;
+        margin-bottom: 10px !important;
+        line-height: 1.4 !important;
+    }
+
+    .kc-print-highlight-tag {
+        font-weight: 700 !important;
+        margin-right: 5px !important;
+    }
+
+    .kc-print-body-wrap {
+        margin-bottom: 16px !important;
+    }
+
+    .kc-print-body-text {
+        font-size: 11pt !important;
+        color: #1e293b !important;
+        line-height: 1.7 !important;
+        text-align: justify !important;
+        text-justify: inter-word !important;
+        text-indent: 32px !important;
+        margin: 0 !important;
+    }
+
+    .kc-print-sign-row {
+        display: flex !important;
+        justify-content: flex-end !important;
+        margin-top: 14px !important;
+        margin-bottom: 14px !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+
+    .kc-print-sign-box {
+        width: 250px !important;
+        text-align: center !important;
+        position: relative !important;
+    }
+
+    .kc-print-seal-stamp {
+        position: absolute !important;
+        top: -24px !important;
+        left: 8px !important;
+        width: 68px !important;
+        height: 68px !important;
+        opacity: 0.85 !important;
+        pointer-events: none !important;
+    }
+
+    .kc-print-signature-img {
+        height: 36px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        margin-bottom: 3px !important;
+    }
+
+    .kc-print-signatory-name {
+        font-size: 10.5pt !important;
+        font-weight: 700 !important;
+        color: #0f172a !important;
+    }
+
+    .kc-print-signatory-title {
+        font-size: 10pt !important;
+        font-weight: 700 !important;
+        color: #005a2b !important;
+    }
+
+    .kc-print-signatory-inst {
+        font-size: 9pt !important;
+        color: #334155 !important;
+    }
+
+    .kc-print-signatory-phone {
+        font-size: 7.5pt !important;
+        color: #64748b !important;
+    }
+
+    .kc-print-cc-block {
+        border-top: 1px solid #e2e8f0 !important;
+        padding-top: 8px !important;
+        margin-top: 10px !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+
+    .kc-print-cc-title {
+        font-size: 8.5pt !important;
+        font-weight: 700 !important;
+        color: #334155 !important;
+        margin-bottom: 3px !important;
+    }
+
+    .kc-print-cc-list {
+        margin: 0 !important;
+        padding-left: 20px !important;
+        font-size: 8pt !important;
+        color: #475569 !important;
+        line-height: 1.35 !important;
+    }
+
+    .kc-print-footer {
+        margin-top: 10px !important;
+        padding-top: 6px !important;
+        border-top: 1px dashed #94a3b8 !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+
+    .kc-print-footer-content {
+        display: flex !important;
+        justify-content: space-between !important;
+        font-size: 7.5pt !important;
+        color: #64748b !important;
+    }
+}
+
+
+/* ==========================================================================
+   LIVELY CONTEXT-AWARE MICRO-ANIMATIONS FOR ALL QUICK MENU ICONS
+   ========================================================================== */
+
+/* 1. ????? (Notice) - Ringing Notification Bell */
+.qm-theme-notice .qm-icon-wrap svg {
+    transform-origin: 50% 12% !important;
+    animation: qmBellRing 2.8s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite !important;
+    will-change: transform;
+}
+.qm-theme-notice:hover .qm-icon-wrap svg {
+    animation: qmBellRing 0.85s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite !important;
+}
+@keyframes qmBellRing {
+    0%, 100% { transform: rotate(0deg); }
+    4% { transform: rotate(18deg); }
+    8% { transform: rotate(-16deg); }
+    12% { transform: rotate(14deg); }
+    16% { transform: rotate(-12deg); }
+    20% { transform: rotate(8deg); }
+    24% { transform: rotate(-5deg); }
+    28% { transform: rotate(2deg); }
+    32% { transform: rotate(0deg); }
+}
+
+/* 2. ?????? ????? (Admission) - Floating & Joyful Mortarboard Bob */
+.qm-theme-admission .qm-icon-wrap svg {
+    transform-origin: 50% 80% !important;
+    animation: qmCapFloat 3.2s ease-in-out infinite !important;
+    will-change: transform;
+}
+.qm-theme-admission:hover .qm-icon-wrap svg {
+    animation: qmCapBounce 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) infinite !important;
+}
+@keyframes qmCapFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    25% { transform: translateY(-4px) rotate(-4deg); }
+    50% { transform: translateY(-1px) rotate(3deg); }
+    75% { transform: translateY(-6px) rotate(-2deg) scale(1.05); }
+}
+@keyframes qmCapBounce {
+    0%, 100% { transform: translateY(0) scale(1) rotate(0deg); }
+    40% { transform: translateY(-7px) scale(1.12) rotate(-6deg); }
+    70% { transform: translateY(-2px) scale(1.04) rotate(4deg); }
+}
+
+/* 3. ???? ?????? (Payment) - Card Swipe & Contactless Tap */
+.qm-theme-payment .qm-icon-wrap svg {
+    transform-origin: 50% 50% !important;
+    animation: qmCardSwipe 3s ease-in-out infinite !important;
+    will-change: transform;
+}
+.qm-theme-payment:hover .qm-icon-wrap svg {
+    animation: qmCardTap 0.9s ease-in-out infinite !important;
+}
+@keyframes qmCardSwipe {
+    0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+    20% { transform: translateY(-3px) rotate(-6deg); }
+    40% { transform: translateY(2px) rotate(4deg); }
+    60% { transform: translateY(-2px) scale(1.08) rotate(-2deg); }
+    80% { transform: translateY(0) rotate(0deg); }
+}
+@keyframes qmCardTap {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    30% { transform: scale(0.92) rotate(-4deg); }
+    60% { transform: scale(1.15) rotate(4deg); }
+}
+
+/* 4. ??? ????? (Certificate) - Pinned Honor Medal Pendulum Sway */
+.qm-theme-cert .qm-icon-wrap svg {
+    transform-origin: 50% 15% !important;
+    animation: qmCertSway 3.4s ease-in-out infinite !important;
+    will-change: transform;
+}
+.qm-theme-cert:hover .qm-icon-wrap svg {
+    animation: qmCertSway 1.2s ease-in-out infinite !important;
+}
+@keyframes qmCertSway {
+    0%, 100% { transform: rotate(0deg); }
+    20% { transform: rotate(9deg); }
+    40% { transform: rotate(-8deg); }
+    60% { transform: rotate(5deg); }
+    80% { transform: rotate(-3deg); }
+}
+
+/* 5. ?????-??????? ?????? (Students) - Lively Student Group Greeting Bob */
+.qm-theme-students .qm-icon-wrap svg {
+    transform-origin: 50% 85% !important;
+    animation: qmStudentsBob 3.2s ease-in-out infinite !important;
+    will-change: transform;
+}
+.qm-theme-students:hover .qm-icon-wrap svg {
+    animation: qmStudentsWave 0.9s ease-in-out infinite !important;
+}
+@keyframes qmStudentsBob {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    25% { transform: translateY(-3px) translateX(-2px) scale(1.04); }
+    50% { transform: translateY(0) translateX(0); }
+    75% { transform: translateY(-3px) translateX(2px) scale(1.04); }
+}
+@keyframes qmStudentsWave {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    30% { transform: translateY(-5px) rotate(-5deg) scale(1.1); }
+    70% { transform: translateY(-5px) rotate(5deg) scale(1.1); }
+}
+
+/* 6. ????? (Exam Results) - Victorious Trophy Lift & Celebration */
+.qm-theme-results .qm-icon-wrap svg {
+    transform-origin: 50% 85% !important;
+    animation: qmTrophyLift 2.8s ease-in-out infinite !important;
+    will-change: transform;
+}
+.qm-theme-results:hover .qm-icon-wrap svg {
+    animation: qmTrophyCelebration 0.85s ease-in-out infinite !important;
+}
+@keyframes qmTrophyLift {
+    0%, 100% { transform: translateY(0) scale(1) rotate(0deg); }
+    20% { transform: translateY(-4px) scale(1.08) rotate(-5deg); }
+    35% { transform: translateY(-5px) scale(1.1) rotate(5deg); }
+    50% { transform: translateY(-2px) scale(1.05) rotate(-3deg); }
+    65% { transform: translateY(0) scale(1) rotate(0deg); }
+}
+@keyframes qmTrophyCelebration {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    25% { transform: translateY(-6px) scale(1.15) rotate(-8deg); }
+    75% { transform: translateY(-6px) scale(1.15) rotate(8deg); }
+}
+
+/* 7. ????? ????? (Class Routine) - Clock / Schedule Rhythmic Pendulum Tick */
+.qm-theme-class-routine .qm-icon-wrap svg {
+    transform-origin: 50% 50% !important;
+    animation: qmClockTick 2.6s ease-in-out infinite !important;
+    will-change: transform;
+}
+.qm-theme-class-routine:hover .qm-icon-wrap svg {
+    animation: qmClockTick 0.8s ease-in-out infinite !important;
+}
+@keyframes qmClockTick {
+    0%, 100% { transform: rotate(0deg); }
+    15% { transform: rotate(8deg); }
+    30% { transform: rotate(-7deg); }
+    45% { transform: rotate(5deg); }
+    60% { transform: rotate(-3deg); }
+    75% { transform: rotate(0deg); }
+}
+
+/* 8. ???????? ????? (Exam Routine) - Exam Checklist Marking Motion */
+.qm-theme-exam-routine .qm-icon-wrap svg {
+    transform-origin: 50% 40% !important;
+    animation: qmExamCheck 3s ease-in-out infinite !important;
+    will-change: transform;
+}
+.qm-theme-exam-routine:hover .qm-icon-wrap svg {
+    animation: qmExamTap 0.85s ease-in-out infinite !important;
+}
+@keyframes qmExamCheck {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    20% { transform: translateY(-3px) rotate(-4deg); }
+    40% { transform: translateY(2px) translateX(2px) rotate(4deg); }
+    60% { transform: translateY(-2px) translateX(1px) scale(1.06); }
+    80% { transform: translateY(0) rotate(0deg); }
+}
+@keyframes qmExamTap {
+    0%, 100% { transform: scale(1) translateY(0); }
+    50% { transform: scale(1.12) translateY(-4px) rotate(5deg); }
+}
+
+/* Squircle Badge Ambient Glow Pulse */
+.qm-icon-wrap {
+    animation: qmBadgePulse 4s ease-in-out infinite !important;
+}
+@keyframes qmBadgePulse {
+    0%, 100% {
+        box-shadow: 0 6px 14px var(--qm-glow);
+    }
+    50% {
+        box-shadow: 0 8px 18px var(--qm-glow-hover), 0 0 10px var(--qm-glow);
+    }
+}
+
+
+/* ==========================================================================
+   PREMIUM INSTITUTIONAL SERVICES (???????????? ????? ? ????)
+   ========================================================================== */
+.sb-main-card-header,
+#left-content .block h5.title.sb-main-card-header {
+    background: linear-gradient(135deg, #03703e 0%, #014d2a 100%) !important;
+    padding: 12px 18px !important;
+    margin: 0 !important;
+    color: #ffffff !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    border-bottom: 3px solid #f59e0b !important;
+    box-sizing: border-box !important;
+}
+
+.sb-main-title {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    color: #ffffff !important;
+    margin: 0 !important;
+}
+
+.sb-main-title-icon {
+    width: 28px !important;
+    height: 28px !important;
+    background: rgba(255, 255, 255, 0.16) !important;
+    border-radius: 8px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #fde68a !important;
+}
+
+.sb-main-badge {
+    font-size: 11.5px !important;
+    font-weight: 600 !important;
+    color: #014d2a !important;
+    background: #fde68a !important;
+    padding: 3px 10px !important;
+    border-radius: 20px !important;
+    letter-spacing: 0.2px !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+}
+
+.sb-main-badge::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #16a34a;
+}
+
+.important-services-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 18px !important;
+    padding: 18px !important;
+    margin: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%) !important;
+    align-items: stretch !important;
+}
+
+.service-box.box {
+    position: relative !important;
+    background: #ffffff !important;
+    border: 1.5px solid #e2e8f0 !important;
+    border-radius: 14px !important;
+    padding: 0 !important;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05), 0 1px 3px rgba(15, 23, 42, 0.03) !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+    transition: all 0.28s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+    box-sizing: border-box !important;
+    height: 100% !important;
+    min-height: auto !important;
+}
+
+.service-box.box::before {
+    content: "" !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 3.5px !important;
+    background: var(--sb-grad) !important;
+    transition: height 0.25s ease !important;
+    z-index: 2 !important;
+}
+
+.service-box.box:hover {
+    transform: translateY(-4px) !important;
+    border-color: var(--sb-accent) !important;
+    box-shadow: 0 14px 28px -4px var(--sb-shadow), 0 4px 10px rgba(0, 0, 0, 0.03) !important;
+}
+
+.service-box.box:hover::before {
+    height: 4.5px !important;
+}
+
+.service-box.box h4 {
+    margin: 0 !important;
+    padding: 12px 16px !important;
+    background: #ffffff !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    color: #1e293b !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    letter-spacing: -0.2px !important;
+}
+
+.sb-header-title-wrap {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+.sb-header-icon {
+    width: 26px !important;
+    height: 26px !important;
+    border-radius: 7px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: var(--sb-soft-bg) !important;
+    color: var(--sb-accent) !important;
+    flex-shrink: 0 !important;
+}
+
+.sb-header-icon svg {
+    width: 15px !important;
+    height: 15px !important;
+    stroke: currentColor !important;
+    stroke-width: 2 !important;
+    fill: none !important;
+}
+
+.sb-header-count {
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    color: var(--sb-accent) !important;
+    background: var(--sb-soft-bg) !important;
+    padding: 2px 8px !important;
+    border-radius: 20px !important;
+    border: 1px solid var(--sb-border) !important;
+    line-height: 1.3 !important;
+}
+
+.service-box-body {
+    display: flex !important;
+    align-items: center !important;
+    padding: 16px 14px !important;
+    gap: 14px !important;
+    flex: 1 !important;
+    box-sizing: border-box !important;
+}
+
+.service-box-icon {
+    width: 82px !important;
+    height: 82px !important;
+    border-radius: 14px !important;
+    background: var(--sb-soft-bg) !important;
+    border: 1.5px solid var(--sb-border) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+    box-shadow: 0 4px 12px var(--sb-shadow-light) !important;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease !important;
+    padding: 8px !important;
+    box-sizing: border-box !important;
+}
+
+.service-box-icon img {
+    max-width: 66px !important;
+    max-height: 66px !important;
+    width: auto !important;
+    height: auto !important;
+    object-fit: contain !important;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.08)) !important;
+    transition: transform 0.3s ease !important;
+}
+
+.service-box.box:hover .service-box-icon {
+    transform: scale(1.06) translateY(-2px) !important;
+    box-shadow: 0 8px 18px var(--sb-shadow) !important;
+}
+
+.service-box.box:hover .service-box-icon img {
+    transform: scale(1.05) !important;
+}
+
+.service-box-links {
+    flex: 1 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+}
+
+.service-box-links li {
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+    display: block !important;
+}
+
+.service-box-links li::before {
+    display: none !important;
+}
+
+.service-box-links li a {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 6.5px 10px !important;
+    background: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 8px !important;
+    font-size: 13.5px !important;
+    font-weight: 600 !important;
+    color: #334155 !important;
+    text-decoration: none !important;
+    transition: all 0.22s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+    line-height: 1.35 !important;
+    box-sizing: border-box !important;
+}
+
+.sb-link-text-wrap {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+.sb-link-dot {
+    width: 6px !important;
+    height: 6px !important;
+    border-radius: 50% !important;
+    background: var(--sb-accent) !important;
+    opacity: 0.65 !important;
+    flex-shrink: 0 !important;
+    transition: all 0.2s ease !important;
+}
+
+.sb-link-arrow {
+    display: flex !important;
+    align-items: center !important;
+    color: var(--sb-accent) !important;
+    opacity: 0.45 !important;
+    transform: translateX(0) !important;
+    transition: all 0.22s ease !important;
+    flex-shrink: 0 !important;
+}
+
+.sb-link-arrow svg {
+    width: 12px !important;
+    height: 12px !important;
+    stroke: currentColor !important;
+    stroke-width: 2.4 !important;
+    fill: none !important;
+}
+
+.service-box-links li a:hover {
+    background: var(--sb-soft-bg) !important;
+    border-color: var(--sb-accent) !important;
+    color: var(--sb-accent) !important;
+    transform: translateX(4px) !important;
+    box-shadow: 0 3px 8px var(--sb-shadow-light) !important;
+    text-decoration: none !important;
+}
+
+.service-box-links li a:hover .sb-link-dot {
+    opacity: 1 !important;
+    transform: scale(1.4) !important;
+}
+
+.service-box-links li a:hover .sb-link-arrow {
+    opacity: 1 !important;
+    transform: translateX(3px) !important;
+}
+
+.sb-theme-institution {
+    --sb-grad: linear-gradient(135deg, #059669 0%, #10b981 100%);
+    --sb-accent: #059669;
+    --sb-soft-bg: #ecfdf5;
+    --sb-border: #a7f3d0;
+    --sb-shadow: rgba(16, 185, 129, 0.18);
+    --sb-shadow-light: rgba(16, 185, 129, 0.1);
+}
+
+.sb-theme-admin {
+    --sb-grad: linear-gradient(135deg, #1d4ed8 0%, #3b82f6 100%);
+    --sb-accent: #1d4ed8;
+    --sb-soft-bg: #eff6ff;
+    --sb-border: #bfdbfe;
+    --sb-shadow: rgba(37, 99, 235, 0.18);
+    --sb-shadow-light: rgba(37, 99, 235, 0.1);
+}
+
+.sb-theme-academic {
+    --sb-grad: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+    --sb-accent: #7c3aed;
+    --sb-soft-bg: #faf5ff;
+    --sb-border: #e9d5ff;
+    --sb-shadow: rgba(124, 58, 237, 0.18);
+    --sb-shadow-light: rgba(124, 58, 237, 0.1);
+}
+
+.sb-theme-download {
+    --sb-grad: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
+    --sb-accent: #d97706;
+    --sb-soft-bg: #fffbeb;
+    --sb-border: #fde68a;
+    --sb-shadow: rgba(217, 119, 6, 0.18);
+    --sb-shadow-light: rgba(217, 119, 6, 0.1);
+}
+
