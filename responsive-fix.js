@@ -1387,13 +1387,23 @@ var boundaryPoly = null;
                 
                 // If Daulatpur College or another school parsed from embed
                 if (config.name && config.name.toLowerCase().indexOf('daulatpur') !== -1) {
+                    config.lat = 24.0099265;
+                    config.lng = 88.872643;
                     config.name = "দৌলতপুর কলেজ";
                     config.campus = "মূল ক্যাম্পাস, দৌলতপুর";
                     config.address = "কলেজ রোড, দৌলতপুর সদর, কুষ্টিয়া-৭০৪০";
                     config.transit = "দৌলতপুর বাসস্ট্যান্ড বা উপজেলা মোড় থেকে মাত্র ৩ মিনিট";
                     config.plusCode = "2V6C+32X (দৌলতপুর)";
                     config.directionUrl = "https://www.google.com/maps/dir/?api=1&destination=Daulatpur+College,+Daulatpur&destination_place_id=ChIJIViBwequ_jkRhF8y9FwK91g";
-                    config.placeUrl = "https://www.google.com/maps/place/Daulatpur+College,+Daulatpur/@24.0098667,88.8727078,17z/data=!3m1!4b1!4m6!3m5!1s0x39feae9ac1814821:0x58f7245cf4325f84!8m2!3d24.0099265!4d88.872643!16s%2Fg%2F11bvt8c4f5";
+                    config.placeUrl = "https://www.google.com/maps/place/Daulatpur+College,+Daulatpur/@24.0099265,88.872643,18z/data=!3m1!4b1!4m6!3m5!1s0x39feae9ac1814821:0x58f7245cf4325f84!8m2!3d24.0099265!4d88.872643!16s%2Fg%2F11bvt8c4f5";
+                    config.boundary = [
+                        [24.01075, 88.87215],
+                        [24.01085, 88.87320],
+                        [24.01035, 88.87355],
+                        [24.00935, 88.87340],
+                        [24.00925, 88.87220],
+                        [24.00990, 88.87180]
+                    ];
                 } else if (config.lat !== 23.5455) {
                     // Generic new school fallback
                     config.address = config.name + ", সদর রোড";
@@ -1401,6 +1411,16 @@ var boundaryPoly = null;
                     config.plusCode = config.lat.toFixed(4) + ", " + config.lng.toFixed(4);
                     config.directionUrl = "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(config.name);
                     config.placeUrl = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(config.name);
+                    var d_lat = 0.0009;
+                    var d_lng = 0.0011;
+                    config.boundary = [
+                        [config.lat + d_lat * 0.8, config.lng - d_lng * 0.9],
+                        [config.lat + d_lat * 1.1, config.lng + d_lng * 0.8],
+                        [config.lat + d_lat * 0.3, config.lng + d_lng * 1.2],
+                        [config.lat - d_lat * 0.9, config.lng + d_lng * 0.9],
+                        [config.lat - d_lat * 1.1, config.lng - d_lng * 0.7],
+                        [config.lat - d_lat * 0.2, config.lng - d_lng * 1.1]
+                    ];
                 } else {
                     config.directionUrl = "https://www.google.com/maps/dir/?api=1&destination=" + config.lat + "," + config.lng;
                     config.placeUrl = "https://www.google.com/maps?q=" + config.lat + "," + config.lng;
