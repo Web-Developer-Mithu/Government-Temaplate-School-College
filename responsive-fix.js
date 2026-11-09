@@ -1384,7 +1384,6 @@ var boundaryPoly = null;
                 config.lat = parsed.lat;
                 config.lng = parsed.lng;
                 if (parsed.name) config.name = parsed.name;
-                config.directionUrl = "https://www.google.com/maps/dir/?api=1&destination=" + config.lat + "," + config.lng;
                 
                 // If Daulatpur College or another school parsed from embed
                 if (config.name && config.name.toLowerCase().indexOf('daulatpur') !== -1) {
@@ -1392,12 +1391,19 @@ var boundaryPoly = null;
                     config.campus = "মূল ক্যাম্পাস, দৌলতপুর";
                     config.address = "কলেজ রোড, দৌলতপুর সদর, কুষ্টিয়া-৭০৪০";
                     config.transit = "দৌলতপুর বাসস্ট্যান্ড বা উপজেলা মোড় থেকে মাত্র ৩ মিনিট";
-                    config.plusCode = "2V5C+X4 (দৌলতপুর)";
+                    config.plusCode = "2V6C+32X (দৌলতপুর)";
+                    config.directionUrl = "https://www.google.com/maps/dir/?api=1&destination=Daulatpur+College,+Daulatpur&destination_place_id=ChIJIViBwequ_jkRhF8y9FwK91g";
+                    config.placeUrl = "https://www.google.com/maps/place/Daulatpur+College,+Daulatpur/@24.0098667,88.8727078,17z/data=!3m1!4b1!4m6!3m5!1s0x39feae9ac1814821:0x58f7245cf4325f84!8m2!3d24.0099265!4d88.872643!16s%2Fg%2F11bvt8c4f5";
                 } else if (config.lat !== 23.5455) {
                     // Generic new school fallback
                     config.address = config.name + ", সদর রোড";
                     config.transit = "নিকটস্থ বাসস্ট্যান্ড বা বাজার মোড় থেকে ৩-৫ মিনিট";
                     config.plusCode = config.lat.toFixed(4) + ", " + config.lng.toFixed(4);
+                    config.directionUrl = "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(config.name);
+                    config.placeUrl = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(config.name);
+                } else {
+                    config.directionUrl = "https://www.google.com/maps/dir/?api=1&destination=" + config.lat + "," + config.lng;
+                    config.placeUrl = "https://www.google.com/maps?q=" + config.lat + "," + config.lng;
                 }
 
                 // Check custom data attributes on container
@@ -1548,7 +1554,7 @@ var boundaryPoly = null;
 
         mapContainer._leaflet_map = map;
         marker.on('click', function() {
-            window.open(config.directionUrl, '_blank');
+            window.open(config.directionUrl, '_blank', 'noopener,noreferrer');
         });
 
         var satSearchText = document.getElementById('kc-sat-search-text');
@@ -1596,27 +1602,20 @@ var boundaryPoly = null;
             }
 
             if (satSearchText) {
-                satSearchText.textContent = '🌍 গ্লোবাল স্যাটেলাইট থেকে ট্র্যাকিং শুরু...';
+                satSearchText.textContent = '🛰️ দক্ষিণ এশিয়া আকাশসীমা • বাংলাদেশ মানচিত্র স্পষ্ট হচ্ছে...';
             }
 
-            // Start softly at regional altitude (Zoom 3: South Asia / Bay of Bengal / Himalayas)
-            map.setView([config.lat, config.lng], 3, { reset: true });
+            // Start softly at continental altitude (Zoom 4: South Asia / Bay of Bengal / Bangladesh outline)
+            map.setView([config.lat, config.lng], 4, { animate: false });
             map.invalidateSize();
 
-            if (flightTimer) clearTimeout(flightTimer);
-            flightTimer = setTimeout(function() {
-                if (satSearchText) {
-                    satSearchText.textContent = '🛰️ ' + config.name + ' • রিয়েল-টাইম স্যাটেলাইট জুম...';
-                }
+            if (revealOpeningGlobe) revealOpeningGlobe();
 
-                if (revealOpeningGlobe) revealOpeningGlobe();
-
-                // Smooth continuous optical zoom directly to building rooftops
-                map.flyTo([config.lat, config.lng], config.zoom || 19, {
-                    duration: 4.8,
-                    easeLinearity: 0.22
-                });
-            }, 600);
+            // Smooth continuous optical zoom through Bangladesh map down to college building rooftop
+            map.flyTo([config.lat, config.lng], config.zoom || 19, {
+                duration: 5.0,
+                easeLinearity: 0.22
+            });
         }
 
         function playOpeningGlobe(onComplete) {
@@ -1633,11 +1632,36 @@ var boundaryPoly = null;
             var overlay = document.createElement('div');
             var loadTimeout = null;
             var overlayLeaving = false;
+            var mapFlightStarted = false;
+            var startRotation = null;
+            var targetRotation = null;
 
             overlay.className = 'kc-globe-overlay';
             overlay.setAttribute('aria-hidden', 'true');
             stageWrap.appendChild(overlay);
             mapContainer.classList.add('kc-map-animations-paused');
+
+            function revealOverlay() {
+                if (overlayLeaving) return;
+                overlayLeaving = true;
+                overlay.classList.add('kc-globe-overlay-leaving');
+                setTimeout(function() {
+                    if (earth) {
+                        if (earth.geometry) earth.geometry.dispose();
+                        if (earth.material) {
+                            if (earth.material.map) earth.material.map.dispose();
+                            earth.material.dispose();
+                        }
+                    }
+                    if (earthTexture) earthTexture.dispose();
+                    if (renderer) {
+                        renderer.dispose();
+                        renderer.forceContextLoss();
+                    }
+                    if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+                    mapContainer.classList.remove('kc-map-animations-paused');
+                }, 800);
+            }
 
             function complete(error) {
                 if (finished) return;
@@ -1647,26 +1671,8 @@ var boundaryPoly = null;
                 if (error) console.error('Opening Earth animation could not be loaded.', error);
                 openingGlobeResume = null;
 
-                function revealOverlay() {
-                    if (overlayLeaving) return;
-                    overlayLeaving = true;
-                    overlay.classList.add('kc-globe-overlay-leaving');
-                    setTimeout(function() {
-                        if (earth) {
-                            earth.geometry.dispose();
-                            earth.material.dispose();
-                        }
-                        if (earthTexture) earthTexture.dispose();
-                        if (renderer) {
-                            renderer.dispose();
-                            renderer.forceContextLoss();
-                        }
-                        if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
-                        mapContainer.classList.remove('kc-map-animations-paused');
-                    }, 900);
-                }
-
-                onComplete(revealOverlay);
+                revealOverlay();
+                if (onComplete) onComplete();
             }
 
             function animate(timestamp) {
@@ -1679,15 +1685,49 @@ var boundaryPoly = null;
                 if (lastTimestamp) elapsed += Math.min(timestamp - lastTimestamp, 50);
                 lastTimestamp = timestamp;
 
-                earth.rotation.y = elapsed / 2800 * Math.PI * 2;
-                if (timestamp - lastRenderTimestamp >= 33) {
+                // Phase 1 (0ms - 2400ms): 360° Earth Axial Rotation (প্রথম থেকেই দ্রুত ও মসৃণভাবে ঘুরবে)
+                var spinProgress = Math.min(elapsed / 2400, 1);
+                // Ease-out: starts spinning at full natural momentum from Frame 0, softly decelerates onto Bangladesh
+                var easedSpin = 1 - Math.pow(1 - spinProgress, 2.2);
+                var spinAngle = (1 - easedSpin) * -Math.PI * 2;
+                var spinQuat = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), spinAngle);
+                if (earth && targetRotation) {
+                    earth.quaternion.copy(targetRotation).multiply(spinQuat);
+                }
+
+                if (satSearchText && elapsed < 2400) {
+                    satSearchText.textContent = '🌍 পৃথিবী আবর্তন করছে • স্যাটেলাইট ট্র্যাকিং সক্রিয়...';
+                }
+
+                // Phase 2 (2400ms - 3800ms): Earth Dives/Zooms In Towards Bangladesh (ঘোরার পর জুম হতে হতে)
+                if (elapsed >= 2400 && camera) {
+                    var zoomProgress = Math.min((elapsed - 2400) / 1400, 1);
+                    var easedZoom = zoomProgress * zoomProgress * (3 - 2 * zoomProgress);
+                    camera.position.z = 3.1 - easedZoom * 1.82; // Zooms camera smoothly down from 3.1 to 1.28
+                    if (satSearchText && elapsed < 3500) {
+                        satSearchText.textContent = '🛰️ পৃথিবীর কক্ষপথ থেকে বাংলাদেশ আকাশসীমায় প্রবেশ...';
+                    }
+                }
+
+                // Phase 3 (3500ms): Seamless Hand-off to Real Google Satellite Map of Bangladesh
+                if (elapsed >= 3500 && !mapFlightStarted) {
+                    mapFlightStarted = true;
+                    if (onComplete) {
+                        onComplete(revealOverlay);
+                    }
+                }
+
+                if (timestamp - lastRenderTimestamp >= 33 && renderer && scene && camera) {
                     renderer.render(scene, camera);
                     lastRenderTimestamp = timestamp;
                 }
-                if (elapsed >= 2800) {
+
+                // Phase 4 (4200ms): Globe animation finishes and dissolves
+                if (elapsed >= 4200) {
                     complete();
                     return;
                 }
+
                 frameId = requestAnimationFrame(animate);
             }
 
@@ -1697,6 +1737,119 @@ var boundaryPoly = null;
                 }
             }
             openingGlobeResume = resume;
+
+            function createInstantEarthCanvas() {
+                var cvs = document.createElement('canvas');
+                cvs.width = 1024;
+                cvs.height = 512;
+                var ctx = cvs.getContext('2d');
+                if (!ctx) return null;
+
+                // Deep space ocean gradient
+                var ocean = ctx.createLinearGradient(0, 0, 0, 512);
+                ocean.addColorStop(0, '#0a2342');
+                ocean.addColorStop(0.3, '#0e3870');
+                ocean.addColorStop(0.5, '#104580');
+                ocean.addColorStop(0.7, '#0e3870');
+                ocean.addColorStop(1, '#071830');
+                ctx.fillStyle = ocean;
+                ctx.fillRect(0, 0, 1024, 512);
+
+                // Polar ice caps
+                ctx.fillStyle = '#e2e8f0';
+                ctx.beginPath();
+                ctx.ellipse(512, 12, 512, 28, 0, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.beginPath();
+                ctx.ellipse(512, 500, 512, 32, 0, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Continents (approximate equirectangular world map)
+                ctx.fillStyle = '#2d6a4f';
+
+                // Africa & Europe
+                ctx.beginPath();
+                ctx.moveTo(500, 130);
+                ctx.lineTo(540, 120);
+                ctx.lineTo(580, 150);
+                ctx.lineTo(570, 190);
+                ctx.lineTo(600, 220);
+                ctx.lineTo(560, 340);
+                ctx.lineTo(520, 320);
+                ctx.lineTo(490, 230);
+                ctx.lineTo(470, 190);
+                ctx.closePath();
+                ctx.fill();
+
+                // Eurasia
+                ctx.beginPath();
+                ctx.moveTo(550, 110);
+                ctx.lineTo(680, 80);
+                ctx.lineTo(840, 90);
+                ctx.lineTo(890, 140);
+                ctx.lineTo(830, 210);
+                ctx.lineTo(760, 230);
+                ctx.lineTo(720, 190);
+                ctx.lineTo(680, 170);
+                ctx.closePath();
+                ctx.fill();
+
+                // Indian Subcontinent & Bangladesh (vibrant delta green)
+                ctx.fillStyle = '#38b000';
+                ctx.beginPath();
+                ctx.moveTo(700, 195);
+                ctx.lineTo(755, 195);
+                ctx.lineTo(750, 230);
+                ctx.lineTo(735, 235);
+                ctx.lineTo(725, 260);
+                ctx.lineTo(705, 225);
+                ctx.closePath();
+                ctx.fill();
+
+                // Americas
+                ctx.fillStyle = '#2d6a4f';
+                ctx.beginPath();
+                ctx.moveTo(140, 90);
+                ctx.lineTo(260, 100);
+                ctx.lineTo(280, 160);
+                ctx.lineTo(240, 210);
+                ctx.lineTo(200, 230);
+                ctx.lineTo(170, 170);
+                ctx.closePath();
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.moveTo(250, 240);
+                ctx.lineTo(310, 270);
+                ctx.lineTo(300, 350);
+                ctx.lineTo(250, 420);
+                ctx.lineTo(235, 340);
+                ctx.closePath();
+                ctx.fill();
+
+                // Australia
+                ctx.beginPath();
+                ctx.moveTo(820, 330);
+                ctx.lineTo(900, 330);
+                ctx.lineTo(900, 390);
+                ctx.lineTo(830, 385);
+                ctx.closePath();
+                ctx.fill();
+
+                // Atmospheric clouds swirls (semi-transparent)
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.22)';
+                ctx.beginPath();
+                ctx.ellipse(300, 180, 160, 35, -0.15, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.beginPath();
+                ctx.ellipse(650, 280, 180, 30, 0.1, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.beginPath();
+                ctx.ellipse(750, 160, 140, 28, -0.08, 0, Math.PI * 2);
+                ctx.fill();
+
+                return new THREE.CanvasTexture(cvs);
+            }
 
             function loadGlobe() {
                 if (!window.THREE) {
@@ -1735,36 +1888,87 @@ var boundaryPoly = null;
                     scene.background = new THREE.Color('#020817');
                     camera = new THREE.PerspectiveCamera(42, width / height, 0.1, 100);
                     camera.position.set(0, 0, 3.1);
-                    scene.add(new THREE.AmbientLight(0xffffff, 0.7));
-                    var sunlight = new THREE.DirectionalLight(0xffffff, 1.3);
+                    scene.add(new THREE.AmbientLight(0xffffff, 0.85));
+                    var sunlight = new THREE.DirectionalLight(0xffffff, 1.4);
                     sunlight.position.set(-3, 2, 4);
                     scene.add(sunlight);
 
+                    // Add subtle space stars background
+                    var starCount = 180;
+                    var starGeo = new THREE.BufferGeometry();
+                    var starPositions = new Float32Array(starCount * 3);
+                    for (var s = 0; s < starCount; s++) {
+                        starPositions[s * 3] = (Math.random() - 0.5) * 35;
+                        starPositions[s * 3 + 1] = (Math.random() - 0.5) * 35;
+                        starPositions[s * 3 + 2] = (Math.random() - 0.5) * 20 - 5;
+                    }
+                    starGeo.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+                    var starMat = new THREE.PointsMaterial({ color: '#93c5fd', size: 0.08, transparent: true, opacity: 0.6 });
+                    scene.add(new THREE.Points(starGeo, starMat));
+
+                    // Calculate target orientation to center Bangladesh at camera
+                    var lat = (config.lat || 24.0099) * Math.PI / 180;
+                    var lng = (config.lng || 88.8726) * Math.PI / 180;
+                    var targetDirection = new THREE.Vector3(
+                        Math.cos(lat) * Math.sin(lng),
+                        Math.sin(lat),
+                        Math.cos(lat) * Math.cos(lng)
+                    );
+                    var destination = new THREE.Vector3(0, 0, 1);
+                    targetRotation = new THREE.Quaternion().setFromUnitVectors(targetDirection, destination);
+
+                    // Create instant procedural Earth canvas texture synchronously in 2ms
+                    var instantTexture = createInstantEarthCanvas();
+                    if (instantTexture) instantTexture.encoding = THREE.sRGBEncoding;
+                    var earthMat = new THREE.MeshPhongMaterial({
+                        map: instantTexture,
+                        shininess: 16,
+                        specular: new THREE.Color('#182c47')
+                    });
+                    earth = new THREE.Mesh(new THREE.SphereGeometry(1, 48, 32), earthMat);
+
+                    // Initial orientation: rotated 360° away around polar Y axis
+                    var initialSpin = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), -Math.PI * 2);
+                    earth.quaternion.copy(targetRotation).multiply(initialSpin);
+
+                    // Glowing target indicator over Bangladesh on the globe
+                    var targetMarker = new THREE.Group();
+                    targetMarker.position.copy(targetDirection).multiplyScalar(1.008);
+                    targetMarker.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), targetDirection);
+                    targetMarker.add(new THREE.Mesh(
+                        new THREE.SphereGeometry(0.015, 8, 6),
+                        new THREE.MeshBasicMaterial({ color: '#ef4444' })
+                    ));
+                    targetMarker.add(new THREE.Mesh(
+                        new THREE.RingGeometry(0.02, 0.038, 16),
+                        new THREE.MeshBasicMaterial({ color: '#38bdf8', side: THREE.DoubleSide, transparent: true, opacity: 0.9 })
+                    ));
+                    earth.add(targetMarker);
+
+                    scene.add(earth);
+
+                    // START ANIMATION IMMEDIATELY (Frame 0 - ZERO DELAY)
+                    resume();
+
+                    // Stream 2K NASA texture in the background asynchronously
                     var loader = new THREE.TextureLoader();
                     loader.setCrossOrigin('anonymous');
                     loader.load(
                         'https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg',
                         function(texture) {
-                            if (finished) {
+                            if (finished || !earth || !earth.material) {
                                 texture.dispose();
                                 return;
                             }
-                            earthTexture = texture;
                             texture.encoding = THREE.sRGBEncoding;
-                            earth = new THREE.Mesh(
-                                new THREE.SphereGeometry(1, 48, 32),
-                                new THREE.MeshPhongMaterial({
-                                    map: texture,
-                                    shininess: 16,
-                                    specular: new THREE.Color('#182c47')
-                                })
-                            );
-                            scene.add(earth);
-                            resume();
+                            earthTexture = texture;
+                            earth.material.map = texture;
+                            earth.material.needsUpdate = true;
+                            if (instantTexture) instantTexture.dispose();
                         },
                         undefined,
-                        function(error) {
-                            complete(error || new Error('Earth texture failed to load.'));
+                        function() {
+                            // Instant canvas texture is already rendering smoothly
                         }
                     );
                 } catch (error) {
@@ -1778,19 +1982,19 @@ var boundaryPoly = null;
             loadGlobe();
         }
 
-        // Softly update search bar during continuous zoom
+        // Softly update search bar during continuous zoom through Bangladesh into college
         map.on('zoom', function() {
             if (!mapFlightActive) return;
             var z = map.getZoom();
             if (satSearchText) {
                 if (z < 6) {
-                    satSearchText.textContent = '🌍 ভারত মহাসাগর ও দক্ষিণ এশিয়া আকাশসীমা...';
-                } else if (z < 11) {
-                    satSearchText.textContent = '🛰️ বাংলাদেশ ও পদ্মা নদী অববাহিকা...';
-                } else if (z < 16) {
-                    satSearchText.textContent = '🛰️ কুষ্টিয়া জেলা • দৌলতপুর এলাকা অতিক্রম করছে...';
+                    satSearchText.textContent = '🛰️ দক্ষিণ এশিয়া আকাশসীমা • বাংলাদেশ মানচিত্রে প্রবেশ করছে...';
+                } else if (z < 10) {
+                    satSearchText.textContent = '🛰️ বাংলাদেশ ম্যাপ • পদ্মা ও যমুনা নদী অববাহিকা...';
+                } else if (z < 15) {
+                    satSearchText.textContent = '🛰️ কুষ্টিয়া জেলা • দৌলতপুর উপজেলা এলাকা জুম হচ্ছে...';
                 } else {
-                    satSearchText.textContent = '📍 ' + config.name + ' • ক্যাম্পাস ছাদ ও সীমানা স্পষ্ট হচ্ছে...';
+                    satSearchText.textContent = '📍 ' + config.name + ' • মূল ক্যাম্পাস ছাদ ও সীমানা স্পষ্ট হচ্ছে...';
                 }
             }
         });
@@ -1886,17 +2090,24 @@ var boundaryPoly = null;
         }
 
         // Fullscreen Google Maps button & Header Direction button
-        var fsBtn = document.querySelector('.kc-map-fullscreen-btn');
+        var fsBtn = document.getElementById('kc-map-fullscreen-btn') || document.querySelector('.kc-map-fullscreen-btn');
         if (fsBtn) {
+            fsBtn.href = config.placeUrl || config.directionUrl;
+            fsBtn.setAttribute('title', config.name + ' সম্পূর্ণ গুগল ম্যাপে ওপেন করুন');
             fsBtn.addEventListener('click', function(e) {
                 e.preventDefault();
-                window.open(config.directionUrl, '_blank');
+                window.open(config.placeUrl || config.directionUrl, '_blank', 'noopener,noreferrer');
             });
         }
 
-        var dirBtn = document.querySelector('.kc-map-dir-btn');
+        var dirBtn = document.getElementById('kc-map-dir-btn') || document.querySelector('.kc-map-dir-btn');
         if (dirBtn) {
             dirBtn.href = config.directionUrl;
+            dirBtn.setAttribute('title', config.name + ' সরাসরি গুগল ম্যাপে ডিরেকশন ও নেভিগেশন পান');
+            dirBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.open(config.directionUrl, '_blank', 'noopener,noreferrer');
+            });
         }
 
         // Auto resize invalidation on window resize
