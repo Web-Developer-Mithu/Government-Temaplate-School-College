@@ -721,19 +721,18 @@ img, video, audio, iframe {
 }
 
 .kc-bani-speech {
-    background: #f8fafc !important;
-    border-left: 3px solid #03703e !important;
-    border-radius: 0 6px 6px 0 !important;
-    padding: 10px 12px !important;
-    margin: 8px 0 12px 0 !important;
-    font-size: 12.5px !important;
-    line-height: 1.65 !important;
+    background: transparent !important;
+    border: none !important;
+    border-left: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-size: 13.5px !important;
+    line-height: 1.7 !important;
     color: #334155 !important;
     text-align: justify !important;
-    max-height: 180px !important;
-    overflow-y: auto !important;
-    scrollbar-width: thin !important;
-    scrollbar-color: #03703e #f1f5f9 !important;
+    max-height: none !important;
+    overflow: visible !important;
 }
 
 .kc-bani-btn {
@@ -4031,25 +4030,33 @@ body, html {
     width: 100% !important;
 }
 
-/* 2. Full visibility for Bani text - no truncation or clipping */
+/* 2. Full visibility for Bani text with Single Left Accent Border and Narration Quotes */
 .kc-bani-speech-box {
     position: relative !important;
-    background: #f4faf6 !important;
-    border-left: 3.5px solid #088143 !important;
+    background: #f0fdf4 !important;
+    border: none !important;
+    border-left: 3.5px solid #056333 !important;
     border-radius: 0 8px 8px 0 !important;
-    padding: 10px 12px !important;
-    margin: 10px 0 14px 0 !important;
+    padding: 12px 14px !important;
+    margin: 12px 0 16px 0 !important;
     box-sizing: border-box !important;
     width: 100% !important;
+    box-shadow: 0 1px 3px rgba(5, 99, 51, 0.05) !important;
 }
 
 .kc-quote-watermark {
     display: none !important; /* Remove watermark clutter so text is 100% clean and clear */
 }
 
-.kc-bani-speech {
+.kc-bani-speech,
+#kc-speech-principal-box,
+#kc-speech-vp-box {
     margin: 0 !important;
     padding: 0 !important;
+    border: none !important;
+    border-left: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
     max-height: none !important;
     overflow: visible !important;
     display: block !important;
@@ -4060,17 +4067,38 @@ body, html {
 .kc-speech-excerpt {
     margin: 0 !important;
     padding: 0 !important;
-    font-size: 13px !important;
-    line-height: 1.65 !important;
-    color: #1e293b !important; /* High contrast, deep, crystal clear readability */
+    font-size: 13.5px !important;
+    line-height: 1.7 !important;
+    color: #334155 !important; /* High contrast, deep, crystal clear readability */
     text-align: justify !important;
     font-style: normal !important;
     font-weight: 500 !important;
     word-break: break-word !important;
+    display: inline !important;
+}
+
+.kc-speech-excerpt::before {
+    content: '“' !important;
+    font-family: Georgia, 'Times New Roman', serif !important;
+    font-size: 22px !important;
+    font-weight: 700 !important;
+    color: #056333 !important;
+    margin-right: 3px !important;
+    line-height: 0 !important;
+    vertical-align: -2px !important;
+    display: inline !important;
 }
 
 .kc-speech-excerpt::after {
-    display: none !important;
+    content: '”' !important;
+    font-family: Georgia, 'Times New Roman', serif !important;
+    font-size: 22px !important;
+    font-weight: 700 !important;
+    color: #056333 !important;
+    margin-left: 3px !important;
+    line-height: 0 !important;
+    vertical-align: -2px !important;
+    display: inline !important;
 }
 
 .kc-bani-speech::after {
@@ -10558,3 +10586,73 @@ h1, h2, h3, h4, h5, h6, p, span, a, li, button {
         gap: 8px !important;
     }
 }
+
+/* ==========================================================================
+   SPEECH BOX & NARRATION QUOTATION MARKS (একক বর্ডার ও ন্যারেশন ইনভার্টেড কমা)
+   ========================================================================== */
+.kc-bani-speech-box {
+    position: relative !important;
+    background: #f0fdf4 !important;
+    border: none !important;
+    border-left: 3.5px solid #056333 !important;
+    border-radius: 0 8px 8px 0 !important;
+    padding: 12px 14px !important;
+    margin: 12px 0 16px 0 !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    box-shadow: 0 1px 3px rgba(5, 99, 51, 0.05) !important;
+}
+
+.kc-bani-speech,
+#kc-speech-principal-box,
+#kc-speech-vp-box {
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    border-left: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    max-height: none !important;
+    overflow: visible !important;
+    display: block !important;
+    -webkit-line-clamp: unset !important;
+    text-overflow: unset !important;
+}
+
+.kc-speech-excerpt {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 13.5px !important;
+    line-height: 1.7 !important;
+    color: #334155 !important;
+    text-align: justify !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    word-break: break-word !important;
+    display: inline !important;
+}
+
+.kc-speech-excerpt::before {
+    content: '“' !important;
+    font-family: Georgia, 'Times New Roman', serif !important;
+    font-size: 22px !important;
+    font-weight: 700 !important;
+    color: #056333 !important;
+    margin-right: 3px !important;
+    line-height: 0 !important;
+    vertical-align: -2px !important;
+    display: inline !important;
+}
+
+.kc-speech-excerpt::after {
+    content: '”' !important;
+    font-family: Georgia, 'Times New Roman', serif !important;
+    font-size: 22px !important;
+    font-weight: 700 !important;
+    color: #056333 !important;
+    margin-left: 3px !important;
+    line-height: 0 !important;
+    vertical-align: -2px !important;
+    display: inline !important;
+}
+
