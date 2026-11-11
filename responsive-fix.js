@@ -246,8 +246,93 @@ var boundaryPoly = null;
         "অনলাইন ভর্তি আবেদন": "Online Admission",
         "হটলাইন / হেল্পডেস্ক": "Hotline / Helpdesk",
         "অফিসিয়াল ইমেইল": "Official Email",
+                // Quick Menu Tags & Badges
+        // College Brand Variants
+        "সরকারি আদর্শ মডেল কলেজ": "Govt. Ideal Model College",
+        "দিনাজপুর-১২০০": "Dinajpur-1200",
+        "দিনাজপুর সদর": "Dinajpur Sadar",
+        "স.আ.ম.ক.": "GIMC",
+        "১৯৭৫": "1975",
+        "১৯৬০": "1960",
+        "২০২৬": "2026",
+        "২০২৭": "2027",
+
+        // Gallery Captions
+        "শিশু অধিকার সচেতনতামুলক র‍্যালি": "Child Rights Awareness Rally",
+        "শিক্ষক দিবসের র‍্যালি": "Teachers' Day Rally",
+        "পরিচ্ছিন্নতা অভিযান": "Cleanliness Campaign",
+        "দেশি মাছ সংরক্ষণ রিপোর্ট": "Indigenous Fish Conservation Report",
+        "বাবুই পাখির উপর ডকুমেন্টারি": "Documentary on Baya Weaver Bird",
+
+        // Notice Popover Details
+        "২.৪ মেগাবাইট": "2.4 MB",
+        "স্মারক নং:": "Ref No:",
+        "জরুরি অবগতি:": "Urgent Notice:",
+        "স্বাক্ষরিত": "Signed",
+        "৮টি জরুরি সেবা": "8 Vital Services",
+        "ভর্তি পোর্টাল": "Admission Portal",
+        "ফি পেমেন্ট": "Pay Fees Online",
+        "সনদপত্র সেবা": "Certificate Services",
+        "শিক্ষার্থী তথ্য": "Student Records",
+        "জরুরি নোটিশ": "Urgent Notices",
+        "গ্রেড ও রেজাল্ট": "Grades & Results",
+        "ক্লাস সময়সূচী": "Class Schedule",
+        "ক্লাস সময়সূচী": "Class Schedule",
+        "পরীক্ষা সময়সূচী": "Exam Schedule",
+        "পরীক্ষা সময়সূচী": "Exam Schedule",
+
+        // Important Services
+        "৪টি সেবা শাখা": "4 Service Wings",
+        "৩টি সেবা": "3 Services",
+        "৬টি সেবা": "6 Services",
+        "৪টি সেবা": "4 Services",
+        "একাডেমিক": "Academic",
+        "ডাউনলোড": "Downloads",
+        "ম্যানুয়েল": "User Manual",
+        "ই-বুক": "E-Book",
+        "লেকচার শীট": "Lecture Sheet",
+
+        // National Anthem
+        "আমার সোনার বাংলা, আমি তোমায় ভালোবাসি": "My Golden Bengal, I Love You",
+        "আমার সোনার বাংলা": "My Golden Bengal",
+
+        // Sidebar
+        "বাংলাদেশ শিক্ষাতথ্য ও পরিসংখ্যান ব্যুরো (ব্যানবেইস)": "Bangladesh Bureau of Educational Information & Statistics (BANBEIS)",
+        "ব্যানবেইস": "BANBEIS",
+
+        // Map & Satellite
+        "ক্যাম্পাস অবস্থান ও গুগল ম্যাপ": "Campus Location & Google Maps",
+        "লাইভ জিপিএস লোকেশন": "Live GPS Location",
+        "ডিরেকশন পান": "Get Directions",
+        "লাইভ স্যাটেলাইট": "Live Satellite",
+        "স্যাটেলাইট": "Satellite",
+        "ক্যাম্পাস পিন": "Campus Pin",
+        "বড় ম্যাপ": "Large Map",
+        "দৌলতপুর কলেজ": "Daulatpur College",
+        "দৌলতপুর কলেজ, দৌলতপুর, কুষ্টিয়া": "Daulatpur College, Daulatpur, Kushtia",
+        "মূল ক্যাম্পাস, দৌলতপুর • ডিরেকশন দেখতে ক্লিক করুন ↗": "Main Campus, Daulatpur • Click for directions ↗",
+
+        // Gallery & Badges
+        "ক্যাম্পাস মুহূর্ত": "Campus Moments",
+        "ফটো": "Photo",
+        "ভিডিও": "Video",
+
+        // Notice Popover / Detail Modal
+        "✓ অফিসিয়াল নথি": "✓ Official Document",
+        "অফিসিয়াল নথি": "Official Document",
+        "প্রিভিউ 👁": "Preview 👁",
+        "সম্পূর্ণ নোটিশ বিস্তারিত দেখুন": "View Full Notice Details",
+        "ডাউনলোড কপি": "Download Copy",
+        "প্রিন্ট": "Print",
+        "ফুল ভিউ": "Full View",
+        "উচ্চ রেজোলিউশনে দেখুন": "View High Resolution",
+        "অথবা বাইরে মাউস সরালে বন্ধ হবে": "or move mouse away to close",
         "সর্বস্বত্ব সংরক্ষিত": "All Rights Reserved"
     };
+    var DICT_KEYS = Object.keys(DICTIONARY).sort(function(a, b) {
+        return b.length - a.length;
+    });
+
 
     // --------------------------------------------------------------------------
     // 3. Language Switching Engine
@@ -306,6 +391,18 @@ var boundaryPoly = null;
             b.textContent = isEn ? 'Message' : 'বার্তা';
         });
 
+        // Translate Hotline Cards
+        document.querySelectorAll('.kc-hotline-card').forEach(function(card) {
+            var nameEl = card.querySelector('.kc-hl-name');
+            var numEl = card.querySelector('.kc-hl-number');
+            var badgeEl = card.querySelector('.kc-hl-badge');
+            var actionEl = card.querySelector('.kc-hl-call-action span');
+            if (nameEl && nameEl.getAttribute('data-en')) nameEl.textContent = isEn ? nameEl.getAttribute('data-en') : nameEl.getAttribute('data-bn');
+            if (numEl && numEl.getAttribute('data-en')) numEl.textContent = isEn ? numEl.getAttribute('data-en') : numEl.getAttribute('data-bn');
+            if (badgeEl && badgeEl.getAttribute('data-en')) badgeEl.textContent = isEn ? badgeEl.getAttribute('data-en') : badgeEl.getAttribute('data-bn');
+            if (actionEl) actionEl.textContent = isEn ? 'Call' : 'কল করুন';
+        });
+
         var pTitleSpan = document.querySelector('#kc-principal-card .kc-bani-header-left span');
         if (pTitleSpan) pTitleSpan.textContent = isEn ? "Principal's Message" : "অধ্যক্ষের বাণী";
 
@@ -344,9 +441,86 @@ var boundaryPoly = null;
             headerLabels[1].textContent = isEn ? 'Academic & Services' : 'একাডেমিক ও সেবা';
             headerLabels[2].textContent = isEn ? 'Contact Info' : 'যোগাযোগের তথ্য';
         }
-        var phoneVal = document.querySelector('a[href^="tel:"]');
-        if (phoneVal) {
-            phoneVal.textContent = isEn ? '+880 1700-000000' : '+৮৮০ ১৭০০-০০০০০০';
+        var phoneLinks = document.querySelectorAll('.def-concept-contact a[href*="tel:"], .def-footer a[href*="tel:"]');
+        phoneLinks.forEach(function(p) {
+            p.textContent = isEn ? '+880 1700-000000' : '+৮৮০ ১৭০০-০০০০০০';
+        });
+        var crText = document.querySelector('.def-copyright-text');
+        if (crText) {
+            crText.innerHTML = isEn ?
+                '© 2026 <strong>Govt. Ideal Model College</strong> <span class="def-cr-pipe">|</span> <span class="def-cr-sub">All Rights Reserved</span>' :
+                '© ২০২৬ <strong>সরকারি আদর্শ মডেল কলেজ</strong> <span class="def-cr-pipe">|</span> <span class="def-cr-sub">সর্বস্বত্ব সংরক্ষিত</span>';
+        }
+        // Quick Menu & Vital Services
+        var qmBadge = document.querySelector('.qm-header-badge');
+        if (qmBadge) {
+            qmBadge.textContent = isEn ? '8 Vital Services' : '৮টি জরুরি সেবা';
+        }
+        var qmTags = document.querySelectorAll('.qm-item-tag');
+        var qmTagEn = [
+            'Admission Portal',
+            'Pay Fees Online',
+            'Certificate Services',
+            'Student Records',
+            'Urgent Notices',
+            'Grades & Results',
+            'Class Schedule',
+            'Exam Schedule'
+        ];
+        var qmTagBn = [
+            'ভর্তি পোর্টাল',
+            'ফি পেমেন্ট',
+            'সনদপত্র সেবা',
+            'শিক্ষার্থী তথ্য',
+            'জরুরি নোটিশ',
+            'গ্রেড ও রেজাল্ট',
+            'ক্লাস সময়সূচী',
+            'পরীক্ষা সময়সূচী'
+        ];
+        qmTags.forEach(function(tag, idx) {
+            if (idx < qmTagEn.length) {
+                tag.textContent = isEn ? qmTagEn[idx] : qmTagBn[idx];
+            }
+        });
+
+        // Important Services & Links Section
+        var sbMainBadge = document.querySelector('.sb-main-badge');
+        if (sbMainBadge) {
+            sbMainBadge.textContent = isEn ? '4 Service Wings' : '৪টি সেবা শাখা';
+        }
+        var sbCounts = document.querySelectorAll('.sb-header-count');
+        var sbCountEn = ['3 Services', '3 Services', '6 Services', '4 Services'];
+        var sbCountBn = ['৩টি সেবা', '৩টি সেবা', '৬টি সেবা', '৪টি সেবা'];
+        sbCounts.forEach(function(cnt, idx) {
+            if (idx < sbCountEn.length) {
+                cnt.textContent = isEn ? sbCountEn[idx] : sbCountBn[idx];
+            }
+        });
+
+        // National Anthem Subtitle
+        var anthemSub = document.querySelector('.kc-anthem-sub');
+        if (anthemSub) {
+            anthemSub.textContent = isEn ? 'My Golden Bengal, I Love You' : 'আমার সোনার বাংলা, আমি তোমায় ভালোবাসি';
+        }
+
+        // BANBEIS link in Sidebar
+        var banbeisLink = document.querySelector('a[href*="banbeis.gov.bd"]');
+        if (banbeisLink) {
+            banbeisLink.textContent = isEn ? 'Bangladesh Bureau of Educational Information & Statistics (BANBEIS)' : 'বাংলাদেশ শিক্ষাতথ্য ও পরিসংখ্যান ব্যুরো (ব্যানবেইস)';
+        }
+
+        // Map and Satellite Controls
+        var satSearch = document.querySelector('.kc-sat-search-text');
+        if (satSearch) {
+            satSearch.textContent = isEn ? 'Daulatpur College, Daulatpur, Kushtia' : 'দৌলতপুর কলেজ, দৌলতপুর, কুষ্টিয়া';
+        }
+        var satTitle = document.querySelector('.kc-tooltip-title');
+        if (satTitle) {
+            satTitle.textContent = isEn ? 'Daulatpur College' : 'দৌলতপুর কলেজ';
+        }
+        var satSub = document.querySelector('.kc-tooltip-sub');
+        if (satSub) {
+            satSub.textContent = isEn ? 'Main Campus, Daulatpur • Click for directions ↗' : 'মূল ক্যাম্পাস, দৌলতপুর • ডিরেকশন দেখতে ক্লিক করুন ↗';
         }
 
         // E. Walk DOM text nodes and translate
@@ -365,7 +539,7 @@ var boundaryPoly = null;
                     if (tag === 'script' || tag === 'style' || tag === 'noscript' || tag === 'svg' || tag === 'path') {
                         return NodeFilter.FILTER_REJECT;
                     }
-                    if (parent.closest('#kc-speech-modal')) {
+                    if (parent.closest('#kc-speech-modal') || parent.closest('.kc-hotline-grid')) {
                         return NodeFilter.FILTER_REJECT;
                     }
                     return NodeFilter.FILTER_ACCEPT;
@@ -386,13 +560,13 @@ var boundaryPoly = null;
                     }
                     node.nodeValue = node.nodeValue.replace(val, DICTIONARY[val]);
                 } else {
-                    for (var bnKey in DICTIONARY) {
-                        if (bnKey.length >= 4 && val.indexOf(bnKey) !== -1) {
+                    for (var k = 0; k < DICT_KEYS.length; k++) {
+                        var bnKey = DICT_KEYS[k];
+                        if (bnKey.length >= 3 && node.nodeValue.indexOf(bnKey) !== -1) {
                             if (node._orig_bn === undefined) {
                                 node._orig_bn = node.nodeValue;
                             }
                             node.nodeValue = node.nodeValue.split(bnKey).join(DICTIONARY[bnKey]);
-                            break;
                         }
                     }
                 }
@@ -651,126 +825,74 @@ var boundaryPoly = null;
             if (progressBar) progressBar.style.width = '0%';
         }
 
-        // 3D Ultra-HD Crisp Mosaic Fragment Assembly
-        function assembleTransition(targetIndex, direction) {
-            if (isAnimating) return;
-            if (targetIndex === currentIndex) return;
+// --------------------------------------------------------------------------
+    // Ultra-Smooth Velvety Soft Cinematic Slide Transition (Zero Stutter / 60FPS)
+    // --------------------------------------------------------------------------
+    function assembleTransition(targetIndex, direction) {
+        if (isAnimating) return;
+        if (targetIndex === currentIndex) return;
 
-            isAnimating = true;
-            resetProgress();
-            var targetSlide = slides[targetIndex];
+        isAnimating = true;
+        resetProgress();
+        var targetSlide = slides[targetIndex];
+        var isNext = (direction !== 'prev');
 
-            // Use exact integer wrapper dimensions
-            var W = Math.round(wrapper.clientWidth) || 800;
-            var H = Math.round(wrapper.clientHeight) || 410;
+        // Clean up any stray transition layer
+        var oldLayer = wrapper.querySelector('.kc-soft-slide-layer');
+        if (oldLayer) oldLayer.remove();
 
-            // Crisp HD Grid:
-            // Desktop: 16 columns x 10 rows = 160 crystal-clear fragments
-            // Mobile: 10 columns x 6 rows = 60 fragments
-            var isMobile = (W < 650);
-            var cols = isMobile ? 10 : 16;
-            var rows = isMobile ? 6 : 10;
-            var tileW = W / cols;
-            var tileH = H / rows;
+        // Create incoming slide image layer
+        var incomingImg = document.createElement('img');
+        incomingImg.className = 'ad-main-display kc-soft-slide-layer';
+        incomingImg.src = targetSlide.src;
+        incomingImg.alt = targetSlide.title || 'Slide Photo';
 
-            var oldStage = wrapper.querySelector('.kc-mosaic-stage');
-            if (oldStage) oldStage.remove();
+        // Initial state: subtle offset & soft opacity for velvety glide
+        var startOffset = isNext ? 36 : -36;
+        incomingImg.style.opacity = '0';
+        incomingImg.style.transform = 'translate3d(' + startOffset + 'px, 0, 0) scale(1.035)';
+        incomingImg.style.transition = 'opacity 750ms cubic-bezier(0.25, 1, 0.5, 1), transform 750ms cubic-bezier(0.25, 1, 0.5, 1)';
 
-            var stage = document.createElement('div');
-            stage.className = 'kc-mosaic-stage';
-            stage.style.width = W + 'px';
-            stage.style.height = H + 'px';
+        // Outgoing image soft transition
+        mainImg.style.transition = 'opacity 750ms cubic-bezier(0.25, 1, 0.5, 1), transform 750ms cubic-bezier(0.25, 1, 0.5, 1)';
 
-            var originX = (direction === 'prev') ? 0 : (direction === 'next' ? cols : cols / 2);
-            var originY = rows / 2;
-            var maxDist = Math.hypot(cols, rows);
+        wrapper.insertBefore(incomingImg, wrapper.querySelector('.kc-slider-nav-btn') || wrapper.firstChild);
 
-            var fragDoc = document.createDocumentFragment();
-            var pieceElements = [];
+        currentIndex = targetIndex;
+        updateThumbnails(targetIndex);
+        updateCaption(targetSlide);
 
-            for (var r = 0; r < rows; r++) {
-                for (var c = 0; c < cols; c++) {
-                    var piece = document.createElement('div');
-                    piece.className = 'kc-fragment-piece';
-
-                    // Integer pixel grid: Guaranteed zero subpixel gaps or blurry resampling
-                    var leftPx = Math.round(c * tileW);
-                    var topPx = Math.round(r * tileH);
-                    var widthPx = Math.round((c + 1) * tileW) - leftPx;
-                    var heightPx = Math.round((r + 1) * tileH) - topPx;
-
-                    piece.style.left = leftPx + 'px';
-                    piece.style.top = topPx + 'px';
-                    piece.style.width = widthPx + 'px';
-                    piece.style.height = heightPx + 'px';
-                    piece.style.backgroundImage = 'url("' + targetSlide.src + '")';
-                    piece.style.backgroundSize = W + 'px ' + H + 'px';
-                    piece.style.backgroundPosition = (-leftPx) + 'px ' + (-topPx) + 'px';
-
-                    // NO BLUR FILTER - 100% crisp, razor-sharp high-definition rendering
-                    // Natural 3D depth translation without extreme texture squashing
-                    var dx = (Math.random() - 0.5) * (W * 0.65);
-                    var dy = (Math.random() - 0.5) * (H * 0.65);
-                    var dz = Math.random() * 320 + 80;
-                    var rx = (Math.random() - 0.5) * 60;
-                    var ry = (Math.random() - 0.5) * 60;
-                    var rz = (Math.random() - 0.5) * 30;
-                    var sc = 0.88 + Math.random() * 0.12; // Crisp scale range: 0.88 to 1.0 (Zero blur!)
-
-                    var dist = Math.hypot(c - originX, r - originY);
-                    var delay = (dist / maxDist) * 240 + (Math.random() * 60);
-
-                    piece.style.transform = 'translate3d(' + dx.toFixed(1) + 'px, ' + dy.toFixed(1) + 'px, ' + dz.toFixed(1) + 'px) ' +
-                                            'rotateX(' + rx.toFixed(1) + 'deg) rotateY(' + ry.toFixed(1) + 'deg) rotateZ(' + rz.toFixed(1) + 'deg) ' +
-                                            'scale(' + sc.toFixed(2) + ')';
-                    piece.style.opacity = '0';
-                    piece.style.transitionDelay = delay.toFixed(1) + 'ms';
-
-                    fragDoc.appendChild(piece);
-                    pieceElements.push(piece);
-                }
-            }
-
-            stage.appendChild(fragDoc);
-            wrapper.appendChild(stage);
-
-            currentIndex = targetIndex;
-            updateThumbnails(targetIndex);
-            updateCaption(targetSlide);
-
-            // Double RAF guarantees hardware-accelerated CSS transition starts smoothly
+        // Double RAF ensures smooth start of CSS animation without frame drops
+        requestAnimationFrame(function() {
             requestAnimationFrame(function() {
-                requestAnimationFrame(function() {
-                    for (var i = 0; i < pieceElements.length; i++) {
-                        var p = pieceElements[i];
-                        p.style.transform = 'translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(1)';
-                        p.style.opacity = '1';
-                    }
-                });
+                incomingImg.style.opacity = '1';
+                incomingImg.style.transform = 'translate3d(0, 0, 0) scale(1.0)';
+                
+                var endOffset = isNext ? -36 : 36;
+                mainImg.style.opacity = '0';
+                mainImg.style.transform = 'translate3d(' + endOffset + 'px, 0, 0) scale(0.97)';
             });
+        });
 
-            // As elements assemble into place, smoothly dissolve hairline borders
-            setTimeout(function() {
-                for (var i = 0; i < pieceElements.length; i++) {
-                    pieceElements[i].classList.add('assembled');
-                }
-            }, 550);
+        // Seamless swap and reset
+        setTimeout(function() {
+            mainImg.src = targetSlide.src;
+            mainImg.style.transition = 'none';
+            mainImg.style.opacity = '1';
+            mainImg.style.transform = 'scale(1.0)';
+            void mainImg.offsetWidth; // Force reflow
+            triggerKenBurns();
 
-            // Seamlessly swap main image at transition completion and start Ken-Burns
-            setTimeout(function() {
-                mainImg.src = targetSlide.src;
-                triggerKenBurns();
-                if (stage && stage.parentNode) {
-                    stage.parentNode.removeChild(stage);
-                }
-                isAnimating = false;
+            if (incomingImg && incomingImg.parentNode) {
+                incomingImg.parentNode.removeChild(incomingImg);
+            }
+            isAnimating = false;
 
-                // Resume progress if not paused
-                if (!isPaused) {
-                    startProgress();
-                }
-            }, 820);
-        }
+            if (!isPaused) {
+                startProgress();
+            }
+        }, 780);
+    }
 
         function nextSlide() {
             var nextIdx = (currentIndex + 1) % slides.length;
@@ -1087,7 +1209,34 @@ var boundaryPoly = null;
             document.querySelectorAll('.kc-new-badge').forEach(function(nb) {
                 nb.innerHTML = isEn ? '<span class="kc-new-dot"></span> NEW' : '<span class="kc-new-dot"></span> নতুন';
             });
+
+            // Marquee ticker language sync
+            var marqueeTitle = document.querySelector('.kc-marquee-title-text');
+            if (marqueeTitle) marqueeTitle.textContent = isEn ? 'Latest Notice:' : 'সর্বশেষ নোটিশ :';
+
+            document.querySelectorAll('.kc-marquee-link').forEach(function(link) {
+                var textEl = link.querySelector('.kc-marquee-text');
+                var badgeEl = link.querySelector('.kc-marquee-badge');
+                if (textEl) {
+                    textEl.textContent = isEn ? (link.getAttribute('data-en') || textEl.textContent) : (link.getAttribute('data-bn') || textEl.textContent);
+                }
+                if (badgeEl) {
+                    badgeEl.textContent = isEn ? (badgeEl.getAttribute('data-en') || badgeEl.textContent) : (badgeEl.getAttribute('data-bn') || badgeEl.textContent);
+                }
+            });
         };
+
+        // Touch support for latest notice continuous ticker
+        var tickerWrap = document.querySelector('.kc-ticker-wrap');
+        var tickerTrack = document.querySelector('.kc-ticker-track');
+        if (tickerWrap && tickerTrack) {
+            tickerWrap.addEventListener('touchstart', function() {
+                tickerTrack.style.animationPlayState = 'paused';
+            }, { passive: true });
+            tickerWrap.addEventListener('touchend', function() {
+                tickerTrack.style.animationPlayState = 'running';
+            }, { passive: true });
+        }
     }
 
     // 5. Initialize All Listeners
@@ -1274,6 +1423,13 @@ var boundaryPoly = null;
                 }
             }
         }
+
+        window.openNoticeModalById = function(noticeId) {
+            var item = document.querySelector('.kc-notice-item[data-notice-id="' + noticeId + '"]');
+            if (item) {
+                populateAndShow(item);
+            }
+        };
 
         window.printOfficialNotice = function() {
             syncPrintData();
@@ -2196,15 +2352,15 @@ var boundaryPoly = null;
             }
         });
 
-        // D. Mobile drawer toggle
+        // D. Mobile drawer toggle & Accordion handling
         window.toggle_insertion_box = function(e) {
             if (e && e.preventDefault) e.preventDefault();
+            if (e && e.stopPropagation) e.stopPropagation();
             var dawgdrops = document.getElementById('dawgdrops');
             var toggleBtn = document.querySelector('.t1-mobile-nav-toggle');
             if (!dawgdrops) return false;
             
-            var isShowing = dawgdrops.classList.contains('show-dawgdrops') || 
-                            window.getComputedStyle(dawgdrops).display === 'block';
+            var isShowing = dawgdrops.classList.contains('show-dawgdrops');
             
             if (isShowing) {
                 dawgdrops.classList.remove('show-dawgdrops');
@@ -2217,6 +2373,30 @@ var boundaryPoly = null;
             }
             return false;
         };
+
+        // Attach click listeners for mobile accordion (avoid double-toggle on mobile nav toggle)
+        document.addEventListener('click', function(e) {
+            // Mobile accordion submenu
+            var subTrigger = e.target.closest('#dawgdrops .meganizr > li.mzr-drop > a');
+            if (subTrigger && window.innerWidth <= 991) {
+                var parentLi = subTrigger.closest('li.mzr-drop');
+                if (parentLi) {
+                    var subUl = parentLi.querySelector('ul.mzr-links');
+                    if (subUl) {
+                        e.preventDefault();
+                        var wasOpen = parentLi.classList.contains('open');
+                        document.querySelectorAll('#dawgdrops .meganizr > li.mzr-drop.open').forEach(function(el) {
+                            if (el !== parentLi) el.classList.remove('open');
+                        });
+                        if (wasOpen) {
+                            parentLi.classList.remove('open');
+                        } else {
+                            parentLi.classList.add('open');
+                        }
+                    }
+                }
+            }
+        });
 
         // E. Floating Smooth "Back to Top" Button
         if (!document.getElementById('kc-back-to-top')) {
